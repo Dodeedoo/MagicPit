@@ -11,11 +11,12 @@ public class Knowledge implements Attribute {
     public String name = "Knowledge";
     public String colorcode = "&5";
     public String icon = "";
-    public HashMap<Player, Integer> playerKnowledgeMap = new HashMap<>();
+    public HashMap<Player, Object> playerKnowledgeMap = new HashMap<>();
+    public Integer defaultval = 10;
 
     @Override
     public void setPlayerStat(HashMap<Player, Object> map) {
-
+        this.playerKnowledgeMap = map;
     }
 
     @Override
@@ -35,12 +36,12 @@ public class Knowledge implements Attribute {
 
     @Override
     public HashMap<Player, Object> getPlayerStats() {
-        return null;
+        return this.playerKnowledgeMap;
     }
 
     @Override
     public Object getPlayer(Player player) {
-        return null;
+        return this.playerKnowledgeMap.get(player);
     }
 
     @Override
@@ -56,6 +57,6 @@ public class Knowledge implements Attribute {
     @Override
     public Object getDefaultValue() {
 
-        return null;
+        return this.defaultval;
     }
 }

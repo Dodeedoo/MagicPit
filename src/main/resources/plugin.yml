@@ -8,3 +8,21 @@ website: dodeedoo.me
 commands:
   setStrength:
     permission: "*"
+  setWeight:
+    permission: "*"
+  setRegen:
+    permission: "*"
+  setMaxmana:
+    permission: "*"
+  setMana:
+    permission: "*"
+  setKnowledge:
+    permission: "*"
+  setHealth:
+    permission: "*"
+  setDefense:
+    permission: "*"
+  setCritchance:
+    permission: "*"
+  setCrit:
+    permission: "*"

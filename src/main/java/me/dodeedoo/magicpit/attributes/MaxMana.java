@@ -11,11 +11,12 @@ public class MaxMana implements Attribute {
     public String name = "Max Mana";
     public String colorcode = "&b";
     public String icon = "";
-    public HashMap<Player, Integer> playerMaxManaMap = new HashMap<>();
+    public HashMap<Player, Object> playerMaxManaMap = new HashMap<>();
+    public Integer defaultval = 200;
 
     @Override
     public void setPlayerStat(HashMap<Player, Object> map) {
-
+        this.playerMaxManaMap = map;
     }
 
     @Override
@@ -45,17 +46,16 @@ public class MaxMana implements Attribute {
 
     @Override
     public HashMap<Player, Object> getPlayerStats() {
-        return null;
+        return this.playerMaxManaMap;
     }
 
     @Override
     public Object getPlayer(Player player) {
-        return null;
+        return this.playerMaxManaMap.get(player);
     }
 
     @Override
     public Object getDefaultValue() {
-
-        return null;
+        return this.defaultval;
     }
 }

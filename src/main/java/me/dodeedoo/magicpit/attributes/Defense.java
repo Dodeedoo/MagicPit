@@ -11,11 +11,12 @@ public class Defense implements Attribute {
     public String name = "Defense";
     public String colorcode = "&2";
     public String icon = "";
-    public HashMap<Player, Integer> playerDefenseMap = new HashMap<>();
+    public HashMap<Player, Object> playerDefenseMap = new HashMap<>();
+    public Integer defaultval = 50;
 
     @Override
     public void setPlayerStat(HashMap<Player, Object> map) {
-
+        this.playerDefenseMap = map;
     }
 
     @Override
@@ -40,12 +41,12 @@ public class Defense implements Attribute {
 
     @Override
     public HashMap<Player, Object> getPlayerStats() {
-        return null;
+        return this.playerDefenseMap;
     }
 
     @Override
     public Object getPlayer(Player player) {
-        return null;
+        return this.playerDefenseMap.get(player);
     }
 
     @Override
@@ -56,6 +57,6 @@ public class Defense implements Attribute {
     @Override
     public Object getDefaultValue() {
 
-        return null;
+        return this.defaultval;
     }
 }

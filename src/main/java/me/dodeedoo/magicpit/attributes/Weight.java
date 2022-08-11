@@ -11,7 +11,8 @@ public class Weight implements Attribute {
     public String name = "Weight";
     public String colorcode = "&8";
     public String icon = "";
-    public HashMap<Player, Integer> playerWeightMap = new HashMap<>();
+    public HashMap<Player, Object> playerWeightMap = new HashMap<>();
+    public Integer defaultval = 0;
 
     @Override
     public void deathModifier(EntityDeathEvent event) {
@@ -30,12 +31,12 @@ public class Weight implements Attribute {
 
     @Override
     public HashMap<Player, Object> getPlayerStats() {
-        return null;
+        return this.playerWeightMap;
     }
 
     @Override
     public Object getPlayer(Player player) {
-        return null;
+        return this.playerWeightMap.get(player);
     }
 
     @Override
@@ -50,12 +51,12 @@ public class Weight implements Attribute {
 
     @Override
     public void setPlayerStat(HashMap<Player, Object> map) {
-
+        this.playerWeightMap = map;
     }
 
     @Override
     public Integer getDefaultValue() {
-        return null;
+        return this.defaultval;
     }
 
 }

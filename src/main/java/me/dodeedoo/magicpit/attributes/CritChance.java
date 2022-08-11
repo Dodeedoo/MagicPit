@@ -11,11 +11,12 @@ public class CritChance implements Attribute {
     public String name = "Critical Hit Chance";
     public String colorcode = "&3";
     public String icon = "";
-    public HashMap<Player, Integer> playerCritChanceMap = new HashMap<>();
+    public HashMap<Player, Object> playerCritChanceMap = new HashMap<>();
+    public Integer defaultval = 10;
 
     @Override
     public void setPlayerStat(HashMap<Player, Object> map) {
-
+        this.playerCritChanceMap = map;
     }
 
     @Override
@@ -45,18 +46,18 @@ public class CritChance implements Attribute {
 
     @Override
     public HashMap<Player, Object> getPlayerStats() {
-        return null;
+        return this.playerCritChanceMap;
     }
 
     @Override
     public Object getPlayer(Player player) {
-        return null;
+        return this.playerCritChanceMap.get(player);
     }
 
 
     @Override
     public Object getDefaultValue() {
 
-        return null;
+        return this.defaultval;
     }
 }

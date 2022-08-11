@@ -1,8 +1,6 @@
 package me.dodeedoo.magicpit;
 
-import me.dodeedoo.magicpit.attributes.Attribute;
-import me.dodeedoo.magicpit.attributes.AttributesHandler;
-import me.dodeedoo.magicpit.attributes.Strength;
+import me.dodeedoo.magicpit.attributes.*;
 import me.dodeedoo.magicpit.commands.setStrength;
 import me.dodeedoo.magicpit.events.Connection;
 import net.md_5.bungee.api.ChatMessageType;
@@ -21,6 +19,15 @@ public final class MagicPitCore extends JavaPlugin {
 
         // Register Attributes
         AttributesHandler.addAttribute(new Strength(), "Strength");
+        AttributesHandler.addAttribute(new Weight(), "Weight");
+        AttributesHandler.addAttribute(new Regeneration(), "Regeneration");
+        AttributesHandler.addAttribute(new MaxMana(), "Maxmana");
+        AttributesHandler.addAttribute(new Mana(), "Mana");
+        AttributesHandler.addAttribute(new Knowledge(), "Knowledge");
+        AttributesHandler.addAttribute(new Health(), "Health");
+        AttributesHandler.addAttribute(new Defense(), "Defense");
+        AttributesHandler.addAttribute(new CritChance(), "Critchance");
+        AttributesHandler.addAttribute(new Crit(), "Crit");
 
         //Register Commands
         this.getCommand("setStrength").setExecutor(new setStrength());

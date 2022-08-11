@@ -11,7 +11,8 @@ public class Health implements Attribute {
     public String name = "Health";
     public String colorcode = "&c";
     public String icon = "";
-    public HashMap<Player, Integer> playerHealthMap = new HashMap<>();
+    public HashMap<Player, Object> playerHealthMap = new HashMap<>();
+    public Integer defaultval = 0;
 
     @Override
     public void deathModifier(EntityDeathEvent event) {
@@ -20,12 +21,12 @@ public class Health implements Attribute {
 
     @Override
     public HashMap<Player, Object> getPlayerStats() {
-        return null;
+        return this.playerHealthMap;
     }
 
     @Override
     public Object getPlayer(Player player) {
-        return null;
+        return this.playerHealthMap.get(player);
     }
 
     @Override
@@ -40,7 +41,7 @@ public class Health implements Attribute {
 
     @Override
     public void setPlayerStat(HashMap<Player, Object> map) {
-
+        this.playerHealthMap = map;
     }
 
     @Override
@@ -55,7 +56,6 @@ public class Health implements Attribute {
 
     @Override
     public Object getDefaultValue() {
-
-        return null;
+        return defaultval;
     }
 }

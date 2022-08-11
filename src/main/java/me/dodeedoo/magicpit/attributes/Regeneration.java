@@ -11,11 +11,12 @@ public class Regeneration implements Attribute {
     public String name = "Regeneration";
     public String colorcode = "&d";
     public String icon = "";
-    public HashMap<Player, Integer> playerRegenerationMap = new HashMap<>();
+    public HashMap<Player, Object> playerRegenerationMap = new HashMap<>();
+    public Integer defaultval = 3;
 
     @Override
     public void setPlayerStat(HashMap<Player, Object> map) {
-
+        this.playerRegenerationMap = map;
     }
 
     @Override
@@ -45,16 +46,16 @@ public class Regeneration implements Attribute {
 
     @Override
     public HashMap<Player, Object> getPlayerStats() {
-        return null;
+        return this.playerRegenerationMap;
     }
 
     @Override
     public Object getPlayer(Player player) {
-        return null;
+        return this.playerRegenerationMap.get(player);
     }
 
     @Override
     public Object getDefaultValue() {
-        return null;
+        return this.defaultval;
     }
 }
