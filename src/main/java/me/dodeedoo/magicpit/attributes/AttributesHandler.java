@@ -1,6 +1,5 @@
 package me.dodeedoo.magicpit.attributes;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AttributesHandler {

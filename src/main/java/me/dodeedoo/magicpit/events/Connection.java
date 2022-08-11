@@ -1,6 +1,8 @@
 package me.dodeedoo.magicpit.events;
 
+import me.dodeedoo.magicpit.ConfigUtil;
 import me.dodeedoo.magicpit.Util;
+import me.dodeedoo.magicpit.actionbar.AttributeDisplay;
 import me.dodeedoo.magicpit.attributes.Attribute;
 import me.dodeedoo.magicpit.attributes.AttributesHandler;
 import org.bukkit.event.EventHandler;
@@ -14,6 +16,8 @@ public class Connection implements Listener {
     public void Playerjoin(PlayerJoinEvent event) {
         Util.handlePlayerAttributes(event.getPlayer());
         Util.updatePlayerAttributes(event.getPlayer());
+        ConfigUtil.handlePlayerConfig(event.getPlayer());
+        AttributeDisplay.handlePreferenceLoad(event.getPlayer());
     }
 
     @EventHandler
