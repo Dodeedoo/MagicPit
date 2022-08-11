@@ -86,7 +86,7 @@ public final class MagicPitCore extends JavaPlugin {
                             break;
                         }
                         case "CritChance": {
-                            Attribute attr = AttributesHandler.Attributes.get("CritChance");
+                            Attribute attr = AttributesHandler.Attributes.get("Critchance");
                             msg.append("&9✯Crit Chance ").append(attr.getPlayer(player).toString()).append("% &7// ");
                             break;
                         }
