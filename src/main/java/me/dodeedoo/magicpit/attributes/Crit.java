@@ -14,8 +14,8 @@ public class Crit implements Attribute {
     public HashMap<Player, Integer> playerCritMap = new HashMap<>();
 
     @Override
-    public HashMap<Player, Object> getPlayerStats(Player player) {
-        return null;
+    public void setPlayerStat(HashMap<Player, Object> map) {
+
     }
 
     @Override
@@ -34,6 +34,17 @@ public class Crit implements Attribute {
     }
 
     @Override
+    public HashMap<Player, Object> getPlayerStats() {
+        return null;
+    }
+
+    @Override
+    public Object getPlayer(Player player) {
+        return null;
+    }
+
+
+    @Override
     public void secondModifier() {
 
     }
@@ -41,5 +52,11 @@ public class Crit implements Attribute {
     @Override
     public void killModifier(EntityDeathEvent event) {
 
+    }
+
+    @Override
+    public Object getDefaultValue() {
+
+        return null;
     }
 }

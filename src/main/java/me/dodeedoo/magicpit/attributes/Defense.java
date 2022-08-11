@@ -14,8 +14,8 @@ public class Defense implements Attribute {
     public HashMap<Player, Integer> playerDefenseMap = new HashMap<>();
 
     @Override
-    public HashMap<Player, Object> getPlayerStats(Player player) {
-        return null;
+    public void setPlayerStat(HashMap<Player, Object> map) {
+
     }
 
     @Override
@@ -39,7 +39,23 @@ public class Defense implements Attribute {
     }
 
     @Override
+    public HashMap<Player, Object> getPlayerStats() {
+        return null;
+    }
+
+    @Override
+    public Object getPlayer(Player player) {
+        return null;
+    }
+
+    @Override
     public void killModifier(EntityDeathEvent event) {
 
+    }
+
+    @Override
+    public Object getDefaultValue() {
+
+        return null;
     }
 }

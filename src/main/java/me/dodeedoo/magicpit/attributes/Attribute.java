@@ -7,10 +7,13 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import java.util.HashMap;
 
 public interface Attribute {
-    HashMap<Player, Object> getPlayerStats(Player player);
+    HashMap<Player, Object> getPlayerStats();
+    void setPlayerStat(HashMap<Player, Object> map);
     void deathModifier(EntityDeathEvent event);
     void attackModifier(EntityDamageByEntityEvent event);
     void damagedModifier(EntityDamageByEntityEvent event);
     void secondModifier();
     void killModifier(EntityDeathEvent event);
+    Object getPlayer(Player player);
+    Object getDefaultValue();
 }

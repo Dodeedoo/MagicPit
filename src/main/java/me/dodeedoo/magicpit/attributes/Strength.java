@@ -10,12 +10,25 @@ public class Strength implements Attribute {
 
     public String name = "Strength";
     public String colorcode = "&4";
-    public String icon = "";
-    public HashMap<Player, Integer> playerStrengthMap = new HashMap<>();
+    public String icon = "❀";
 
     @Override
-    public HashMap<Player, Object> getPlayerStats(Player player) {
-        return null;
+    public void setPlayerStat(HashMap<Player, Object> map) {
+        this.playerStrengthMap = map;
+    }
+
+    public HashMap<Player, Object> playerStrengthMap = new HashMap<>();
+    public Integer defaultval = 0;
+
+
+    @Override
+    public HashMap<Player, Object> getPlayerStats() {
+        return this.playerStrengthMap;
+    }
+
+    @Override
+    public Object getPlayer(Player player) {
+        return this.playerStrengthMap.get(player);
     }
 
     @Override
@@ -41,6 +54,11 @@ public class Strength implements Attribute {
     @Override
     public void killModifier(EntityDeathEvent event) {
 
+    }
+
+    @Override
+    public Object getDefaultValue() {
+        return this.defaultval;
     }
 
 }

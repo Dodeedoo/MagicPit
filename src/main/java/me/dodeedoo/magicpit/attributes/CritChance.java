@@ -14,8 +14,8 @@ public class CritChance implements Attribute {
     public HashMap<Player, Integer> playerCritChanceMap = new HashMap<>();
 
     @Override
-    public HashMap<Player, Object> getPlayerStats(Player player) {
-        return null;
+    public void setPlayerStat(HashMap<Player, Object> map) {
+
     }
 
     @Override
@@ -41,5 +41,22 @@ public class CritChance implements Attribute {
     @Override
     public void killModifier(EntityDeathEvent event) {
 
+    }
+
+    @Override
+    public HashMap<Player, Object> getPlayerStats() {
+        return null;
+    }
+
+    @Override
+    public Object getPlayer(Player player) {
+        return null;
+    }
+
+
+    @Override
+    public Object getDefaultValue() {
+
+        return null;
     }
 }

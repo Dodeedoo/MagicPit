@@ -14,13 +14,18 @@ public class Health implements Attribute {
     public HashMap<Player, Integer> playerHealthMap = new HashMap<>();
 
     @Override
-    public HashMap<Player, Object> getPlayerStats(Player player) {
+    public void deathModifier(EntityDeathEvent event) {
+
+    }
+
+    @Override
+    public HashMap<Player, Object> getPlayerStats() {
         return null;
     }
 
     @Override
-    public void deathModifier(EntityDeathEvent event) {
-
+    public Object getPlayer(Player player) {
+        return null;
     }
 
     @Override
@@ -34,6 +39,11 @@ public class Health implements Attribute {
     }
 
     @Override
+    public void setPlayerStat(HashMap<Player, Object> map) {
+
+    }
+
+    @Override
     public void secondModifier() {
 
     }
@@ -41,5 +51,11 @@ public class Health implements Attribute {
     @Override
     public void killModifier(EntityDeathEvent event) {
 
+    }
+
+    @Override
+    public Object getDefaultValue() {
+
+        return null;
     }
 }
