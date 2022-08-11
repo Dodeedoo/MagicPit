@@ -1,12 +1,16 @@
 package me.dodeedoo.magicpit.attributes;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 
 import java.util.HashMap;
 
 public interface Attribute {
-    HashMap<Player, Object> getPlayerStat();
-
-    void setName();
-
+    HashMap<Player, Object> getPlayerStats(Player player);
+    void deathModifier(EntityDeathEvent event);
+    void attackModifier(EntityDamageByEntityEvent event);
+    void damagedModifier(EntityDamageByEntityEvent event);
+    void secondModifier();
+    void killModifier(EntityDeathEvent event);
 }
