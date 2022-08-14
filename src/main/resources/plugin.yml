@@ -27,3 +27,8 @@ commands:
   setCrit:
     permission: "*"
   statsdisplay:
+    aliases:
+      - "statsettings"
+  stats:
+    aliases:
+      - "st"

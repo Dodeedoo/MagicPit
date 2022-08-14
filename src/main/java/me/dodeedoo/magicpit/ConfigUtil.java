@@ -19,6 +19,7 @@ public class ConfigUtil {
         if (!new File(main.getDataFolder() + "/players/" + player.getUniqueId() + ".yml").exists()) {
             cfg =  createConfig(new File(main.getDataFolder() + "/player/" + player.getUniqueId() + ".yml"), new YamlConfiguration(), "/players/" + player.getUniqueId() + ".yml");
             cfg.set("Display", new String[]{"Strength", "Maxmana", "Defense", "Health"});
+            MagicPitCore.getInstance().getLogger().info("EEEEEEEE");
             try {
                 cfg.save(buildSaveFile(player));
             }catch (Exception e) {

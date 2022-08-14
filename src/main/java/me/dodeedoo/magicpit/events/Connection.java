@@ -25,6 +25,7 @@ public class Connection implements Listener {
         for (Attribute attribute : AttributesHandler.Attributes.values()) {
             attribute.getPlayerStats().remove(event.getPlayer());
         }
+        AttributeDisplay.handlePreferenceUnload(event.getPlayer());
     }
 
 

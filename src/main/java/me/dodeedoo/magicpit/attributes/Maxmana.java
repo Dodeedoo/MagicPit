@@ -6,7 +6,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 
 import java.util.HashMap;
 
-public class MaxMana implements Attribute {
+public class Maxmana implements Attribute {
 
     public String name = "Max Mana";
     public String colorcode = "&b";
