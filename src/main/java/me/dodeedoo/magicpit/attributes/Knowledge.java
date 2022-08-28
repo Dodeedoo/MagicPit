@@ -35,6 +35,16 @@ public class Knowledge implements Attribute {
     }
 
     @Override
+    public void secondModifier(Player player) {
+
+    }
+
+    @Override
+    public void threeSecondModifier(Player player) {
+
+    }
+
+    @Override
     public HashMap<Player, Object> getPlayerStats() {
         return this.playerKnowledgeMap;
     }
@@ -42,11 +52,6 @@ public class Knowledge implements Attribute {
     @Override
     public Object getPlayer(Player player) {
         return this.playerKnowledgeMap.get(player);
-    }
-
-    @Override
-    public void secondModifier() {
-
     }
 
     @Override

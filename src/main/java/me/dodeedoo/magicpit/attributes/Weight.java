@@ -30,6 +30,22 @@ public class Weight implements Attribute {
     }
 
     @Override
+    public void secondModifier(Player player) {
+        int weight = (int)getPlayer(player);
+        if (weight > 30) {
+            float diff = (((float)weight) - 30) / 25;
+            player.setWalkSpeed(0.55F - diff);
+        }else{
+            player.setWalkSpeed(0.55F);
+        }
+    }
+
+    @Override
+    public void threeSecondModifier(Player player) {
+
+    }
+
+    @Override
     public HashMap<Player, Object> getPlayerStats() {
         return this.playerWeightMap;
     }
@@ -39,10 +55,6 @@ public class Weight implements Attribute {
         return this.playerWeightMap.get(player);
     }
 
-    @Override
-    public void secondModifier() {
-
-    }
 
     @Override
     public void killModifier(EntityDeathEvent event) {

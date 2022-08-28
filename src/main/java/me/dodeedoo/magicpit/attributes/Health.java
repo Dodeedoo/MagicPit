@@ -40,14 +40,23 @@ public class Health implements Attribute {
     }
 
     @Override
+    public void secondModifier(Player player) {
+        double health = player.getMaxHealth();
+        if (health != (20D + ((int) getPlayer(player)))) {
+            player.setMaxHealth(20D + ((int) getPlayer(player)));
+        }
+    }
+
+    @Override
+    public void threeSecondModifier(Player player) {
+
+    }
+
+    @Override
     public void setPlayerStat(HashMap<Player, Object> map) {
         this.playerHealthMap = map;
     }
 
-    @Override
-    public void secondModifier() {
-
-    }
 
     @Override
     public void killModifier(EntityDeathEvent event) {

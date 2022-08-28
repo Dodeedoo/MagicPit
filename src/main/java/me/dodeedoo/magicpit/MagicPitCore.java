@@ -4,6 +4,7 @@ import me.dodeedoo.magicpit.actionbar.AttributeDisplay;
 import me.dodeedoo.magicpit.attributes.*;
 import me.dodeedoo.magicpit.commands.setStrength;
 import me.dodeedoo.magicpit.events.Connection;
+import me.dodeedoo.magicpit.events.Damage;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -19,21 +20,22 @@ public final class MagicPitCore extends JavaPlugin {
         instance = this;
 
         // Register Attributes
-        AttributesHandler.addAttribute(new Strength(), "Strength");
-        AttributesHandler.addAttribute(new Weight(), "Weight");
-        AttributesHandler.addAttribute(new Regeneration(), "Regeneration");
-        AttributesHandler.addAttribute(new Maxmana(), "Maxmana");
+        AttributesHandler.addAttribute(new Strength(), "Strength"); //dmg event
+        AttributesHandler.addAttribute(new Weight(), "Weight"); //second DONE
+        AttributesHandler.addAttribute(new Regeneration(), "Regeneration"); //3 second DONE
+        AttributesHandler.addAttribute(new Maxmana(), "Maxmana"); //second DONE
         AttributesHandler.addAttribute(new Mana(), "Mana");
-        AttributesHandler.addAttribute(new Knowledge(), "Knowledge");
-        AttributesHandler.addAttribute(new Health(), "Health");
+        AttributesHandler.addAttribute(new Knowledge(), "Knowledge"); //magic dmg
+        AttributesHandler.addAttribute(new Health(), "Health"); //second DONE
         AttributesHandler.addAttribute(new Defense(), "Defense");
-        AttributesHandler.addAttribute(new CritChance(), "Critchance");
-        AttributesHandler.addAttribute(new Crit(), "Crit");
+        AttributesHandler.addAttribute(new CritChance(), "Critchance"); //dmg event
+        AttributesHandler.addAttribute(new Crit(), "Crit"); //dmg event
 
         //Register Commands
         this.getCommand("setStrength").setExecutor(new setStrength());
 
         //Register Listeners
+        Bukkit.getPluginManager().registerEvents(new Damage(), this);
         Bukkit.getPluginManager().registerEvents(new Connection(), this);
 
         //Periodical Loops
@@ -61,7 +63,7 @@ public final class MagicPitCore extends JavaPlugin {
                             case "Maxmana": {
                                 Attribute attr = AttributesHandler.Attributes.get("Maxmana");
                                 Attribute attr2 = AttributesHandler.Attributes.get("Mana");
-                                msg.append("&b✿Mana ").append(attr.getPlayer(player).toString()).append("/").append(attr2.getPlayer(player).toString()).append(" &7// ");
+                                msg.append("&b✿Mana ").append(attr2.getPlayer(player).toString()).append("/").append(attr.getPlayer(player).toString()).append(" &7// ");
                                 break;
                             }
                             case "Knowledge": {
@@ -72,7 +74,7 @@ public final class MagicPitCore extends JavaPlugin {
                             case "Health": {
                                 Attribute attr = AttributesHandler.Attributes.get("Health");
                                 Double maxhp = (Integer) attr.getPlayer(player) + player.getMaxHealth();
-                                msg.append("&c❤Health ").append(player.getHealth()).append("/").append(maxhp).append(" &7// ");
+                                msg.append("&c❤Health ").append(player.getHealth()).append("/").append(maxhp.intValue()).append(" &7// ");
                                 break;
                             }
                             case "Defense": {
@@ -106,6 +108,16 @@ public final class MagicPitCore extends JavaPlugin {
                 }
             }
         }, 10, 10);
+        Bukkit.getScheduler().runTaskTimer(this, () -> {
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                AttributesHandler.handleSecond(player);
+            }
+        }, 20, 20);
+        Bukkit.getScheduler().runTaskTimer(this, () -> {
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                AttributesHandler.handleThreeSecond(player);
+            }
+        }, 60, 60);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package me.dodeedoo.magicpit.attributes;
 
+import me.dodeedoo.magicpit.Util;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -35,8 +36,13 @@ public class Regeneration implements Attribute {
     }
 
     @Override
-    public void secondModifier() {
+    public void secondModifier(Player player) {
 
+    }
+
+    @Override
+    public void threeSecondModifier(Player player) {
+        Util.updateHealth(player, (int)getPlayer(player));
     }
 
     @Override

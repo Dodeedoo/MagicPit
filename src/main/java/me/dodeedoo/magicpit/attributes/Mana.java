@@ -34,8 +34,20 @@ public class Mana implements Attribute {
 
     }
 
+    //mana regeneration
     @Override
-    public void secondModifier() {
+    public void secondModifier(Player player) {
+        Attribute maxmana = AttributesHandler.Attributes.get("Maxmana");
+        Integer regen = (Integer) maxmana.getPlayer(player) / 15;
+        if ((Integer) getPlayer(player) + regen > (Integer) maxmana.getPlayer(player)) {
+            playerManaMap.put(player, maxmana.getPlayer(player));
+        }else{
+            playerManaMap.put(player, (Integer) getPlayer(player) + regen);
+        }
+    }
+
+    @Override
+    public void threeSecondModifier(Player player) {
 
     }
 

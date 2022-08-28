@@ -12,7 +12,8 @@ public interface Attribute {
     void deathModifier(EntityDeathEvent event);
     void attackModifier(EntityDamageByEntityEvent event);
     void damagedModifier(EntityDamageByEntityEvent event);
-    void secondModifier();
+    void secondModifier(Player player);
+    void threeSecondModifier(Player player);
     void killModifier(EntityDeathEvent event);
     Object getPlayer(Player player);
     Object getDefaultValue();

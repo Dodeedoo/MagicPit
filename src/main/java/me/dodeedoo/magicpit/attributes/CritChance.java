@@ -35,7 +35,12 @@ public class CritChance implements Attribute {
     }
 
     @Override
-    public void secondModifier() {
+    public void secondModifier(Player player) {
+
+    }
+
+    @Override
+    public void threeSecondModifier(Player player) {
 
     }
 

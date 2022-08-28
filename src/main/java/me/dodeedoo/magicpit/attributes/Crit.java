@@ -35,6 +35,16 @@ public class Crit implements Attribute {
     }
 
     @Override
+    public void secondModifier(Player player) {
+
+    }
+
+    @Override
+    public void threeSecondModifier(Player player) {
+
+    }
+
+    @Override
     public HashMap<Player, Object> getPlayerStats() {
         return this.playerCritMap;
     }
@@ -42,12 +52,6 @@ public class Crit implements Attribute {
     @Override
     public Object getPlayer(Player player) {
         return this.playerCritMap.get(player);
-    }
-
-
-    @Override
-    public void secondModifier() {
-
     }
 
     @Override

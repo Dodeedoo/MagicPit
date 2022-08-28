@@ -31,7 +31,12 @@ public class Util {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
-    public static void updateHealth(Player player, Double health) {
+    public static void updateHealth(Player player, Integer health) {
+        if ((player.getHealth() + health) > player.getMaxHealth()) {
+            player.setHealth(player.getMaxHealth());
+        }else{
+            player.setHealth(player.getHealth() + health);
+        }
         //credit https://www.spigotmc.org/threads/make-players-hearts-flash-like-when-they-naturally-heal.484328/
         //THANK YOU ESOPHOSE!!!!! you saved me half an hour
         ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
@@ -39,8 +44,6 @@ public class Util {
 
         packet.getFloat().write(0, (float) player.getHealth()).write(1, player.getSaturation());
         packet.getIntegers().write(0, player.getFoodLevel());
-
-        player.setHealth(player.getHealth() + health);
 
         try {
             protocolManager.sendServerPacket(player, packet);
