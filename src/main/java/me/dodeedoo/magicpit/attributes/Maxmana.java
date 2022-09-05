@@ -35,6 +35,11 @@ public class Maxmana implements Attribute {
     }
 
     @Override
+    public ModifierPriority getPriority() {
+        return null;
+    }
+
+    @Override
     public void secondModifier(Player player) {
 
     }

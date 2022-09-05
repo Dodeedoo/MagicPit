@@ -5,6 +5,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 
 import java.util.HashMap;
+import java.util.Random;
 
 public class Crit implements Attribute {
 
@@ -26,12 +27,22 @@ public class Crit implements Attribute {
 
     @Override
     public void attackModifier(EntityDamageByEntityEvent event) {
-
+        Attribute critchance = AttributesHandler.Attributes.get("Critchance");
+        //Float chance = ((Float) critchance.getPlayerStats().get((Player) event.getDamager())) * 0.01F;
+        int random = new Random().nextInt(100-1) + 1;
+        if (random <= (Integer) critchance.getPlayer((Player) event.getDamager())) {
+            event.setDamage(event.getDamage() * ((Integer) getPlayer((Player) event.getDamager()) * 0.01));
+        }
     }
 
     @Override
     public void damagedModifier(EntityDamageByEntityEvent event) {
 
+    }
+
+    @Override
+    public ModifierPriority getPriority() {
+        return null;
     }
 
     @Override

@@ -9,6 +9,12 @@ import java.util.HashMap;
 public class Weight implements Attribute {
 
     public String name = "Weight";
+
+    @Override
+    public ModifierPriority getPriority() {
+        return null;
+    }
+
     public String colorcode = "&8";
     public String icon = "";
     public HashMap<Player, Object> playerWeightMap = new HashMap<>();

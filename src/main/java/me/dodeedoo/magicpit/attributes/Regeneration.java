@@ -41,6 +41,11 @@ public class Regeneration implements Attribute {
     }
 
     @Override
+    public ModifierPriority getPriority() {
+        return null;
+    }
+
+    @Override
     public void threeSecondModifier(Player player) {
         Util.updateHealth(player, (int)getPlayer(player));
     }

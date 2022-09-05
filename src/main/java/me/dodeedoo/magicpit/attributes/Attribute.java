@@ -17,4 +17,5 @@ public interface Attribute {
     void killModifier(EntityDeathEvent event);
     Object getPlayer(Player player);
     Object getDefaultValue();
+    ModifierPriority getPriority();
 }

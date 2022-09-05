@@ -20,6 +20,11 @@ public class Defense implements Attribute {
     }
 
     @Override
+    public ModifierPriority getPriority() {
+        return null;
+    }
+
+    @Override
     public void deathModifier(EntityDeathEvent event) {
 
     }
@@ -31,7 +36,7 @@ public class Defense implements Attribute {
 
     @Override
     public void damagedModifier(EntityDamageByEntityEvent event) {
-
+        event.setDamage(event.getDamage() - ((Float) playerDefenseMap.get((Player) event.getEntity()) / 5));
     }
 
     @Override

@@ -40,6 +40,11 @@ public class Health implements Attribute {
     }
 
     @Override
+    public ModifierPriority getPriority() {
+        return null;
+    }
+
+    @Override
     public void secondModifier(Player player) {
         double health = player.getMaxHealth();
         if (health != (20D + ((int) getPlayer(player)))) {

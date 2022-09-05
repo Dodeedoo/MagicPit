@@ -20,16 +20,16 @@ public final class MagicPitCore extends JavaPlugin {
         instance = this;
 
         // Register Attributes
-        AttributesHandler.addAttribute(new Strength(), "Strength"); //dmg event
+        AttributesHandler.addAttribute(new Strength(), "Strength"); //dmg event DONE
         AttributesHandler.addAttribute(new Weight(), "Weight"); //second DONE
         AttributesHandler.addAttribute(new Regeneration(), "Regeneration"); //3 second DONE
         AttributesHandler.addAttribute(new Maxmana(), "Maxmana"); //second DONE
         AttributesHandler.addAttribute(new Mana(), "Mana");
         AttributesHandler.addAttribute(new Knowledge(), "Knowledge"); //magic dmg
         AttributesHandler.addAttribute(new Health(), "Health"); //second DONE
-        AttributesHandler.addAttribute(new Defense(), "Defense");
-        AttributesHandler.addAttribute(new CritChance(), "Critchance"); //dmg event
-        AttributesHandler.addAttribute(new Crit(), "Crit"); //dmg event
+        AttributesHandler.addAttribute(new Defense(), "Defense"); //dmg event DONE
+        AttributesHandler.addAttribute(new CritChance(), "Critchance"); //dmg event DONE
+        AttributesHandler.addAttribute(new Crit(), "Crit"); //dmg event DONE
 
         //Register Commands
         this.getCommand("setStrength").setExecutor(new setStrength());

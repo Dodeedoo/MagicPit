@@ -47,6 +47,11 @@ public class Mana implements Attribute {
     }
 
     @Override
+    public ModifierPriority getPriority() {
+        return null;
+    }
+
+    @Override
     public void threeSecondModifier(Player player) {
 
     }

@@ -37,8 +37,15 @@ public class Strength implements Attribute {
     }
 
     @Override
-    public void attackModifier(EntityDamageByEntityEvent event) {
+    public ModifierPriority getPriority() {
+        return null;
+    }
 
+    @Override
+    public void attackModifier(EntityDamageByEntityEvent event) {
+        Player player  = (Player) event.getDamager();
+        Integer strength = (Integer) playerStrengthMap.get(player);
+        event.setDamage(event.getDamage() + strength);
     }
 
     @Override
