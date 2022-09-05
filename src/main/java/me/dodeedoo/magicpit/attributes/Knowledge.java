@@ -36,7 +36,7 @@ public class Knowledge implements Attribute {
 
     @Override
     public ModifierPriority getPriority() {
-        return null;
+        return ModifierPriority.LOW;
     }
 
     @Override

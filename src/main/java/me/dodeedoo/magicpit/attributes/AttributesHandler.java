@@ -13,36 +13,37 @@ public class AttributesHandler {
 
     public static void addAttribute(Attribute attribute, String name) { Attributes.put(name, attribute); }
 
-    public static void handlePriorityQueue(HashMap<Attribute, ModifierPriority> priorityHashMap, Player player, String methodname) {
+    public static void handlePriorityQueue(HashMap<Attribute, ModifierPriority> priorityHashMap, Object argument, String methodname, Class arg) {
         try {
             for (Attribute attribute : priorityHashMap.keySet()) {
                 ModifierPriority priority = priorityHashMap.get(attribute);
                 if (priority == ModifierPriority.LOWEST) {
-                    attribute.getClass().getMethod(methodname).invoke(player);
+                    //Bukkit.broadcastMessage(attribute.getClass().getMethods()[0].getName());
+                    attribute.getClass().getMethod(methodname, arg).invoke(attribute, argument);
                 }
             }
             for (Attribute attribute : priorityHashMap.keySet()) {
                 ModifierPriority priority = priorityHashMap.get(attribute);
                 if (priority == ModifierPriority.LOW) {
-                    attribute.getClass().getMethod(methodname).invoke(player);
+                    attribute.getClass().getMethod(methodname, arg).invoke(attribute, argument);
                 }
             }
             for (Attribute attribute : priorityHashMap.keySet()) {
                 ModifierPriority priority = priorityHashMap.get(attribute);
                 if (priority == ModifierPriority.NORMAL) {
-                    attribute.getClass().getMethod(methodname).invoke(player);
+                    attribute.getClass().getMethod(methodname, arg).invoke(attribute, argument);
                 }
             }
             for (Attribute attribute : priorityHashMap.keySet()) {
                 ModifierPriority priority = priorityHashMap.get(attribute);
                 if (priority == ModifierPriority.HIGH) {
-                    attribute.getClass().getMethod(methodname).invoke(player);
+                    attribute.getClass().getMethod(methodname, arg).invoke(attribute, argument);
                 }
             }
             for (Attribute attribute : priorityHashMap.keySet()) {
                 ModifierPriority priority = priorityHashMap.get(attribute);
                 if (priority == ModifierPriority.HIGHEST) {
-                    attribute.getClass().getMethod(methodname).invoke(player);
+                    attribute.getClass().getMethod(methodname, arg).invoke(attribute, argument);
                 }
             }
         } catch (Exception e) {
@@ -53,38 +54,37 @@ public class AttributesHandler {
     public static void handleSecond(Player player) {
         HashMap<Attribute, ModifierPriority> priorityHashMap = new HashMap<>();
         for (Attribute attribute : Attributes.values()) priorityHashMap.put(attribute, attribute.getPriority());
-        handlePriorityQueue(priorityHashMap, player, "secondModifier");
+        handlePriorityQueue(priorityHashMap, player, "secondModifier", Player.class);
     }
 
     public static void handleThreeSecond(Player player) {
-        for (Attribute attribute : Attributes.values()) {
-            attribute.threeSecondModifier(player);
-        }
+        HashMap<Attribute, ModifierPriority> priorityHashMap = new HashMap<>();
+        for (Attribute attribute : Attributes.values()) priorityHashMap.put(attribute, attribute.getPriority());
+        handlePriorityQueue(priorityHashMap, player, "threeSecondModifier", Player.class);
     }
 
     public static void handleKill(EntityDeathEvent event) {
-        for (Attribute attribute : Attributes.values()) {
-            attribute.killModifier(event);
-        }
+        HashMap<Attribute, ModifierPriority> priorityHashMap = new HashMap<>();
+        for (Attribute attribute : Attributes.values()) priorityHashMap.put(attribute, attribute.getPriority());
+        handlePriorityQueue(priorityHashMap, event, "killModifier", event.getClass());
     }
 
     public static void handleDeath(EntityDeathEvent event) {
-        for (Attribute attribute : Attributes.values()) {
-            attribute.deathModifier(event);
-        }
+        HashMap<Attribute, ModifierPriority> priorityHashMap = new HashMap<>();
+        for (Attribute attribute : Attributes.values()) priorityHashMap.put(attribute, attribute.getPriority());
+        handlePriorityQueue(priorityHashMap, event, "deathModifier", event.getClass());
     }
 
     public static void handleHit(EntityDamageByEntityEvent event) {
-        for (Attribute attribute : Attributes.values()) {
-            Bukkit.broadcastMessage(attribute.getClass().toString());
-            attribute.attackModifier(event);
-        }
+        HashMap<Attribute, ModifierPriority> priorityHashMap = new HashMap<>();
+        for (Attribute attribute : Attributes.values()) priorityHashMap.put(attribute, attribute.getPriority());
+        handlePriorityQueue(priorityHashMap, event, "attackModifier", event.getClass());
     }
 
     public static void handleDamaged(EntityDamageByEntityEvent event) {
-        for (Attribute attribute : Attributes.values()) {
-            attribute.damagedModifier(event);
-        }
+        HashMap<Attribute, ModifierPriority> priorityHashMap = new HashMap<>();
+        for (Attribute attribute : Attributes.values()) priorityHashMap.put(attribute, attribute.getPriority());
+        handlePriorityQueue(priorityHashMap, event, "damagedModifier", event.getClass());
     }
 
 }

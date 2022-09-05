@@ -42,7 +42,7 @@ public class Crit implements Attribute {
 
     @Override
     public ModifierPriority getPriority() {
-        return null;
+        return ModifierPriority.HIGHEST;
     }
 
     @Override

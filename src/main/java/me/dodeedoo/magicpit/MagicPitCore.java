@@ -5,6 +5,7 @@ import me.dodeedoo.magicpit.attributes.*;
 import me.dodeedoo.magicpit.commands.setStrength;
 import me.dodeedoo.magicpit.events.Connection;
 import me.dodeedoo.magicpit.events.Damage;
+import me.dodeedoo.magicpit.events.magicdamage.MagicDamageHandle;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -30,6 +31,7 @@ public final class MagicPitCore extends JavaPlugin {
         AttributesHandler.addAttribute(new Defense(), "Defense"); //dmg event DONE
         AttributesHandler.addAttribute(new CritChance(), "Critchance"); //dmg event DONE
         AttributesHandler.addAttribute(new Crit(), "Crit"); //dmg event DONE
+        AttributesHandler.addAttribute(new Scorch(), "Scorch");
 
         //Register Commands
         this.getCommand("setStrength").setExecutor(new setStrength());
@@ -37,6 +39,7 @@ public final class MagicPitCore extends JavaPlugin {
         //Register Listeners
         Bukkit.getPluginManager().registerEvents(new Damage(), this);
         Bukkit.getPluginManager().registerEvents(new Connection(), this);
+        Bukkit.getPluginManager().registerEvents(new MagicDamageHandle(), this);
 
         //Periodical Loops
         Bukkit.getScheduler().runTaskTimer(this, () -> {

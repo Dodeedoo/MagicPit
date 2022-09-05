@@ -15,8 +15,9 @@ public class setStrength implements CommandExecutor  {
         Player player = (Player) commandSender;
         try {
             AttributesHandler.Attributes.get("Strength").getPlayerStats().put(player, Integer.parseInt(strings[0]));
-            //DisplayGui.showDisplayGuiToPlayer(player);
+            DisplayGui.showDisplayGuiToPlayer(player);
             AttributesHandler.Attributes.get("Mana").getPlayerStats().put(player, 0);
+            AttributesHandler.Attributes.get("Scorch").getPlayerStats().put(player, 30);
         }catch (IndexOutOfBoundsException e) {
             player.sendMessage(Util.colorize("&cusage: /setstrength <number>"));
         }catch (Exception e) {

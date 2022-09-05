@@ -21,7 +21,7 @@ public class Defense implements Attribute {
 
     @Override
     public ModifierPriority getPriority() {
-        return null;
+        return ModifierPriority.HIGH;
     }
 
     @Override

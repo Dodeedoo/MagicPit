@@ -48,7 +48,7 @@ public class Mana implements Attribute {
 
     @Override
     public ModifierPriority getPriority() {
-        return null;
+        return ModifierPriority.LOWEST;
     }
 
     @Override

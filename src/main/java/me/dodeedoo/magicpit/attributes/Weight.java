@@ -12,7 +12,7 @@ public class Weight implements Attribute {
 
     @Override
     public ModifierPriority getPriority() {
-        return null;
+        return ModifierPriority.LOW;
     }
 
     public String colorcode = "&8";

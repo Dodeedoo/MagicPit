@@ -36,7 +36,7 @@ public class Maxmana implements Attribute {
 
     @Override
     public ModifierPriority getPriority() {
-        return null;
+        return ModifierPriority.LOWEST;
     }
 
     @Override
