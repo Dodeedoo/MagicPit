@@ -2,12 +2,15 @@ package me.dodeedoo.magicpit.attributes;
 
 import me.dodeedoo.magicpit.Util;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import particles.LocationLib;
+import xyz.xenondevs.particle.ParticleEffect;
 
 import java.util.HashMap;
 
@@ -47,6 +50,10 @@ public class Scorch implements Attribute {
             playerScorchMap.put(player, (int) getPlayer(player) - 1);
         }
         if ((int) getPlayer(player) != 0) {
+            Location location = player.getLocation();
+            for (Location loc : LocationLib.getHelix(new Location[]{location}, 0.2, 2.3, 1, 7)) {
+                if (Math.random() < 0.2) ParticleEffect.SMOKE_LARGE.display(loc);
+            }
             if (bar.containsKey(player)) bar.get(player).removeAll();
             String n;
             BarColor color = BarColor.YELLOW;

@@ -5,6 +5,10 @@ api-version: 1.19
 authors: [ Dodeedoo ]
 description: Core plugin for MagicPit
 website: dodeedoo.me
+libraries:
+  - xyz.xenondevs:particle:1.8.1
+depend:
+  - WorldGuard
 commands:
   setStrength:
     permission: "*"

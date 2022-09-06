@@ -1,11 +1,15 @@
 package me.dodeedoo.magicpit.events.magicdamage;
 
+import me.dodeedoo.magicpit.attributes.AttributesHandler;
+import org.bukkit.Color;
+import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.potion.PotionEffectType;
-
-import java.util.HashMap;
+import particles.LocationLib;
+import xyz.xenondevs.particle.ParticleEffect;
 
 public class MagicDamageHandle implements Listener {
 
@@ -28,7 +32,26 @@ public class MagicDamageHandle implements Listener {
                 return;
             }
             case FIRE: {
+                Location location = event.victim.getLocation();
+                for (Location loc : LocationLib.getHelix(new Location[]{location}, 1, 2.5, 1, 5)) {
+                    if (Math.random() < 0.2) ParticleEffect.FLAME.display(loc);
+                }
+                if (!(event.victim instanceof Player)) {
+                    return;
+                }
+                double tmp = ((int)AttributesHandler.Attributes.get("Scorch").getPlayer((Player) event.victim) / 5D);
+                event.victim.damage(event.value * tmp);
+                int scorchamount;
+                if (event.value > 1000) {
+                    scorchamount = 10;
+                }else{
+                    scorchamount = event.value / 100;
+                    if (scorchamount < 2) scorchamount = 2;
+                }
+                AttributesHandler.Attributes.get("Scorch").getPlayerStats().put(event.attacker,
+                        scorchamount + (int) AttributesHandler.Attributes.get("Scorch").getPlayer((Player) event.victim));
 
+                return;
             }
         }
     }
