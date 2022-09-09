@@ -50,8 +50,10 @@ public class MagicDamageHandle implements Listener {
                 }
                 AttributesHandler.Attributes.get("Scorch").getPlayerStats().put(event.attacker,
                         scorchamount + (int) AttributesHandler.Attributes.get("Scorch").getPlayer((Player) event.victim));
-
                 return;
+            }
+            case CURSE: {
+
             }
         }
     }

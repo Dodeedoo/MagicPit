@@ -1,4 +1,4 @@
 package me.dodeedoo.magicpit.items;
 
-public class item {
+public interface item {
 }
