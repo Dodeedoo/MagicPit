@@ -1,5 +1,6 @@
 package me.dodeedoo.magicpit.events.magicdamage;
 
+import me.dodeedoo.magicpit.skills.Skill;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;

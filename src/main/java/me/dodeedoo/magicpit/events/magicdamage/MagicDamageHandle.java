@@ -48,11 +48,28 @@ public class MagicDamageHandle implements Listener {
                     scorchamount = event.value / 100;
                     if (scorchamount < 2) scorchamount = 2;
                 }
-                AttributesHandler.Attributes.get("Scorch").getPlayerStats().put(event.attacker,
+                AttributesHandler.Attributes.get("Scorch").getPlayerStats().put((Player) event.victim,
                         scorchamount + (int) AttributesHandler.Attributes.get("Scorch").getPlayer((Player) event.victim));
                 return;
             }
             case CURSE: {
+                if (!(event.victim instanceof Player)) {
+                    return;
+                }
+                int curseamount;
+                if (event.value > 500) {
+                    curseamount = 10;
+                }else{
+                    curseamount = event.value / 50;
+                    if (curseamount < 3) curseamount = 3;
+                }
+                AttributesHandler.Attributes.get("Curse").getPlayerStats().put((Player) event.victim, curseamount +
+                        (int) AttributesHandler.Attributes.get("Curse").getPlayer((Player) event.victim));
+            }
+            case ARCANE: {
+
+            }
+            case EARTH: {
 
             }
         }

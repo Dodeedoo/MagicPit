@@ -5,12 +5,17 @@ import me.dodeedoo.magicpit.actionbar.DisplayGui;
 import me.dodeedoo.magicpit.attributes.AttributesHandler;
 import me.dodeedoo.magicpit.events.magicdamage.MagicDamage;
 import me.dodeedoo.magicpit.events.magicdamage.MagicDamageType;
+import me.dodeedoo.magicpit.skills.Skill;
+import me.dodeedoo.magicpit.skills.SkillHandler;
+import me.dodeedoo.magicpit.skills.list.testskill;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.HashMap;
 
 public class setStrength implements CommandExecutor  {
     @Override
@@ -22,6 +27,10 @@ public class setStrength implements CommandExecutor  {
             AttributesHandler.Attributes.get("Mana").getPlayerStats().put(player, 0);
             //AttributesHandler.Attributes.get("Scorch").getPlayerStats().put(player, 30);
             Bukkit.getPluginManager().callEvent(new MagicDamage(player, player, MagicDamageType.FIRE, 1200));
+            Bukkit.getPluginManager().callEvent(new MagicDamage(player, player, MagicDamageType.CURSE, 1200));
+            HashMap<Skill, String[]> map = new HashMap<>();
+            map.put(new testskill(), new String[]{});
+            SkillHandler.playerSkills.put(player, map);
         }catch (IndexOutOfBoundsException e) {
             player.sendMessage(Util.colorize("&cusage: /setstrength <number>"));
         }catch (Exception e) {

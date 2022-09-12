@@ -47,7 +47,12 @@ public class Regeneration implements Attribute {
 
     @Override
     public void threeSecondModifier(Player player) {
-        Util.updateHealth(player, (int)getPlayer(player));
+        int health = (int) getPlayer(player);
+        if ((int) AttributesHandler.Attributes.get("Curse").getPlayer(player) > 0) {
+            double curseamount = 1D - ((int) AttributesHandler.Attributes.get("Curse").getPlayer(player) * 0.01D);
+            health *= curseamount;
+        }
+        Util.updateHealth(player, health);
     }
 
     @Override

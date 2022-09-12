@@ -5,6 +5,7 @@ import me.dodeedoo.magicpit.Util;
 import me.dodeedoo.magicpit.actionbar.AttributeDisplay;
 import me.dodeedoo.magicpit.attributes.Attribute;
 import me.dodeedoo.magicpit.attributes.AttributesHandler;
+import me.dodeedoo.magicpit.scoreboard.ScoreboardManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -18,6 +19,7 @@ public class Connection implements Listener {
         Util.updatePlayerAttributes(event.getPlayer());
         ConfigUtil.handlePlayerConfig(event.getPlayer());
         AttributeDisplay.handlePreferenceLoad(event.getPlayer());
+        ScoreboardManager.loadPlayer(event.getPlayer());
     }
 
     @EventHandler
@@ -26,6 +28,7 @@ public class Connection implements Listener {
             attribute.getPlayerStats().remove(event.getPlayer());
         }
         AttributeDisplay.handlePreferenceUnload(event.getPlayer());
+        ScoreboardManager.boardMap.remove(event.getPlayer());
     }
 
 

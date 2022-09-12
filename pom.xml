@@ -40,6 +40,11 @@
                             <pattern>com.github.stefvanschie.inventoryframework</pattern>
                             <shadedPattern>me.dodeedoo.magicpit.inventoryframework</shadedPattern>
                         </relocation>
+                        <relocation>
+                            <pattern>fr.mrmicky.fastboard</pattern>
+                            <!-- Replace 'com.yourpackage' with the package of your plugin ! -->
+                            <shadedPattern>me.dodeedoo.magicpit</shadedPattern>
+                        </relocation>
                     </relocations>
                 </configuration>
                 <executions>
@@ -80,6 +85,11 @@
     </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>fr.mrmicky</groupId>
+            <artifactId>fastboard</artifactId>
+            <version>1.2.1</version>
+        </dependency>
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>

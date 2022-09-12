@@ -39,6 +39,10 @@ public class Mana implements Attribute {
     public void secondModifier(Player player) {
         Attribute maxmana = AttributesHandler.Attributes.get("Maxmana");
         Integer regen = (Integer) maxmana.getPlayer(player) / 15;
+        if ((int) AttributesHandler.Attributes.get("Curse").getPlayer(player) > 0) {
+            double curseamount = 1D - ((int) AttributesHandler.Attributes.get("Curse").getPlayer(player) * 0.01D);
+            regen *= (int) curseamount;
+        }
         if ((Integer) getPlayer(player) + regen > (Integer) maxmana.getPlayer(player)) {
             playerManaMap.put(player, maxmana.getPlayer(player));
         }else{
