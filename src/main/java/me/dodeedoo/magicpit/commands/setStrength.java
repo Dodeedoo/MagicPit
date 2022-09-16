@@ -1,13 +1,12 @@
 package me.dodeedoo.magicpit.commands;
 
 import me.dodeedoo.magicpit.Util;
-import me.dodeedoo.magicpit.actionbar.DisplayGui;
 import me.dodeedoo.magicpit.attributes.AttributesHandler;
 import me.dodeedoo.magicpit.events.magicdamage.MagicDamage;
 import me.dodeedoo.magicpit.events.magicdamage.MagicDamageType;
 import me.dodeedoo.magicpit.skills.Skill;
 import me.dodeedoo.magicpit.skills.SkillHandler;
-import me.dodeedoo.magicpit.skills.list.testskill;
+import me.dodeedoo.magicpit.skills.list.HoldRightClickSkillExample;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -29,7 +28,7 @@ public class setStrength implements CommandExecutor  {
             Bukkit.getPluginManager().callEvent(new MagicDamage(player, player, MagicDamageType.FIRE, 1200));
             Bukkit.getPluginManager().callEvent(new MagicDamage(player, player, MagicDamageType.CURSE, 1200));
             HashMap<Skill, String[]> map = new HashMap<>();
-            map.put(new testskill(), new String[]{});
+            map.put(new HoldRightClickSkillExample(), new String[]{});
             SkillHandler.playerSkills.put(player, map);
         }catch (IndexOutOfBoundsException e) {
             player.sendMessage(Util.colorize("&cusage: /setstrength <number>"));

@@ -80,7 +80,7 @@ public final class MagicPitCore extends JavaPlugin {
                             case "Health": {
                                 Attribute attr = AttributesHandler.Attributes.get("Health");
                                 Double maxhp = (Integer) attr.getPlayer(player) + player.getMaxHealth();
-                                msg.append("&c❤Health ").append(player.getHealth()).append("/").append(maxhp.intValue()).append(" &7// ");
+                                msg.append("&c❤Health ").append(((int) player.getHealth())).append("/").append(maxhp.intValue()).append(" &7// ");
                                 break;
                             }
                             case "Defense": {

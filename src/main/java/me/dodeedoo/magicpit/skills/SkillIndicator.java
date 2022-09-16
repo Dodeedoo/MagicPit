@@ -5,9 +5,7 @@ import org.bukkit.boss.BarColor;
 public class SkillIndicator {
 
     public enum indicatorType {
-        BOSSBAR,
         MESSAGE,
-        SCOREBOARD,
     }
 
     public String indicatorString;
@@ -16,8 +14,10 @@ public class SkillIndicator {
     public indicatorType type;
     public BarColor barColor;
 
-    public SkillIndicator() {
-
+    public SkillIndicator(indicatorType type, String indicatorString, Integer time) {
+        this.type = type;
+        this.indicatorString = indicatorString;
+        this.time = time;
     }
 
     public void setIndicatorString(String indicatorString) {

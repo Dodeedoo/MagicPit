@@ -15,4 +15,8 @@ public interface Skill {
     SkillIndicator getIndicator();
     HashMap<Player, Long> getCooldownMap();
     void setCooldownMap(HashMap<Player, Long> map);
+    Boolean overTime();
+    HashMap<Player, Long> getHeldTicksMap();
+    void initiateCooldown(Player player);
+    //void setHeldTicksMap();
 }

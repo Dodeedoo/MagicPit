@@ -19,11 +19,11 @@ public class SkillHandler {
 
     public static void invokeSkill(Skill skill, Player player, String[] args) {
         if (!skill.getCooldownMap().containsKey(player)) {
-            skill.getCooldownMap().put(player, TimeUnit.SECONDS.toSeconds(System.currentTimeMillis()));
+            skill.getCooldownMap().put(player, System.currentTimeMillis());
         }
-        long timeleft = TimeUnit.SECONDS.toSeconds(System.currentTimeMillis()) - skill.getCooldownMap().get(player);
-        Bukkit.broadcastMessage(String.valueOf(timeleft));
-        if (timeleft >= skill.getCooldown()) {
+        long timeleft = System.currentTimeMillis() - skill.getCooldownMap().get(player);
+        //Bukkit.broadcastMessage(String.valueOf(timeleft));
+        if (TimeUnit.MILLISECONDS.toSeconds(timeleft) >= skill.getCooldown()) {
             Boolean afford = false;
             switch (skill.getCostType()) {
                 case COIN: {
@@ -47,15 +47,37 @@ public class SkillHandler {
                 }
             }
             if (afford) {
-                HashMap<Player, Long> cdmap = skill.getCooldownMap();
-                cdmap.put(player, TimeUnit.SECONDS.toSeconds(System.currentTimeMillis()));
-                skill.setCooldownMap(cdmap);
+                if (skill.getAction() == SkillExecuteAction.HOLD_RIGHT_CLICK) {
+                    if (skill.getHeldTicksMap().containsKey(player)) {
+                        skill.getHeldTicksMap().put(player, 5L + skill.getHeldTicksMap().get(player));
+                    }else{
+                        skill.getHeldTicksMap().put(player, 5L);
+                    }
+                }
+//                HashMap<Player, Long> cdmap = skill.getCooldownMap();
+//                cdmap.put(player, TimeUnit.SECONDS.toSeconds(System.currentTimeMillis()));
+//                skill.setCooldownMap(cdmap);
                 skill.execute(player, args);
             }else{
-                player.sendMessage(Util.colorize("&cCant use this skill! no Mana/Health/Coins!"));
+                String type = "UNKNOWN";
+                switch (skill.getCostType()) {
+                    case HEALTH: {
+                        type = "Health";
+                        break;
+                    }
+                    case MANA: {
+                        type = "Mana";
+                        break;
+                    }
+                    case COIN: {
+                        type = "Coins";
+                        break;
+                    }
+                }
+                player.sendMessage(Util.colorize("&cCant use this skill! not enough " + type));
             }
         }else{
-            player.sendMessage(Util.colorize("&con cooldown! " + timeleft + " seconds left"));
+            player.sendMessage(Util.colorize("&con cooldown! " + (skill.getCooldown() - TimeUnit.MILLISECONDS.toSeconds(timeleft)) + " seconds left"));
         }
     }
 
@@ -67,11 +89,62 @@ public class SkillHandler {
         }
     }
 
-    public static HashMap<Player, Integer> playerClickDelayMap = new HashMap<>();
-    public static HashMap<Player, Integer> playerHeldKeyTicks = new HashMap<>();
+    public static HashMap<Player, Long> playerClickDelayMap = new HashMap<>();
+    public static HashMap<Player, Long> playerHeldKeyTicks = new HashMap<>();
+    public static HashMap<Player, Boolean> playerIsHeld = new HashMap<>();
 
     public static void handleClick(PlayerInteractEvent event) {
         Player player = event.getPlayer();
+        if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
+            handleAction(SkillExecuteAction.LEFT_CLICK, player);
+            return;
+        }
+        if (playerClickDelayMap.containsKey(player)) {
+            Bukkit.broadcastMessage(String.valueOf(playerClickDelayMap.get(player)));
+            if (playerClickDelayMap.get(player) == 5 || playerClickDelayMap.get(player) == 1) {
+                if (!playerIsHeld.containsKey(player)) {
+                    playerIsHeld.put(player, false);
+                }
+                if (playerIsHeld.get(player)) {
+                    if (playerHeldKeyTicks.containsKey(player)) {
+                        playerHeldKeyTicks.put(player, playerClickDelayMap.get(player) + playerHeldKeyTicks.get(player));
+                    }else{
+                        playerHeldKeyTicks.put(player, playerClickDelayMap.get(player));
+                    }
+                    handleAction(SkillExecuteAction.HOLD_RIGHT_CLICK, player);
+                    //Bukkit.broadcastMessage("holding " + playerHeldKeyTicks.get(player));
+                }else{
+                    if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                        handleAction(SkillExecuteAction.RIGHT_CLICK, player);
+                    }
+                    playerIsHeld.put(player, true);
+                }
+            }else{
+                if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
+                    handleAction(SkillExecuteAction.LEFT_CLICK, player);
+                }
+                if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                    handleAction(SkillExecuteAction.RIGHT_CLICK, player);
+                }
+                playerIsHeld.put(player, false);
+                playerHeldKeyTicks.put(player, 0L);
+            }
+            playerClickDelayMap.put(player, 1L);
+        }else{
+            playerClickDelayMap.put(player, 1L);
+            new BukkitRunnable() {
+
+                @Override
+                public void run() {
+                    playerClickDelayMap.put(player, 1 + playerClickDelayMap.get(player));
+                    if (playerClickDelayMap.get(player) > 20) {
+                        playerClickDelayMap.remove(player);
+                        cancel();
+                    }
+                }
+            }.runTaskTimer(MagicPitCore.getInstance(), 1, 1);
+        }
+        /*
         if (playerClickDelayMap.containsKey(player)) {
             playerClickDelayMap.put(player, 1);
             Bukkit.broadcastMessage("holding....");
@@ -90,6 +163,8 @@ public class SkillHandler {
                     }else{
                         playerHeldKeyTicks.put(player, 2);
                     }
+                    Bukkit.broadcastMessage(String.valueOf(playerClickDelayMap.get(player)));
+                    //Bukkit.broadcastMessage(String.valueOf(playerHeldKeyTicks.get(player)));
                     if (playerClickDelayMap.get(player) > 3) {
                         if (playerHeldKeyTicks.get(player) <= 7) {
                             Bukkit.broadcastMessage("Registered Normal Click");
@@ -109,6 +184,8 @@ public class SkillHandler {
                 }
             }.runTaskTimer(MagicPitCore.getInstance(), 2, 2);
         }
+
+         */
     }
 
 }
