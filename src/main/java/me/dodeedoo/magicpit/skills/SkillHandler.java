@@ -6,6 +6,7 @@ import me.dodeedoo.magicpit.attributes.AttributesHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -74,10 +75,14 @@ public class SkillHandler {
                         break;
                     }
                 }
-                player.sendMessage(Util.colorize("&cCant use this skill! not enough " + type));
+                if (skill.getAction() != SkillExecuteAction.DAMAGED) {
+                    player.sendMessage(Util.colorize("&cCant use this skill! not enough " + type));
+                }
             }
         }else{
-            player.sendMessage(Util.colorize("&con cooldown! " + (skill.getCooldown() - TimeUnit.MILLISECONDS.toSeconds(timeleft)) + " seconds left"));
+            if (skill.getAction() != SkillExecuteAction.DAMAGED) {
+                player.sendMessage(Util.colorize("&con cooldown! " + (skill.getCooldown() - TimeUnit.MILLISECONDS.toSeconds(timeleft)) + " seconds left"));
+            }
         }
     }
 
@@ -96,11 +101,15 @@ public class SkillHandler {
     public static void handleClick(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
+            if (player.isSneaking()) {
+                handleAction(SkillExecuteAction.SNEAK_LEFT_CLICK, player);
+                return;
+            }
             handleAction(SkillExecuteAction.LEFT_CLICK, player);
             return;
         }
         if (playerClickDelayMap.containsKey(player)) {
-            Bukkit.broadcastMessage(String.valueOf(playerClickDelayMap.get(player)));
+            //Bukkit.broadcastMessage(String.valueOf(playerClickDelayMap.get(player)));
             if (playerClickDelayMap.get(player) == 5 || playerClickDelayMap.get(player) == 1) {
                 if (!playerIsHeld.containsKey(player)) {
                     playerIsHeld.put(player, false);
@@ -111,20 +120,36 @@ public class SkillHandler {
                     }else{
                         playerHeldKeyTicks.put(player, playerClickDelayMap.get(player));
                     }
+                    if (player.isSneaking()) {
+                        handleAction(SkillExecuteAction.HOLD_SNEAK_RIGHT_CLICK, player);
+                        return;
+                    }
                     handleAction(SkillExecuteAction.HOLD_RIGHT_CLICK, player);
                     //Bukkit.broadcastMessage("holding " + playerHeldKeyTicks.get(player));
                 }else{
                     if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                        handleAction(SkillExecuteAction.RIGHT_CLICK, player);
+                        if (player.isSneaking()) {
+                            handleAction(SkillExecuteAction.SNEAK_RIGHT_CLICK, player);
+                        }else {
+                            handleAction(SkillExecuteAction.RIGHT_CLICK, player);
+                        }
                     }
                     playerIsHeld.put(player, true);
                 }
             }else{
                 if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
-                    handleAction(SkillExecuteAction.LEFT_CLICK, player);
+                    if (player.isSneaking()) {
+                        handleAction(SkillExecuteAction.SNEAK_LEFT_CLICK, player);
+                    }else {
+                        handleAction(SkillExecuteAction.LEFT_CLICK, player);
+                    }
                 }
                 if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                    handleAction(SkillExecuteAction.RIGHT_CLICK, player);
+                    if (player.isSneaking()) {
+                        handleAction(SkillExecuteAction.SNEAK_RIGHT_CLICK, player);
+                    }else {
+                        handleAction(SkillExecuteAction.RIGHT_CLICK, player);
+                    }
                 }
                 playerIsHeld.put(player, false);
                 playerHeldKeyTicks.put(player, 0L);

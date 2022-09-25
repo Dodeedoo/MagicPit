@@ -4,40 +4,45 @@ import me.dodeedoo.magicpit.skills.Skill;
 import me.dodeedoo.magicpit.skills.SkillCost;
 import me.dodeedoo.magicpit.skills.SkillExecuteAction;
 import me.dodeedoo.magicpit.skills.SkillIndicator;
-import org.bukkit.Location;
-import org.bukkit.entity.Fireball;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
+import xyz.xenondevs.particle.ParticleEffect;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class FireBall implements Skill, Serializable {
-
+public class Flash implements Skill {
     public static HashMap<Player, Long> cooldownmap = new HashMap<>();
 
     @Override
     public void execute(Player player, String[] args) {
-        Location loc = player.getEyeLocation().toVector().add(player.getLocation().getDirection().multiply(2)).
-                toLocation(player.getWorld(), player.getLocation().getYaw(), player.getLocation().getPitch());
-        Fireball fireball = player.getWorld().spawn(loc, Fireball.class);
-        fireball.setShooter(player);
-        initiateCooldown(player);
+        List<Player> getFlashed = new ArrayList<>();
+        for (Entity entity : player.getLocation().getNearbyEntities(10, 10, 10)) {
+            if (entity instanceof Player && entity != player) {
+                getFlashed.add((Player) entity);
+                ParticleEffect.SMOKE_LARGE.display(((Player) entity).getEyeLocation());
+            }
+        }
+        for (int i = 0; i < 10; i++) {
+            ParticleEffect.FLASH.display(player.getLocation(), getFlashed);
+        }
     }
 
     @Override
     public List<String> getLore() {
         List<String> lore = new ArrayList<>();
-        lore.add("&cShoots a fucking fireball retard");
+        lore.add("&7Bad for the eyes");
+        lore.add("&7When you are hit, flash players in radius of 10");
+        lore.add("&7Cost: &b20 Mana");
+        lore.add("&7Cooldown: 3 seconds");
         return lore;
     }
 
     @Override
     public SkillExecuteAction getAction() {
-        return SkillExecuteAction.RIGHT_CLICK;
+        return SkillExecuteAction.DAMAGED;
     }
 
     @Override
@@ -47,7 +52,7 @@ public class FireBall implements Skill, Serializable {
 
     @Override
     public Integer getCostAmount() {
-        return 10;
+        return 20;
     }
 
     @Override
@@ -57,7 +62,7 @@ public class FireBall implements Skill, Serializable {
 
     @Override
     public SkillIndicator getIndicator() {
-        return new SkillIndicator(SkillIndicator.indicatorType.MESSAGE, "&6Fireball", 0);
+        return new SkillIndicator(SkillIndicator.indicatorType.MESSAGE, "&eFlash", 0);
     }
 
     @Override

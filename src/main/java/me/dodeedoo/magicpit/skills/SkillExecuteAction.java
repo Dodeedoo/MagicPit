@@ -9,4 +9,6 @@ public enum SkillExecuteAction {
     DROP,
     HOLD_RIGHT_CLICK,
     HOLD_SNEAK_RIGHT_CLICK,
+    DAMAGED,
+    DEATH
 }

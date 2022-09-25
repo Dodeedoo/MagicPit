@@ -4,6 +4,7 @@ import me.dodeedoo.magicpit.Util;
 import me.dodeedoo.magicpit.attributes.AttributesHandler;
 import me.dodeedoo.magicpit.events.magicdamage.MagicDamage;
 import me.dodeedoo.magicpit.events.magicdamage.MagicDamageType;
+import me.dodeedoo.magicpit.scoreboard.ScoreboardManager;
 import me.dodeedoo.magicpit.skills.Skill;
 import me.dodeedoo.magicpit.skills.SkillHandler;
 import me.dodeedoo.magicpit.skills.list.HoldRightClickSkillExample;
@@ -23,13 +24,11 @@ public class setStrength implements CommandExecutor  {
         try {
             AttributesHandler.Attributes.get("Strength").getPlayerStats().put(player, Integer.parseInt(strings[0]));
             //DisplayGui.showDisplayGuiToPlayer(player);
-            AttributesHandler.Attributes.get("Mana").getPlayerStats().put(player, 0);
+            //AttributesHandler.Attributes.get("Mana").getPlayerStats().put(player, 0);
             //AttributesHandler.Attributes.get("Scorch").getPlayerStats().put(player, 30);
             Bukkit.getPluginManager().callEvent(new MagicDamage(player, player, MagicDamageType.FIRE, 1200));
             Bukkit.getPluginManager().callEvent(new MagicDamage(player, player, MagicDamageType.CURSE, 1200));
-            HashMap<Skill, String[]> map = new HashMap<>();
-            map.put(new HoldRightClickSkillExample(), new String[]{});
-            SkillHandler.playerSkills.put(player, map);
+            ScoreboardManager.refreshSkill(player);
         }catch (IndexOutOfBoundsException e) {
             player.sendMessage(Util.colorize("&cusage: /setstrength <number>"));
         }catch (Exception e) {

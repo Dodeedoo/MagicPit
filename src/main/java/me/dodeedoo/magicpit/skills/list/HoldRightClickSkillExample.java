@@ -5,12 +5,13 @@ import me.dodeedoo.magicpit.skills.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class HoldRightClickSkillExample implements Skill {
+public class HoldRightClickSkillExample implements Skill, Serializable {
 
     public static HashMap<Player, Long> cooldownmap = new HashMap<>();
     public static HashMap<Player, Long> heldticksmap = new HashMap<>();

@@ -3,10 +3,11 @@ package me.dodeedoo.magicpit.events.magicdamage;
 import me.dodeedoo.magicpit.skills.Skill;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class MagicDamage extends Event {
+public class MagicDamage extends Event implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();
     public Player attacker;
     public LivingEntity victim;
@@ -29,4 +30,13 @@ public class MagicDamage extends Event {
         this.value = value;
     }
 
+    @Override
+    public boolean isCancelled() {
+        return false;
+    }
+
+    @Override
+    public void setCancelled(boolean b) {
+
+    }
 }

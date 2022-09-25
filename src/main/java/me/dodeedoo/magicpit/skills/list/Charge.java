@@ -4,40 +4,36 @@ import me.dodeedoo.magicpit.skills.Skill;
 import me.dodeedoo.magicpit.skills.SkillCost;
 import me.dodeedoo.magicpit.skills.SkillExecuteAction;
 import me.dodeedoo.magicpit.skills.SkillIndicator;
-import org.bukkit.Location;
-import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
+import org.bukkit.util.Vector;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class FireBall implements Skill, Serializable {
-
+public class Charge implements Skill {
     public static HashMap<Player, Long> cooldownmap = new HashMap<>();
 
     @Override
     public void execute(Player player, String[] args) {
-        Location loc = player.getEyeLocation().toVector().add(player.getLocation().getDirection().multiply(2)).
-                toLocation(player.getWorld(), player.getLocation().getYaw(), player.getLocation().getPitch());
-        Fireball fireball = player.getWorld().spawn(loc, Fireball.class);
-        fireball.setShooter(player);
-        initiateCooldown(player);
+        Vector unitVector = new Vector(player.getLocation().getDirection().getX(), 0, player.getLocation().getDirection().getZ());
+        unitVector = unitVector.normalize();
+        player.setVelocity(unitVector.multiply(2));
     }
 
     @Override
     public List<String> getLore() {
         List<String> lore = new ArrayList<>();
-        lore.add("&cShoots a fucking fireball retard");
+        lore.add("&7Charge forward");
+        lore.add("&7Cost: &b30 Mana");
+        lore.add("&7Cooldown: 2 seconds");
         return lore;
     }
 
     @Override
     public SkillExecuteAction getAction() {
-        return SkillExecuteAction.RIGHT_CLICK;
+        return SkillExecuteAction.SNEAK_LEFT_CLICK;
     }
 
     @Override
@@ -47,17 +43,17 @@ public class FireBall implements Skill, Serializable {
 
     @Override
     public Integer getCostAmount() {
-        return 10;
+        return 30;
     }
 
     @Override
     public Long getCooldown() {
-        return 3L;
+        return 2L;
     }
 
     @Override
     public SkillIndicator getIndicator() {
-        return new SkillIndicator(SkillIndicator.indicatorType.MESSAGE, "&6Fireball", 0);
+        return new SkillIndicator(SkillIndicator.indicatorType.MESSAGE, " ", 0);
     }
 
     @Override
@@ -72,7 +68,7 @@ public class FireBall implements Skill, Serializable {
 
     @Override
     public Boolean overTime() {
-        return false;
+        return null;
     }
 
     @Override

@@ -36,3 +36,5 @@ commands:
   stats:
     aliases:
       - "st"
+  pititem:
+    permission: "*"

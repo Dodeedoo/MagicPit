@@ -6,9 +6,15 @@ import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketContainer;
 import me.dodeedoo.magicpit.attributes.Attribute;
 import me.dodeedoo.magicpit.attributes.AttributesHandler;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.util.io.BukkitObjectOutputStream;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
@@ -50,5 +56,33 @@ public class Util {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
+    }
+
+    public static String serializeObject(Object object) {
+        String serializedObject = "";
+        try {
+            ByteArrayOutputStream bo = new ByteArrayOutputStream();
+            ObjectOutputStream so = new ObjectOutputStream(bo);
+            so.writeObject(object);
+            so.flush();
+            serializedObject = bo.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return serializedObject;
+    }
+
+    public static Object deserializeObject(String encoded) {
+        //Bukkit.getLogger().info(encoded);
+        Object obj = null;
+        try {
+            byte b[] = encoded.getBytes();
+            ByteArrayInputStream bi = new ByteArrayInputStream(b);
+            ObjectInputStream si = new ObjectInputStream(bi);
+            obj = si.readObject();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return obj;
     }
 }

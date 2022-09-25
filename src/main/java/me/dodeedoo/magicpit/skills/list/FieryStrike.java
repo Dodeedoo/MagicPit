@@ -1,37 +1,54 @@
 package me.dodeedoo.magicpit.skills.list;
 
+import me.dodeedoo.magicpit.attributes.AttributesHandler;
+import me.dodeedoo.magicpit.events.magicdamage.MagicDamage;
+import me.dodeedoo.magicpit.events.magicdamage.MagicDamageType;
 import me.dodeedoo.magicpit.skills.Skill;
 import me.dodeedoo.magicpit.skills.SkillCost;
 import me.dodeedoo.magicpit.skills.SkillExecuteAction;
 import me.dodeedoo.magicpit.skills.SkillIndicator;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.Fireball;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
+import org.bukkit.util.Vector;
+import particles.LocationLib;
+import xyz.xenondevs.particle.ParticleEffect;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class FireBall implements Skill, Serializable {
+public class FieryStrike implements Skill {
 
     public static HashMap<Player, Long> cooldownmap = new HashMap<>();
 
     @Override
     public void execute(Player player, String[] args) {
-        Location loc = player.getEyeLocation().toVector().add(player.getLocation().getDirection().multiply(2)).
-                toLocation(player.getWorld(), player.getLocation().getYaw(), player.getLocation().getPitch());
-        Fireball fireball = player.getWorld().spawn(loc, Fireball.class);
-        fireball.setShooter(player);
+        Location eyes = player.getLocation();
+        Vector direction = player.getLocation().getDirection(); // player's direction, a Vector
+        eyes.add(direction);
+        for (Location loc : LocationLib.getHelix(new Location[]{eyes}, 2, 2, 1, 3)) {
+            ParticleEffect.FLAME.display(loc);
+        }
+        for (Entity entity : eyes.getNearbyEntities(4, 2, 4)) {
+            if (entity instanceof LivingEntity) {
+                if (entity != player)
+                    Bukkit.getPluginManager().callEvent(new MagicDamage(player, (LivingEntity) entity, MagicDamageType.FIRE, ((int) AttributesHandler.Attributes.get("Strength").getPlayer(player) / 3)));
+            }
+        }
         initiateCooldown(player);
     }
 
     @Override
     public List<String> getLore() {
         List<String> lore = new ArrayList<>();
-        lore.add("&cShoots a fucking fireball retard");
+        lore.add("&7Swing with fury from your own blood");
+        lore.add("&7deals &cStrength / 3 Fire Damage");
+        lore.add("&7Cost: &45 hp");
+        lore.add("&7Cooldown: 3 seconds");
         return lore;
     }
 
@@ -42,12 +59,12 @@ public class FireBall implements Skill, Serializable {
 
     @Override
     public SkillCost getCostType() {
-        return SkillCost.MANA;
+        return SkillCost.HEALTH;
     }
 
     @Override
     public Integer getCostAmount() {
-        return 10;
+        return 5;
     }
 
     @Override
@@ -57,7 +74,7 @@ public class FireBall implements Skill, Serializable {
 
     @Override
     public SkillIndicator getIndicator() {
-        return new SkillIndicator(SkillIndicator.indicatorType.MESSAGE, "&6Fireball", 0);
+        return new SkillIndicator(SkillIndicator.indicatorType.MESSAGE, "&6Fiery Strike", 0);
     }
 
     @Override

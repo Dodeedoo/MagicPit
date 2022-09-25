@@ -1,23 +1,33 @@
 package me.dodeedoo.magicpit.skills.list;
 
+import me.dodeedoo.magicpit.PitPlayer;
 import me.dodeedoo.magicpit.skills.Skill;
 import me.dodeedoo.magicpit.skills.SkillCost;
 import me.dodeedoo.magicpit.skills.SkillExecuteAction;
 import me.dodeedoo.magicpit.skills.SkillIndicator;
+import org.bukkit.Location;
 import org.bukkit.entity.Egg;
 import org.bukkit.entity.Player;
+import particles.LocationLib;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class EggBall implements Skill {
+public class EggBall implements Skill, Serializable {
 
     public static HashMap<Player, Long> cooldownmap = new HashMap<>();
 
     @Override
     public void execute(Player player, String[] args) {
-        player.launchProjectile(Egg.class, player.getLocation().getDirection());
+        Egg firstegg = player.launchProjectile(Egg.class, player.getLocation().getDirection());
+        for (Location location : LocationLib.getSphere(new Location[]{player.getLocation()},2, 3)) {
+            Egg egg = player.getWorld().spawn(location, Egg.class);
+            egg.setVelocity(firstegg.getVelocity());
+            egg.setShooter(player);
+        }
+        PitPlayer.playerMap.get(player).setExp(PitPlayer.playerMap.get(player).exp + 25);
         initiateCooldown(player);
     }
 

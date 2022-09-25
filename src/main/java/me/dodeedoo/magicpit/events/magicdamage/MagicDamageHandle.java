@@ -16,6 +16,14 @@ public class MagicDamageHandle implements Listener {
     @EventHandler
     public void magicdamage(MagicDamage event) {
         event.victim.damage(event.value);
+        if (LocationLib.isInSpawn(event.attacker)) {
+            return;
+        }
+        if (event.victim instanceof Player) {
+            if (LocationLib.isInSpawn((Player) event.victim)) {
+                return;
+            }
+        }
         if (event.victim.isDead()) return;
         switch (event.type) {
             case ICE: {
