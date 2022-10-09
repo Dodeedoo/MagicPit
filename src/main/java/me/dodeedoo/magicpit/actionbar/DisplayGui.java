@@ -68,16 +68,17 @@ public class DisplayGui {
                     break;
                 }
             }
+            if (!attrname.equals(" ")) {
+                if (!attribute.getClass().getName().replace("me.dodeedoo.magicpit.attributes.", "").equals("Mana")) {
+                    if (x >= 8 || y >= 8) {
+                        x = 0;
+                        y = y + 2;
+                    } else {
+                        x = x + 2;
+                    }
 
-            if (!attribute.getClass().getName().replace("me.dodeedoo.magicpit.attributes.", "").equals("Mana")) {
-                if (x >= 8 || y >= 8) {
-                    x = 0;
-                    y = y + 2;
-                } else {
-                    x = x + 2;
+                    gui.addPane(getAttrToggle(attribute, player, Util.colorize(attrname), x, y));
                 }
-
-                gui.addPane(getAttrToggle(attribute, player, Util.colorize(attrname), x, y));
             }
         }
 

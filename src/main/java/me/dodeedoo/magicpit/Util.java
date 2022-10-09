@@ -16,7 +16,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class Util {
     public static void updatePlayerAttributes(Player player) {
@@ -56,6 +59,18 @@ public class Util {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
+    }
+
+    public static List<Integer> returnList(Integer... args) {
+        List<Integer> list = new ArrayList<>();
+        list.addAll(Arrays.asList(args));
+        return list;
+    }
+
+    public static List<String> returnStringList(String... args) {
+        List<String> list = new ArrayList<>();
+        list.addAll(Arrays.asList(args));
+        return list;
     }
 
     public static String serializeObject(Object object) {

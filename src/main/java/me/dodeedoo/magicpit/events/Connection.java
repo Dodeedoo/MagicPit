@@ -6,6 +6,7 @@ import me.dodeedoo.magicpit.Util;
 import me.dodeedoo.magicpit.actionbar.AttributeDisplay;
 import me.dodeedoo.magicpit.attributes.Attribute;
 import me.dodeedoo.magicpit.attributes.AttributesHandler;
+import me.dodeedoo.magicpit.classes.PitClassHandler;
 import me.dodeedoo.magicpit.classes.PlayerClassLoading;
 import me.dodeedoo.magicpit.scoreboard.ScoreboardManager;
 import me.dodeedoo.magicpit.skills.Skill;
@@ -32,6 +33,7 @@ public class Connection implements Listener {
         PitPlayer.handlePlayerLoad(event.getPlayer());
         SkillHandler.playerSkills.put(event.getPlayer(), new HashMap<>());
         PlayerClassLoading.handleSelectedClassLoad(event.getPlayer());
+        PitClassHandler.loadData(event.getPlayer());
     }
 
     @EventHandler
@@ -43,6 +45,8 @@ public class Connection implements Listener {
         PitPlayer.handlePlayerUnload(event.getPlayer());
         ScoreboardManager.boardMap.remove(event.getPlayer());
         PlayerClassLoading.handleSelectedClassUnload(event.getPlayer());
+        PitClassHandler.utilListForPreviousClass.remove(event.getPlayer());
+        PitClassHandler.unloadData(event.getPlayer());
     }
 
 

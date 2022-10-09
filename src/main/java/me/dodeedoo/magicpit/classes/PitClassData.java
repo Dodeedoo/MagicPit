@@ -2,11 +2,15 @@ package me.dodeedoo.magicpit.classes;
 
 import me.dodeedoo.magicpit.classes.tree.PitClassDataTree;
 import me.dodeedoo.magicpit.classes.tree.PitClassTreeNode;
+import org.bukkit.Bukkit;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class PitClassData {
+public class PitClassData implements ConfigurationSerializable {
 
     public Integer totalPoints;
     public Integer assignedPoints;
@@ -32,6 +36,10 @@ public class PitClassData {
         this.tree = constructTreeFromNodeMap(map);
     }
 
+    public PitClassData(PitClassDataTree tree) {
+        this.tree = tree;
+    }
+
     public static PitClassDataTree constructTreeFromNodeMap(HashMap<PitClassProperty, List<Integer>> map) {
         PitClassTreeNode baseNode = new PitClassTreeNode();
         for (PitClassProperty property : map.keySet()) {
@@ -48,11 +56,40 @@ public class PitClassData {
         }
         for (int i = 1; i <= max; i++) {
             for (PitClassProperty property : map.keySet()) {
+                //Bukkit.broadcastMessage(property.name + " " + map.get(property));
                 if (map.get(property).size() == i) {
-                    baseNode.branch.add(new PitClassTreeNode(property.name));
+                    PitClassTreeNode tempNode = baseNode;
+                    for (int i2 = 0; i2 < (i-1); i2++) {
+                        //Bukkit.getLogger().info(String.valueOf(i2));
+                        try {
+                            tempNode = tempNode.branch.get(map.get(property).get(i2));
+                        }catch (IndexOutOfBoundsException ignored) { }
+                    }
+                    for (int i3 = 1; i3 <= i; i3++) {
+                        if (tempNode.branch.size() > i3) {
+                            break;
+                        }
+                        tempNode.branch.add(new PitClassTreeNode("NONE"));
+                    }
+                    try {
+                        tempNode.branch.set(map.get(property).get(i - 1), new PitClassTreeNode(property.name));
+                    }catch (Exception LolezignoreproblemandwrapintrycatchLol) { }
                 }
             }
         }
         return new PitClassDataTree(baseNode);
+    }
+
+    @Override
+    public @NotNull Map<String, Object> serialize() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("totalPoints", totalPoints);
+        map.put("assignedPoints", assignedPoints);
+        map.put("tree", tree);
+        return map;
+    }
+
+    public static PitClassData deserialize(Map<String, Object> map) {
+        return new PitClassData((PitClassDataTree) map.get("tree"));
     }
 }

@@ -19,7 +19,7 @@ public class PlayerClassLoading {
                 break;
             }
         }
-        PitPlayer.playerMap.get(player).setPlayerClass(tempClass);
+        PitClassHandler.select(player, tempClass);
 //        try {
 //            PitPlayer.playerMap.get(player).setPlayerClass((PitClass) Class.forName("me.dodeedoo.magicpit.classes." + pitClass).newInstance());
 //        }catch (Exception e) {

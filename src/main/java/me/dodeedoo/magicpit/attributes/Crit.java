@@ -27,7 +27,7 @@ public class Crit implements Attribute {
 
     @Override
     public void attackModifier(EntityDamageByEntityEvent event) {
-        Attribute critchance = AttributesHandler.Attributes.get("Critchance");
+        Attribute critchance = AttributesHandler.Attributes.get("CritChance");
         //Float chance = ((Float) critchance.getPlayerStats().get((Player) event.getDamager())) * 0.01F;
         int random = new Random().nextInt(100-1) + 1;
         if (random <= (Integer) critchance.getPlayer((Player) event.getDamager())) {

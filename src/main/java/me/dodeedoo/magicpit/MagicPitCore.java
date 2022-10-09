@@ -4,6 +4,7 @@ import me.dodeedoo.magicpit.actionbar.AttributeDisplay;
 import me.dodeedoo.magicpit.attributes.*;
 import me.dodeedoo.magicpit.classes.PitClassHandler;
 import me.dodeedoo.magicpit.classes.list.ExampleClass;
+import me.dodeedoo.magicpit.classes.list.ExampleClass2;
 import me.dodeedoo.magicpit.commands.ItemCommand;
 import me.dodeedoo.magicpit.commands.setStrength;
 import me.dodeedoo.magicpit.events.Connection;
@@ -68,6 +69,7 @@ public final class MagicPitCore extends JavaPlugin {
 
         //Register PitClasses
         PitClassHandler.classList.add(new ExampleClass());
+        PitClassHandler.classList.add(new ExampleClass2());
 
         //Periodical Loops
         Bukkit.getScheduler().runTaskTimer(this, () -> {
@@ -208,6 +210,10 @@ public final class MagicPitCore extends JavaPlugin {
                 PitPlayer.playerMap.get(player).setPowerlevel(power);
             }
         }, 20, 20);
+
+        //low priority things that can be started after everything else is loaded
+        PitClassHandler.startClassWorker();
+
     }
 
     @Override

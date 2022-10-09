@@ -4,6 +4,7 @@ import fr.mrmicky.fastboard.FastBoard;
 import me.dodeedoo.magicpit.MagicPitCore;
 import me.dodeedoo.magicpit.PitPlayer;
 import me.dodeedoo.magicpit.Util;
+import me.dodeedoo.magicpit.classes.PitClass;
 import me.dodeedoo.magicpit.skills.Skill;
 import me.dodeedoo.magicpit.skills.SkillHandler;
 import me.dodeedoo.magicpit.skills.SkillIndicator;
@@ -47,7 +48,7 @@ public class ScoreboardManager {
         board.updateLine(1, Util.colorize("&7Balance: &6" + PitPlayer.playerMap.get(player).balance + "$"));
         board.updateLine(2, Util.colorize("&7Level: &a" + PitPlayer.playerMap.get(player).level + " &8(" + PitPlayer.playerMap.get(player).exp + "/" + (10 * (Math.pow(PitPlayer.playerMap.get(player).level, 3))) + ")"));
         board.updateLine(3, Util.colorize("&7Power Lvl: &dx" + PitPlayer.playerMap.get(player).powerlevel));
-        board.updateLine(4, Util.colorize("&7Class: "));
+        board.updateLine(4, Util.colorize("&7Class: " + PitPlayer.playerMap.get(player).playerClass.getFancyName()));
         board.updateLine(5, Util.colorize("&e"));
         int line = 6;
 

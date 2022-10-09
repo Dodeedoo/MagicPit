@@ -6,8 +6,7 @@ import me.dodeedoo.magicpit.classes.PitClass;
 import me.dodeedoo.magicpit.classes.PitClassData;
 import me.dodeedoo.magicpit.classes.PitClassProperty;
 import me.dodeedoo.magicpit.classes.PropertyType;
-import me.dodeedoo.magicpit.skills.list.FireBall;
-import me.dodeedoo.magicpit.skills.list.Flash;
+import me.dodeedoo.magicpit.skills.list.EggBall;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -20,17 +19,16 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class ExampleClass implements PitClass {
-
+public class ExampleClass2 implements PitClass {
     public static HashMap<Player, PitClassData> dataMap = new HashMap<>();
     public static HashMap<PitClassProperty, List<Integer>> nodeMap = new HashMap<>();
     public static FileConfiguration data = new YamlConfiguration();
-    public static File file = new File(MagicPitCore.getInstance().getDataFolder(), "/classes/" + ExampleClass.class.getSimpleName() + ".yml");
+    public static File file = new File(MagicPitCore.getInstance().getDataFolder(), "/classes/" + ExampleClass2.class.getSimpleName() + ".yml");
 
-    public ExampleClass() {
-        nodeMap.put(new PitClassProperty("FirstNode", Flash.class.getName(), PropertyType.SKILL, null, Arrays.asList("lore", "lore")), new ArrayList<>());
+    public ExampleClass2() {
+        nodeMap.put(new PitClassProperty("FirstNode", EggBall.class.getName(), PropertyType.SKILL, null, Arrays.asList("lore", "lore")), new ArrayList<>());
         nodeMap.put(new PitClassProperty("SecondNode"), Util.returnList(0));
-        nodeMap.put(new PitClassProperty("SecondOfTheNode", FireBall.class.getName(), PropertyType.SKILL, null, Arrays.asList("loree", "lor")), Util.returnList(1));
+        nodeMap.put(new PitClassProperty("SecondOfTheNode"), Util.returnList(1));
         nodeMap.put(new PitClassProperty("ThirdNode"), Util.returnList(0, 0));
     }
 
@@ -41,17 +39,17 @@ public class ExampleClass implements PitClass {
 
     @Override
     public Material getGuiMaterial() {
-        return Material.DIAMOND;
+        return Material.EMERALD;
     }
 
     @Override
     public List<String> getGuiLore() {
-        return Util.returnStringList("wqdsa", "asfagdgf");
+        return Util.returnStringList("poop", "foop");
     }
 
     @Override
     public String getFancyName() {
-        return "&7&lTest Class";
+        return "&7&lTest Class 2";
     }
 
     @Override
@@ -93,7 +91,6 @@ public class ExampleClass implements PitClass {
             }catch (Exception e) {
                 e.printStackTrace();
             }
-            Bukkit.getLogger().info(dt.getKeys(true).toString());
         }
         return dt;
     }
@@ -101,9 +98,9 @@ public class ExampleClass implements PitClass {
     @Override
     public void refreshNodeMap() {
         nodeMap.clear();
-        nodeMap.put(new PitClassProperty("FirstNode", Flash.class.getName(), PropertyType.SKILL, null, Arrays.asList("lore", "lore")), new ArrayList<>());
+        nodeMap.put(new PitClassProperty("FirstNode", EggBall.class.getName(), PropertyType.SKILL, null, Arrays.asList("lore", "lore")), new ArrayList<>());
         nodeMap.put(new PitClassProperty("SecondNode"), Util.returnList(0));
-        nodeMap.put(new PitClassProperty("SecondOfTheNode", FireBall.class.getName(), PropertyType.SKILL, null, Arrays.asList("loree", "lor")), Util.returnList(1));
+        nodeMap.put(new PitClassProperty("SecondOfTheNode"), Util.returnList(1));
         nodeMap.put(new PitClassProperty("ThirdNode"), Util.returnList(0, 0));
     }
 }
