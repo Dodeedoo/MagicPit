@@ -6,6 +6,7 @@ import me.dodeedoo.magicpit.classes.PitClass;
 import me.dodeedoo.magicpit.classes.PitClassData;
 import me.dodeedoo.magicpit.classes.PitClassProperty;
 import me.dodeedoo.magicpit.classes.PropertyType;
+import me.dodeedoo.magicpit.skills.list.Charge;
 import me.dodeedoo.magicpit.skills.list.FireBall;
 import me.dodeedoo.magicpit.skills.list.Flash;
 import org.bukkit.Bukkit;
@@ -28,10 +29,10 @@ public class ExampleClass implements PitClass {
     public static File file = new File(MagicPitCore.getInstance().getDataFolder(), "/classes/" + ExampleClass.class.getSimpleName() + ".yml");
 
     public ExampleClass() {
-        nodeMap.put(new PitClassProperty("FirstNode", Flash.class.getName(), PropertyType.SKILL, null, Arrays.asList("lore", "lore")), new ArrayList<>());
-        nodeMap.put(new PitClassProperty("SecondNode"), Util.returnList(0));
-        nodeMap.put(new PitClassProperty("SecondOfTheNode", FireBall.class.getName(), PropertyType.SKILL, null, Arrays.asList("loree", "lor")), Util.returnList(1));
-        nodeMap.put(new PitClassProperty("ThirdNode"), Util.returnList(0, 0));
+        nodeMap.put(new PitClassProperty("FirstNode", Flash.class.getName(), PropertyType.SKILL, null, Util.returnStringList("lore", "lore"), Material.GLOWSTONE), new ArrayList<>());
+        nodeMap.put(new PitClassProperty("SecondNode", Charge.class.getName(), PropertyType.SKILL, null, Util.returnStringList("lore", "lore"), Material.GLOWSTONE), Util.returnList(0));
+        nodeMap.put(new PitClassProperty("SecondOfTheNode", FireBall.class.getName(), PropertyType.SKILL, null, Util.returnStringList("loree", "lor"), Material.DIAMOND), Util.returnList(1));
+        nodeMap.put(new PitClassProperty("ThirdNode", Flash.class.getName(), PropertyType.SKILL, null, Util.returnStringList("lore", "lore"), Material.GLOWSTONE), Util.returnList(0, 0));
     }
 
     @Override
@@ -100,10 +101,25 @@ public class ExampleClass implements PitClass {
 
     @Override
     public void refreshNodeMap() {
-        nodeMap.clear();
-        nodeMap.put(new PitClassProperty("FirstNode", Flash.class.getName(), PropertyType.SKILL, null, Arrays.asList("lore", "lore")), new ArrayList<>());
-        nodeMap.put(new PitClassProperty("SecondNode"), Util.returnList(0));
-        nodeMap.put(new PitClassProperty("SecondOfTheNode", FireBall.class.getName(), PropertyType.SKILL, null, Arrays.asList("loree", "lor")), Util.returnList(1));
-        nodeMap.put(new PitClassProperty("ThirdNode"), Util.returnList(0, 0));
+        for (PitClassProperty property : nodeMap.keySet()) {
+            switch (property.name) {
+                case "FirstNode": {
+                    nodeMap.put(property, new ArrayList<>());
+                    break;
+                }
+                case "SecondNode": {
+                    nodeMap.put(property, Util.returnList(0));
+                    break;
+                }
+                case "SecondOfTheNode": {
+                    nodeMap.put(property, Util.returnList(1));
+                    break;
+                }
+                case "ThirdNode": {
+                    nodeMap.put(property, Util.returnList(0, 0));
+                    break;
+                }
+            }
+        }
     }
 }

@@ -26,7 +26,7 @@ public class ExampleClass2 implements PitClass {
     public static File file = new File(MagicPitCore.getInstance().getDataFolder(), "/classes/" + ExampleClass2.class.getSimpleName() + ".yml");
 
     public ExampleClass2() {
-        nodeMap.put(new PitClassProperty("FirstNode", EggBall.class.getName(), PropertyType.SKILL, null, Arrays.asList("lore", "lore")), new ArrayList<>());
+        nodeMap.put(new PitClassProperty("FirstNode", EggBall.class.getName(), PropertyType.SKILL, null, Arrays.asList("lore", "lore"), Material.DIAMOND_AXE), new ArrayList<>());
         nodeMap.put(new PitClassProperty("SecondNode"), Util.returnList(0));
         nodeMap.put(new PitClassProperty("SecondOfTheNode"), Util.returnList(1));
         nodeMap.put(new PitClassProperty("ThirdNode"), Util.returnList(0, 0));
@@ -98,7 +98,7 @@ public class ExampleClass2 implements PitClass {
     @Override
     public void refreshNodeMap() {
         nodeMap.clear();
-        nodeMap.put(new PitClassProperty("FirstNode", EggBall.class.getName(), PropertyType.SKILL, null, Arrays.asList("lore", "lore")), new ArrayList<>());
+        nodeMap.put(new PitClassProperty("FirstNode", EggBall.class.getName(), PropertyType.SKILL, null, Arrays.asList("lore", "lore"), Material.DIAMOND_AXE), new ArrayList<>());
         nodeMap.put(new PitClassProperty("SecondNode"), Util.returnList(0));
         nodeMap.put(new PitClassProperty("SecondOfTheNode"), Util.returnList(1));
         nodeMap.put(new PitClassProperty("ThirdNode"), Util.returnList(0, 0));

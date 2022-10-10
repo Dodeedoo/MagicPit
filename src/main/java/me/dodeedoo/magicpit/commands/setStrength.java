@@ -39,6 +39,8 @@ public class setStrength implements CommandExecutor  {
             //PitClassHandler.select(player, PitClassHandler.classList.get(0));
             //PitClassHandler.activateBase(player);
             ClassGui.showMainGui(player);
+            //ClassGui.showClassTreeGui(player);
+            PitPlayer.playerMap.get(player).level = 10;
         }catch (IndexOutOfBoundsException e) {
             player.sendMessage(Util.colorize("&cusage: /setstrength <number>"));
         }catch (Exception e) {

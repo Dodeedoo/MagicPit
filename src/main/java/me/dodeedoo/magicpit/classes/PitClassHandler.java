@@ -26,6 +26,11 @@ public class PitClassHandler {
     public static void startClassWorker() {
         Bukkit.getScheduler().runTaskTimer(MagicPitCore.getInstance(), () -> {
             for (Player player : Bukkit.getOnlinePlayers()) {
+                for (PitClass pitClass : classList) {
+                    PitClassData data = pitClass.getDataMap().get(player);
+                    data.setTotalPoints(PitPlayer.playerMap.get(player).level);
+                    pitClass.getDataMap().put(player, data);
+                }
                 if (!utilListForPreviousClass.containsKey(player)) {
                     utilListForPreviousClass.put(player, PitPlayer.playerMap.get(player).playerClass);
                     PitPlayer.playerMap.get(player).playerClass.refreshNodeMap();

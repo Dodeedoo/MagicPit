@@ -5,6 +5,7 @@ import me.dodeedoo.magicpit.attributes.Attribute;
 import me.dodeedoo.magicpit.scoreboard.ScoreboardManager;
 import me.dodeedoo.magicpit.skills.Skill;
 import me.dodeedoo.magicpit.skills.SkillHandler;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class PitClassProperty {
     public Attribute attribute = null;
     public List<String> lore = new ArrayList<>();
     public Object amount;
+    public Material guiMaterial = Material.ANVIL;
     private boolean dummy = false;
 
     public PitClassProperty(String name) {
@@ -26,21 +28,27 @@ public class PitClassProperty {
         this.dummy = true;
     }
 
-    public PitClassProperty(String name, String skillClassName, PropertyType type, Attribute attribute, List<String> lore) {
+    public PitClassProperty(String name, String skillClassName, PropertyType type, Attribute attribute, List<String> lore, Material material) {
         this.name = name;
         this.type = type;
         this.skillClassName = skillClassName;
         this.attribute = attribute;
         this.lore = lore;
+        this.guiMaterial = material;
     }
 
-    public PitClassProperty(String name, String skillClassName, PropertyType type, Attribute attribute, List<String> lore, Object amount) {
+    public PitClassProperty(String name, String skillClassName, PropertyType type, Attribute attribute, List<String> lore, Object amount, Material material) {
         this.name = name;
         this.type = type;
         this.skillClassName = skillClassName;
         this.attribute = attribute;
         this.lore = lore;
         this.amount = amount;
+        this.guiMaterial = material;
+    }
+
+    public List<String> getLore() {
+        return lore;
     }
 
     public void apply(Player player) {

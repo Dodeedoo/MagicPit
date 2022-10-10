@@ -13,7 +13,7 @@ import java.util.Map;
 public class PitClassData implements ConfigurationSerializable {
 
     public Integer totalPoints;
-    public Integer assignedPoints;
+    public Integer assignedPoints = 0;
     public PitClassDataTree tree;
 
     public void setAssignedPoints(Integer assignedPoints) {
