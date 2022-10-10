@@ -41,7 +41,6 @@ public class PitClassHandler {
 //                        Bukkit.broadcastMessage(PitPlayer.playerMap.get(player).playerClass.getDataMap().get(player).tree.isActivated(PitPlayer.playerMap.get(player).playerClass.getNodeMap().get(pitClassProperty)).toString());
 //                        Bukkit.broadcastMessage(PitPlayer.playerMap.get(player).playerClass.getNodeMap().values() + " " + PitPlayer.playerMap.get(player).playerClass.getFancyName());
                         if (PitPlayer.playerMap.get(player).playerClass.getDataMap().get(player).tree.isActivated(PitPlayer.playerMap.get(player).playerClass.getNodeMap().get(pitClassProperty))) {
-                            Bukkit.broadcastMessage(pitClassProperty.skillClassName + " applied");
                             pitClassProperty.apply(player);
                         }
                     }

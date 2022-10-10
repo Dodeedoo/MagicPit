@@ -90,9 +90,11 @@ public class PitItem {
             this.user.sendMessage(Util.colorize("&cYou arent high enough level to use this item!"));
             return;
         }
-        if (!PitPlayer.playerMap.get(this.user).playerClass.getClass().getSimpleName().equals(this.classReq.getClass().getSimpleName())) {
-            this.user.sendMessage(Util.colorize("&c" + this.classReq.getClass().getSimpleName() + " class required to use this item!!!"));
-            return;
+        if (this.classReq != null) {
+            if (!PitPlayer.playerMap.get(this.user).playerClass.getClass().getSimpleName().equals(this.classReq.getClass().getSimpleName())) {
+                this.user.sendMessage(Util.colorize("&c" + this.classReq.getClass().getSimpleName() + " class required to use this item!!!"));
+                return;
+            }
         }
         if (!this.abilities.isEmpty()) {
             for (Skill skill : this.abilities) {
@@ -117,8 +119,10 @@ public class PitItem {
         if (PitPlayer.playerMap.get(this.user).level < this.levelreq) {
             return;
         }
-        if (!PitPlayer.playerMap.get(this.user).playerClass.getClass().getSimpleName().equals(this.classReq.getClass().getSimpleName())) {
-            return;
+        if (this.classReq != null) {
+            if (!PitPlayer.playerMap.get(this.user).playerClass.getClass().getSimpleName().equals(this.classReq.getClass().getSimpleName())) {
+                return;
+            }
         }
         if (!this.abilities.isEmpty()) {
             for (Skill skill : this.abilities) {

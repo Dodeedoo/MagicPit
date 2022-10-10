@@ -26,10 +26,12 @@ public class Damage implements Listener {
             SkillHandler.handleAction(SkillExecuteAction.DAMAGED, (Player) event.getEntity());
 
             //invoke item type properties
-            PitItem.itemFromItemStack(
-                    ((Player) event.getEntity()).getInventory().getItemInMainHand(),
-                    (Player) event.getEntity()
-            ).type.invoke((Player) event.getEntity(), event);
+            try {
+                PitItem.itemFromItemStack(
+                        ((Player) event.getEntity()).getInventory().getItemInMainHand(),
+                        (Player) event.getEntity()
+                ).type.invoke((Player) event.getEntity(), event);
+            }catch (Exception ignored) { }
         }
         if (event.getDamager() instanceof Player) {
             if (LocationLib.isInSpawn((Player) event.getDamager())) {
@@ -38,10 +40,12 @@ public class Damage implements Listener {
             }
             AttributesHandler.handleHit(event);
 
-            PitItem.itemFromItemStack(
-                    ((Player) event.getDamager()).getInventory().getItemInMainHand(),
-                    (Player) event.getDamager()
-            ).type.invoke((Player) event.getDamager(), event);
+            try {
+                PitItem.itemFromItemStack(
+                        ((Player) event.getDamager()).getInventory().getItemInMainHand(),
+                        (Player) event.getDamager()
+                ).type.invoke((Player) event.getDamager(), event);
+            }catch (Exception ignored) { }
         }
     }
 
@@ -52,18 +56,22 @@ public class Damage implements Listener {
             SkillHandler.handleAction(SkillExecuteAction.DEATH, (Player) event.getEntity());
 
             //invoke item type properties
-            PitItem.itemFromItemStack(
-                    ((Player) event.getEntity()).getInventory().getItemInMainHand(),
-                    (Player) event.getEntity()
-            ).type.invoke((Player) event.getEntity(), event);
+            try {
+                PitItem.itemFromItemStack(
+                        ((Player) event.getEntity()).getInventory().getItemInMainHand(),
+                        (Player) event.getEntity()
+                ).type.invoke((Player) event.getEntity(), event);
+            }catch (Exception ignored) { }
         }
         if (event.getEntity().getKiller() != null) {
             AttributesHandler.handleKill(event);
 
-            PitItem.itemFromItemStack(
-                    event.getEntity().getKiller().getInventory().getItemInMainHand(),
-                    event.getEntity().getKiller()
-            ).type.invoke(event.getEntity().getKiller(), event);
+            try {
+                PitItem.itemFromItemStack(
+                        event.getEntity().getKiller().getInventory().getItemInMainHand(),
+                        event.getEntity().getKiller()
+                ).type.invoke(event.getEntity().getKiller(), event);
+            }catch (Exception ignored) { }
         }
     }
 

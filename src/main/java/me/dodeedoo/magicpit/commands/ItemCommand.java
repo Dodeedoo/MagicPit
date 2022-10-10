@@ -3,6 +3,8 @@ package me.dodeedoo.magicpit.commands;
 import me.dodeedoo.magicpit.Util;
 import me.dodeedoo.magicpit.attributes.Attribute;
 import me.dodeedoo.magicpit.attributes.AttributesHandler;
+import me.dodeedoo.magicpit.classes.PitClass;
+import me.dodeedoo.magicpit.classes.PitClassHandler;
 import me.dodeedoo.magicpit.items.ItemManager;
 import me.dodeedoo.magicpit.items.ItemType;
 import me.dodeedoo.magicpit.items.PitItem;
@@ -114,6 +116,26 @@ public class ItemCommand implements CommandExecutor {
 
                 ItemManager.registerItem(PitItem.itemStackFromItem(pitItem), args[1]);
                 return true;
+            }
+            case "setclass": {
+                ItemStack item = ItemManager.itemList.get(args[1]);
+                PitItem pitItem = PitItem.itemFromItemStack(item, player);
+                PitClass setClass = null;
+
+                for (PitClass pitClass : PitClassHandler.classList) {
+                    if (pitClass.getClass().getSimpleName().equals(args[2])) {
+                        setClass = pitClass;
+                        break;
+                    }
+                }
+
+                if (setClass != null) {
+                    pitItem.classReq = setClass;
+                }else{
+                    player.sendMessage("not valid class");
+                }
+
+                ItemManager.registerItem(PitItem.itemStackFromItem(pitItem), args[1]);
             }
 
         }

@@ -146,7 +146,7 @@ public class ClassGui {
         ItemMeta meta = it.getItemMeta();
         List<String> lore = new ArrayList<>(property.getLore());
         meta.setDisplayName(Util.colorize(property.name));
-        Bukkit.broadcastMessage(Util.colorize(property.name) + " " + x + " " + y);
+        //Bukkit.broadcastMessage(Util.colorize(property.name) + " " + x + " " + y);
         if (!isActivated) {
             lore.add(" ");
             if (beforeIsActivated) {
@@ -169,6 +169,7 @@ public class ClassGui {
                     if (pitClass.getDataMap().get(player).assignedPoints < pitClass.getDataMap().get(player).totalPoints) {
                         pitClass.getDataMap().get(player).setAssignedPoints(pitClass.getDataMap().get(player).assignedPoints + 1);
                         pitClass.getDataMap().get(player).tree.activate(pitClass.getNodeMap().get(property));
+                        property.apply(player);
                         showClassTreeGui(player, pitClass);
                     }else{
                         player.sendMessage(Util.colorize("&cNot enough points!"));
@@ -185,6 +186,12 @@ public class ClassGui {
         StaticPane pane = new StaticPane(x, y, 1, 1, Pane.Priority.HIGHEST);
 
         pane.setOnClick(event -> {
+            for (PitClassProperty property : pitClass.getNodeMap().keySet()) {
+                pitClass.refreshNodeMap();
+                if (pitClass.getDataMap().get(player).tree.isActivated(pitClass.getNodeMap().get(property))) {
+                    property.remove(player);
+                }
+            }
             pitClass.getDataMap().put(player, new PitClassData(pitClass.getNodeMap()));
             showClassTreeGui(player, pitClass);
         });
