@@ -5,6 +5,7 @@ import me.dodeedoo.magicpit.attributes.Attribute;
 import me.dodeedoo.magicpit.scoreboard.ScoreboardManager;
 import me.dodeedoo.magicpit.skills.Skill;
 import me.dodeedoo.magicpit.skills.SkillHandler;
+import me.dodeedoo.magicpit.skills.list.ExampleSkill;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -37,10 +38,9 @@ public class PitClassProperty {
         this.guiMaterial = material;
     }
 
-    public PitClassProperty(String name, String skillClassName, PropertyType type, Attribute attribute, List<String> lore, Object amount, Material material) {
+    public PitClassProperty(String name, PropertyType type, Attribute attribute, List<String> lore, Object amount, Material material) {
         this.name = name;
         this.type = type;
-        this.skillClassName = skillClassName;
         this.attribute = attribute;
         this.lore = lore;
         this.amount = amount;
@@ -49,6 +49,23 @@ public class PitClassProperty {
 
     public List<String> getLore() {
         return lore;
+    }
+
+    public List<String> getSkillLore() {
+        List<String> lore = new ArrayList<>();
+        try {
+            Skill skill = (Skill) Class.forName(skillClassName).getDeclaredConstructor().newInstance();
+            lore = skill.getLore();
+        }catch (Exception ignored) { }
+        return lore;
+    }
+
+    public String stringApplyType() {
+        Skill skill = new ExampleSkill();
+        try {
+            skill = (Skill) Class.forName(skillClassName).getDeclaredConstructor().newInstance();
+        }catch (Exception ignored) { }
+        return Util.colorize("&e&l" + skill.getAction().toString().replace("_", " "));
     }
 
     public void apply(Player player) {

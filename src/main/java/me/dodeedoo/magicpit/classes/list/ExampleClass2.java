@@ -34,7 +34,7 @@ public class ExampleClass2 implements PitClass {
 
     @Override
     public Boolean isTestClass() {
-        return false;
+        return true;
     }
 
     @Override

@@ -147,6 +147,16 @@ public class ClassGui {
         List<String> lore = new ArrayList<>(property.getLore());
         meta.setDisplayName(Util.colorize(property.name));
         //Bukkit.broadcastMessage(Util.colorize(property.name) + " " + x + " " + y);
+        if (property.type == PropertyType.ATTRIBUTE) {
+            lore.add(" ");
+            lore.add(Util.colorize("&7" +property.attribute.getClass().getSimpleName() + " &a+" + property.amount));
+        }else{
+            lore.add(" ");
+            lore.add(Util.colorize(property.stringApplyType()));
+            for (String line : property.getSkillLore()) {
+                lore.add(Util.colorize(line));
+            }
+        }
         if (!isActivated) {
             lore.add(" ");
             if (beforeIsActivated) {

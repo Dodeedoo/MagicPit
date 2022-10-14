@@ -2,13 +2,12 @@ package me.dodeedoo.magicpit.classes.list;
 
 import me.dodeedoo.magicpit.MagicPitCore;
 import me.dodeedoo.magicpit.Util;
+import me.dodeedoo.magicpit.attributes.AttributesHandler;
 import me.dodeedoo.magicpit.classes.PitClass;
 import me.dodeedoo.magicpit.classes.PitClassData;
 import me.dodeedoo.magicpit.classes.PitClassProperty;
 import me.dodeedoo.magicpit.classes.PropertyType;
-import me.dodeedoo.magicpit.skills.list.Charge;
-import me.dodeedoo.magicpit.skills.list.FireBall;
-import me.dodeedoo.magicpit.skills.list.Flash;
+import me.dodeedoo.magicpit.skills.list.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -29,10 +28,10 @@ public class ExampleClass implements PitClass {
     public static File file = new File(MagicPitCore.getInstance().getDataFolder(), "/classes/" + ExampleClass.class.getSimpleName() + ".yml");
 
     public ExampleClass() {
-        nodeMap.put(new PitClassProperty("FirstNode", Flash.class.getName(), PropertyType.SKILL, null, Util.returnStringList("lore", "lore"), Material.GLOWSTONE), new ArrayList<>());
+        nodeMap.put(new PitClassProperty("FirstNode", PropertyType.ATTRIBUTE, AttributesHandler.Attributes.get("Defense"), Util.returnStringList("give", "attribute"), 150, Material.GLOWSTONE), new ArrayList<>());
         nodeMap.put(new PitClassProperty("SecondNode", Charge.class.getName(), PropertyType.SKILL, null, Util.returnStringList("lore", "lore"), Material.GLOWSTONE), Util.returnList(0));
-        nodeMap.put(new PitClassProperty("SecondOfTheNode", FireBall.class.getName(), PropertyType.SKILL, null, Util.returnStringList("loree", "lor"), Material.DIAMOND), Util.returnList(1));
-        nodeMap.put(new PitClassProperty("ThirdNode", Flash.class.getName(), PropertyType.SKILL, null, Util.returnStringList("lore", "lore"), Material.GLOWSTONE), Util.returnList(0, 0));
+        nodeMap.put(new PitClassProperty("SecondOfTheNode", Cloak.class.getName(), PropertyType.SKILL, null, Util.returnStringList("loree", "lor"), Material.DIAMOND), Util.returnList(1));
+        nodeMap.put(new PitClassProperty("ThirdNode",  DeathGrapple.class.getName(), PropertyType.SKILL, null, Util.returnStringList("lore", "lore"), Material.GLOWSTONE), Util.returnList(0, 0));
     }
 
     @Override

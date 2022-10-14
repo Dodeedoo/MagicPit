@@ -58,7 +58,8 @@ public class ScoreboardManager {
                 try {
                     timeleft = System.currentTimeMillis() - skill.getCooldownMap().get(player);
                 } catch (NullPointerException e) {
-                    timeleft = System.currentTimeMillis();
+                    timeleft = skill.getCooldown();
+                    skill.initiateCooldown(player);
                 }
                 if ((skill.getCooldown() - TimeUnit.MILLISECONDS.toSeconds(timeleft)) > 0) {
                     board.updateLine(line, Util.colorize(skill.getIndicator().indicatorString + " &c" + (skill.getCooldown() - TimeUnit.MILLISECONDS.toSeconds(timeleft)) + "s"));
