@@ -1,5 +1,6 @@
 package me.dodeedoo.magicpit.skills.list;
 
+import com.destroystokyo.paper.ParticleBuilder;
 import me.dodeedoo.magicpit.Util;
 import me.dodeedoo.magicpit.attributes.AttributesHandler;
 import me.dodeedoo.magicpit.events.magicdamage.MagicDamage;
@@ -10,12 +11,12 @@ import me.dodeedoo.magicpit.skills.SkillExecuteAction;
 import me.dodeedoo.magicpit.skills.SkillIndicator;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 import particles.LocationLib;
-import xyz.xenondevs.particle.ParticleEffect;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,9 +38,9 @@ public class FieryOutrage implements Skill {
             }
         }
         for (Location loc : LocationLib.getSphere(new Location[]{location}, 3, 3)) {
-            if (Math.random() < 0.2) ParticleEffect.SMOKE_LARGE.display(loc);
-            if (Math.random() < 0.4) ParticleEffect.FLASH.display(loc);
-            if (Math.random() < 0.5) ParticleEffect.FLAME.display(loc);
+            if (Math.random() < 0.2) new ParticleBuilder(Particle.SMOKE_LARGE).location(loc).spawn();
+            if (Math.random() < 0.4) new ParticleBuilder(Particle.FLASH).location(loc).spawn();
+            if (Math.random() < 0.5) new ParticleBuilder(Particle.FLAME).location(loc).spawn();
         }
         initiateCooldown(player);
     }

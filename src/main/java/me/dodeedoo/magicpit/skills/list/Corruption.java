@@ -1,5 +1,6 @@
 package me.dodeedoo.magicpit.skills.list;
 
+import com.destroystokyo.paper.ParticleBuilder;
 import me.dodeedoo.magicpit.MagicPitCore;
 import me.dodeedoo.magicpit.attributes.Attribute;
 import me.dodeedoo.magicpit.attributes.AttributesHandler;
@@ -8,13 +9,12 @@ import me.dodeedoo.magicpit.skills.SkillCost;
 import me.dodeedoo.magicpit.skills.SkillExecuteAction;
 import me.dodeedoo.magicpit.skills.SkillIndicator;
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import particles.LocationLib;
-import xyz.xenondevs.particle.ParticleBuilder;
-import xyz.xenondevs.particle.ParticleEffect;
-import xyz.xenondevs.particle.data.color.ParticleColor;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ public class Corruption implements Skill {
                     location.setX(rotatedX + location.getX());
                     location.setZ(rotatedZ + location.getZ());
 
-                    ParticleEffect.FLAME.display(location);
+                    new ParticleBuilder(Particle.FLAME).location(location).spawn();
 //                    Location[] showLoc = LocationLib.getSphere(new Location[]{location}, 1, 2);
 //
 //                    for (Location loc : showLoc) {
@@ -62,7 +62,7 @@ public class Corruption implements Skill {
 
                 Location[] locs = LocationLib.getHelix(new Location[]{player.getLocation()}, 1, player.getHeight(), 1, 2);
                 for (Location loc : locs) {
-                    if (Math.random() > 0.75) new ParticleBuilder(ParticleEffect.REDSTONE, loc).setColor(Color.BLACK).display();
+                    if (Math.random() > 0.75) new ParticleBuilder(Particle.REDSTONE).color(Color.BLACK).location(loc).spawn();
                 }
 
 

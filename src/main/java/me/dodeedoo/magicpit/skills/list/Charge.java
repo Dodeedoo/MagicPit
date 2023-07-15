@@ -1,10 +1,16 @@
 package me.dodeedoo.magicpit.skills.list;
 
+import com.destroystokyo.paper.ParticleBuilder;
+import me.dodeedoo.magicpit.MagicPitCore;
 import me.dodeedoo.magicpit.skills.Skill;
 import me.dodeedoo.magicpit.skills.SkillCost;
 import me.dodeedoo.magicpit.skills.SkillExecuteAction;
 import me.dodeedoo.magicpit.skills.SkillIndicator;
+import org.bukkit.Bukkit;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitScheduler;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -20,6 +26,12 @@ public class Charge implements Skill {
         Vector unitVector = new Vector(player.getLocation().getDirection().getX(), 0, player.getLocation().getDirection().getZ());
         unitVector = unitVector.normalize();
         player.setVelocity(unitVector.multiply(3.5));
+        BukkitTask sched = Bukkit.getScheduler().runTaskTimer(MagicPitCore.getInstance(), () -> {
+            for (int i=0; i<5; i++) {
+                new ParticleBuilder(Particle.CRIMSON_SPORE).location(player.getLocation()).spawn();
+            }
+                }, 1, 1);
+        Bukkit.getScheduler().runTaskLater(MagicPitCore.getInstance(), sched::cancel, 2);
         initiateCooldown(player);
     }
 

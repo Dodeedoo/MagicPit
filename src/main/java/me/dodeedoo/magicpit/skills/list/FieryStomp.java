@@ -1,5 +1,6 @@
 package me.dodeedoo.magicpit.skills.list;
 
+import com.destroystokyo.paper.ParticleBuilder;
 import me.dodeedoo.magicpit.events.magicdamage.MagicDamage;
 import me.dodeedoo.magicpit.events.magicdamage.MagicDamageType;
 import me.dodeedoo.magicpit.skills.Skill;
@@ -8,11 +9,11 @@ import me.dodeedoo.magicpit.skills.SkillExecuteAction;
 import me.dodeedoo.magicpit.skills.SkillIndicator;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import particles.LocationLib;
-import xyz.xenondevs.particle.ParticleEffect;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,9 +27,9 @@ public class FieryStomp implements Skill {
     public void execute(Player player, String[] args) {
         Location location = player.getLocation();
         for (Location loc : LocationLib.getCircle(new Location[]{location}, 5, 3)) {
-            if (Math.random() < 0.5) ParticleEffect.SMOKE_LARGE.display(loc);
-            if (Math.random() < 0.2) ParticleEffect.FLAME.display(loc);
-            if (Math.random() < 0.7) ParticleEffect.BLOCK_CRACK.display(loc);
+            if (Math.random() < 0.5) new ParticleBuilder(Particle.SMOKE_LARGE).location(loc).spawn();
+            if (Math.random() < 0.2) new ParticleBuilder(Particle.FLAME).location(loc).spawn();
+            if (Math.random() < 0.7) new ParticleBuilder(Particle.FLASH).location(loc).spawn();
         }
         for (Entity entity : location.getNearbyEntities(5, 5, 5)) {
             if (entity instanceof LivingEntity && entity != player) {

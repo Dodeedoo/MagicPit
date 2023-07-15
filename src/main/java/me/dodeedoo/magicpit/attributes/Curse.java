@@ -1,8 +1,10 @@
 package me.dodeedoo.magicpit.attributes;
 
+import com.destroystokyo.paper.ParticleBuilder;
 import me.dodeedoo.magicpit.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
@@ -10,7 +12,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import particles.LocationLib;
-import xyz.xenondevs.particle.ParticleEffect;
 
 import java.util.HashMap;
 
@@ -52,7 +53,7 @@ public class Curse implements Attribute {
         if ((int) getPlayer(player) != 0) {
             Location location = player.getLocation();
             for (Location loc : LocationLib.getHelix(new Location[]{location}, 0.2, 2.3, 1, 7)) {
-                if (Math.random() < 0.2) ParticleEffect.SPELL.display(loc);
+                if (Math.random() < 0.2) new ParticleBuilder(Particle.SPELL).location(loc).spawn();
             }
             if (bar.containsKey(player)) bar.get(player).removeAll();
             String n;

@@ -1,5 +1,6 @@
 package me.dodeedoo.magicpit.skills.list;
 
+import com.destroystokyo.paper.ParticleBuilder;
 import me.dodeedoo.magicpit.attributes.AttributesHandler;
 import me.dodeedoo.magicpit.events.magicdamage.MagicDamage;
 import me.dodeedoo.magicpit.events.magicdamage.MagicDamageType;
@@ -9,12 +10,12 @@ import me.dodeedoo.magicpit.skills.SkillExecuteAction;
 import me.dodeedoo.magicpit.skills.SkillIndicator;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 import particles.LocationLib;
-import xyz.xenondevs.particle.ParticleEffect;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +32,7 @@ public class FieryStrike implements Skill {
         Vector direction = player.getLocation().getDirection(); // player's direction, a Vector
         eyes.add(direction);
         for (Location loc : LocationLib.getHelix(new Location[]{eyes}, 2, 2, 1, 3)) {
-            ParticleEffect.FLAME.display(loc);
+            new ParticleBuilder(Particle.FLAME).location(loc).spawn();
         }
         for (Entity entity : eyes.getNearbyEntities(4, 2, 4)) {
             if (entity instanceof LivingEntity) {

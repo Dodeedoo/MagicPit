@@ -1,5 +1,6 @@
 package me.dodeedoo.magicpit.skills.list;
 
+import com.destroystokyo.paper.ParticleBuilder;
 import me.dodeedoo.magicpit.MagicPitCore;
 import me.dodeedoo.magicpit.events.magicdamage.MagicDamage;
 import me.dodeedoo.magicpit.events.magicdamage.MagicDamageType;
@@ -8,13 +9,14 @@ import me.dodeedoo.magicpit.skills.SkillCost;
 import me.dodeedoo.magicpit.skills.SkillExecuteAction;
 import me.dodeedoo.magicpit.skills.SkillIndicator;
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 import particles.LocationLib;
-import xyz.xenondevs.particle.ParticleEffect;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -35,10 +37,10 @@ public class WindStrike implements Skill {
                 location[0] = location[0].add(direction);
                 for (Location loc : LocationLib.getHelix(new Location[]{location[0]}, 1, 1, 1, 1)) {
                     if (Math.random() > 0.2) {
-                        ParticleEffect.SWEEP_ATTACK.display(loc);
+                        new ParticleBuilder(Particle.SWEEP_ATTACK).location(loc).spawn();
                     }
-                    ParticleEffect.REDSTONE.display(loc, Color.WHITE);
-                    ParticleEffect.WHITE_ASH.display(loc);
+                    new ParticleBuilder(Particle.REDSTONE).color(Color.WHITE).location(loc).spawn();
+                    new ParticleBuilder(Particle.WHITE_ASH).location(loc).spawn();
                 }
                 for (Entity entity : location[0].getNearbyEntities(1.5, 1.5, 1.5)) {
                     if (entity instanceof LivingEntity && entity != player) Bukkit.getPluginManager().callEvent(new MagicDamage(player, (LivingEntity) entity, MagicDamageType.ARCANE, 100));

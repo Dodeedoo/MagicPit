@@ -1,5 +1,6 @@
 package me.dodeedoo.magicpit.skills.list;
 
+import com.destroystokyo.paper.ParticleBuilder;
 import me.dodeedoo.magicpit.MagicPitCore;
 import me.dodeedoo.magicpit.events.magicdamage.MagicDamage;
 import me.dodeedoo.magicpit.events.magicdamage.MagicDamageType;
@@ -9,11 +10,11 @@ import me.dodeedoo.magicpit.skills.SkillExecuteAction;
 import me.dodeedoo.magicpit.skills.SkillIndicator;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import particles.LocationLib;
-import xyz.xenondevs.particle.ParticleEffect;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +36,7 @@ public class DeathGrapple implements Skill {
                         Bukkit.getPluginManager().callEvent(new MagicDamage(player, (LivingEntity) entity, MagicDamageType.CURSE, 25));
                         Location[] locations = LocationLib.getHelix(new Location[]{((LivingEntity) entity).getEyeLocation()}, 1, entity.getHeight(), 1, 4);
                         for (Location location : locations) {
-                            if (Math.random() > 0.05) ParticleEffect.SOUL_FIRE_FLAME.display(location);
+                            if (Math.random() > 0.05) new ParticleBuilder(Particle.SOUL_FIRE_FLAME).location(location).spawn();
                         }
                     }, 30 + i);
                 }

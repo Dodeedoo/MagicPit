@@ -1,5 +1,6 @@
 package me.dodeedoo.magicpit.events.magicdamage;
 
+import com.destroystokyo.paper.ParticleBuilder;
 import me.dodeedoo.magicpit.attributes.AttributesHandler;
 import org.bukkit.Color;
 import org.bukkit.Location;
@@ -9,7 +10,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.potion.PotionEffectType;
 import particles.LocationLib;
-import xyz.xenondevs.particle.ParticleEffect;
 
 public class MagicDamageHandle implements Listener {
 
@@ -43,7 +43,7 @@ public class MagicDamageHandle implements Listener {
             case FIRE: {
                 Location location = event.victim.getLocation();
                 for (Location loc : LocationLib.getHelix(new Location[]{location}, 1, 2.5, 1, 5)) {
-                    if (Math.random() < 0.2) ParticleEffect.FLAME.display(loc);
+                    if (Math.random() < 0.2) new ParticleBuilder(Particle.FLAME).location(loc).spawn();
                 }
                 if (!(event.victim instanceof Player)) {
                     return;

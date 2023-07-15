@@ -1,5 +1,6 @@
 package me.dodeedoo.magicpit.skills.list;
 
+import com.destroystokyo.paper.ParticleBuilder;
 import me.dodeedoo.magicpit.MagicPitCore;
 import me.dodeedoo.magicpit.skills.Skill;
 import me.dodeedoo.magicpit.skills.SkillCost;
@@ -8,11 +9,11 @@ import me.dodeedoo.magicpit.skills.SkillIndicator;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.*;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 import org.bukkit.scheduler.BukkitRunnable;
-import xyz.xenondevs.particle.ParticleEffect;
 
 import javax.naming.ldap.SortKey;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class ParalyzingDart implements Skill {
 
                 @Override
                 public void run() {
-                    ParticleEffect.SOUL_FIRE_FLAME.display(finalArrow.getLocation());
+                    new ParticleBuilder(Particle.SOUL_FIRE_FLAME).location(finalArrow.getLocation()).spawn();
                     if (finalArrow.isDead()) {
                         cancel();
                     }

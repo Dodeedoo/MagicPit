@@ -1,12 +1,13 @@
 package me.dodeedoo.magicpit.skills.list;
 
+import com.destroystokyo.paper.ParticleBuilder;
 import me.dodeedoo.magicpit.skills.Skill;
 import me.dodeedoo.magicpit.skills.SkillCost;
 import me.dodeedoo.magicpit.skills.SkillExecuteAction;
 import me.dodeedoo.magicpit.skills.SkillIndicator;
+import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import xyz.xenondevs.particle.ParticleEffect;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,11 +23,11 @@ public class Flash implements Skill {
         for (Entity entity : player.getLocation().getNearbyEntities(10, 10, 10)) {
             if (entity instanceof Player && entity != player) {
                 getFlashed.add((Player) entity);
-                ParticleEffect.SMOKE_LARGE.display(((Player) entity).getEyeLocation());
+                new ParticleBuilder(Particle.SMOKE_LARGE).allPlayers().location(((Player) entity).getEyeLocation()).spawn();
             }
         }
         for (int i = 0; i < 10; i++) {
-            ParticleEffect.FLASH.display(player.getLocation(), getFlashed);
+            new ParticleBuilder(Particle.FLASH).receivers(getFlashed).spawn();
         }
     }
 
