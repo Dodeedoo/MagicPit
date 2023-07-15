@@ -7,6 +7,7 @@ import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import me.dodeedoo.magicpit.GuiUtil;
 import me.dodeedoo.magicpit.PitPlayer;
 import me.dodeedoo.magicpit.Util;
+import me.dodeedoo.magicpit.classes.list.ExampleClass2;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -53,7 +54,10 @@ public class ClassGui {
 
         ItemStack it = new ItemStack(pitClass.getGuiMaterial());
         ItemMeta meta = it.getItemMeta();
-        List<String> lore = pitClass.getGuiLore();
+        List<String> lore = new ArrayList<>();
+        for (String line : pitClass.getGuiLore()) {
+            lore.add(Util.colorize(line));
+        }
         lore.add(" ");
         lore.add(Util.colorize("&7Left Click to select"));
         lore.add(Util.colorize("&7Right Click to view tree"));
@@ -77,7 +81,9 @@ public class ClassGui {
                 }
             }
             if (event.isRightClick()) {
-                showClassTreeGui(player, pitClass);
+                if (PitPlayer.playerMap.get(player).playerClass == pitClass) {
+                    showClassTreeGui(player, pitClass);
+                }
             }
         });
 
@@ -144,12 +150,19 @@ public class ClassGui {
             }
         }
         ItemMeta meta = it.getItemMeta();
-        List<String> lore = new ArrayList<>(property.getLore());
+        List<String> lore = new ArrayList<>();
+        for (String line : property.getLore()) {
+            lore.add(Util.colorize(line));
+        }
         meta.setDisplayName(Util.colorize(property.name));
         //Bukkit.broadcastMessage(Util.colorize(property.name) + " " + x + " " + y);
         if (property.type == PropertyType.ATTRIBUTE) {
             lore.add(" ");
-            lore.add(Util.colorize("&7" +property.attribute.getClass().getSimpleName() + " &a+" + property.amount));
+            if ((int) property.amount < 0) {
+                lore.add(Util.colorize("&7" + property.attribute.getClass().getSimpleName() + " &c" + property.amount));
+            }else {
+                lore.add(Util.colorize("&7" + property.attribute.getClass().getSimpleName() + " &a+" + property.amount));
+            }
         }else{
             lore.add(" ");
             lore.add(Util.colorize(property.stringApplyType()));
@@ -196,14 +209,16 @@ public class ClassGui {
         StaticPane pane = new StaticPane(x, y, 1, 1, Pane.Priority.HIGHEST);
 
         pane.setOnClick(event -> {
-            for (PitClassProperty property : pitClass.getNodeMap().keySet()) {
-                pitClass.refreshNodeMap();
-                if (pitClass.getDataMap().get(player).tree.isActivated(pitClass.getNodeMap().get(property))) {
-                    property.remove(player);
+            pitClass.refreshNodeMap();
+            for (PitClassProperty pitClassProperty : pitClass.getNodeMap().keySet()) {
+                //check if active
+                if (pitClass.getDataMap().get(player).tree.isActivated(pitClass.getNodeMap().get(pitClassProperty))) {
+                    pitClassProperty.remove(player);
                 }
             }
             pitClass.getDataMap().put(player, new PitClassData(pitClass.getNodeMap()));
-            showClassTreeGui(player, pitClass);
+            player.sendMessage(Util.colorize("&cReset!"));
+            player.closeInventory();
         });
 
         ItemStack it = new ItemStack(Material.REDSTONE_BLOCK);

@@ -12,35 +12,38 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 import particles.LocationLib;
 import xyz.xenondevs.particle.ParticleEffect;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class DeathGrapple implements Skill {
+public class WindStrike implements Skill {
     public static HashMap<Player, Long> cooldownmap = new HashMap<>();
 
     @Override
     public void execute(Player player, String[] args) {
-        for (Entity entity : player.getLocation().getNearbyEntities(10, 10, 10)) {
-            if (entity instanceof LivingEntity && entity != player) {
-                Bukkit.getPluginManager().callEvent(new MagicDamage(player, (LivingEntity) entity, MagicDamageType.CURSE, 25));
-                player.setVelocity(entity.getLocation().toVector().subtract(player.getLocation().toVector()).normalize().multiply(1.5));
-                for (int i = 0; i < 4; i++) {
-                    Bukkit.getScheduler().runTaskLater(MagicPitCore.getInstance(), () -> {
-                        entity.setVelocity(player.getLocation().toVector().subtract(entity.getLocation().toVector()).normalize().multiply(1.25));
-                        Bukkit.getPluginManager().callEvent(new MagicDamage(player, (LivingEntity) entity, MagicDamageType.CURSE, 25));
-                        Location[] locations = LocationLib.getHelix(new Location[]{((LivingEntity) entity).getEyeLocation()}, 1, entity.getHeight(), 1, 4);
-                        for (Location location : locations) {
-                            if (Math.random() > 0.05) ParticleEffect.SOUL_FIRE_FLAME.display(location);
-                        }
-                    }, 30 + i);
+        Location start = player.getLocation().add(0, 0.75, 0);
+        final Location[] location = {start.clone()};
+        Vector direction = location[0].getDirection().normalize();
+        for (int i = 0; i < 10; i++) {
+            Bukkit.getScheduler().runTaskLater(MagicPitCore.getInstance(), () -> {
+                location[0] = location[0].add(direction);
+                for (Location loc : LocationLib.getHelix(new Location[]{location[0]}, 1, 1, 1, 1)) {
+                    if (Math.random() > 0.2) {
+                        ParticleEffect.SWEEP_ATTACK.display(loc);
+                    }
+                    ParticleEffect.REDSTONE.display(loc, Color.WHITE);
+                    ParticleEffect.WHITE_ASH.display(loc);
                 }
-                break;
-            }
+                for (Entity entity : location[0].getNearbyEntities(1.5, 1.5, 1.5)) {
+                    if (entity instanceof LivingEntity && entity != player) Bukkit.getPluginManager().callEvent(new MagicDamage(player, (LivingEntity) entity, MagicDamageType.ARCANE, 100));
+                }
+            }, i * 4);
         }
         initiateCooldown(player);
     }
@@ -48,9 +51,10 @@ public class DeathGrapple implements Skill {
     @Override
     public List<String> getLore() {
         List<String> lore = new ArrayList<>();
-        lore.add("&7Grapple onto enemies to deal tremendous magic dps");
-        lore.add("&7Cost: &b100 Mana");
-        lore.add("&7Cooldown: 15 seconds");
+        lore.add("&7Harness Wind and Mana to send");
+        lore.add("&7razor sharp wind strikes forward");
+        lore.add("&7Cost: &b40 Mana");
+        lore.add("&7Cooldown: 4 seconds");
         return lore;
     }
 
@@ -66,17 +70,17 @@ public class DeathGrapple implements Skill {
 
     @Override
     public Integer getCostAmount() {
-        return 100;
+        return 40;
     }
 
     @Override
     public Long getCooldown() {
-        return 15L;
+        return 4L;
     }
 
     @Override
     public SkillIndicator getIndicator() {
-        return new SkillIndicator(SkillIndicator.indicatorType.MESSAGE, "&8Death Grapple", 0);
+        return new SkillIndicator(SkillIndicator.indicatorType.MESSAGE, "&fWind Strike", 0);
     }
 
     @Override
@@ -91,7 +95,7 @@ public class DeathGrapple implements Skill {
 
     @Override
     public Boolean overTime() {
-        return false;
+        return null;
     }
 
     @Override

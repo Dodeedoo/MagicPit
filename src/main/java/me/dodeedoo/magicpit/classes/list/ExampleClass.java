@@ -29,9 +29,9 @@ public class ExampleClass implements PitClass {
 
     public ExampleClass() {
         nodeMap.put(new PitClassProperty("FirstNode", PropertyType.ATTRIBUTE, AttributesHandler.Attributes.get("Defense"), Util.returnStringList("give", "attribute"), 150, Material.GLOWSTONE), new ArrayList<>());
-        nodeMap.put(new PitClassProperty("SecondNode", Charge.class.getName(), PropertyType.SKILL, null, Util.returnStringList("lore", "lore"), Material.GLOWSTONE), Util.returnList(0));
-        nodeMap.put(new PitClassProperty("SecondOfTheNode", Cloak.class.getName(), PropertyType.SKILL, null, Util.returnStringList("loree", "lor"), Material.DIAMOND), Util.returnList(1));
-        nodeMap.put(new PitClassProperty("ThirdNode",  DeathGrapple.class.getName(), PropertyType.SKILL, null, Util.returnStringList("lore", "lore"), Material.GLOWSTONE), Util.returnList(0, 0));
+        nodeMap.put(new PitClassProperty("SecondNode", ParalyzingDart.class.getName(), PropertyType.SKILL, null, Util.returnStringList("lore", "lore"), Material.GLOWSTONE), Util.returnList(0));
+        nodeMap.put(new PitClassProperty("SecondOfTheNode", WindStrike.class.getName(), PropertyType.SKILL, null, Util.returnStringList("loree", "lor"), Material.DIAMOND), Util.returnList(1));
+        nodeMap.put(new PitClassProperty("ThirdNode",  Corruption.class.getName(), PropertyType.SKILL, null, Util.returnStringList("lore", "lore"), Material.GLOWSTONE), Util.returnList(0, 0));
     }
 
     @Override
@@ -87,7 +87,6 @@ public class ExampleClass implements PitClass {
             dt.set("players.player", new PitClassData(nodeMap));
             saveData(dt);
         }else if (!dt.contains("players")){
-            Bukkit.getLogger().info("eeeefcsdfas");
             try {
                 dt.load(file);
             }catch (Exception e) {

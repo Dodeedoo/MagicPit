@@ -2,6 +2,7 @@ package me.dodeedoo.magicpit.classes.list;
 
 import me.dodeedoo.magicpit.MagicPitCore;
 import me.dodeedoo.magicpit.Util;
+import me.dodeedoo.magicpit.attributes.AttributesHandler;
 import me.dodeedoo.magicpit.classes.PitClass;
 import me.dodeedoo.magicpit.classes.PitClassData;
 import me.dodeedoo.magicpit.classes.PitClassProperty;
@@ -26,10 +27,7 @@ public class ExampleClass2 implements PitClass {
     public static File file = new File(MagicPitCore.getInstance().getDataFolder(), "/classes/" + ExampleClass2.class.getSimpleName() + ".yml");
 
     public ExampleClass2() {
-        nodeMap.put(new PitClassProperty("FirstNode", EggBall.class.getName(), PropertyType.SKILL, null, Arrays.asList("lore", "lore"), Material.DIAMOND_AXE), new ArrayList<>());
-        nodeMap.put(new PitClassProperty("SecondNode"), Util.returnList(0));
-        nodeMap.put(new PitClassProperty("SecondOfTheNode"), Util.returnList(1));
-        nodeMap.put(new PitClassProperty("ThirdNode"), Util.returnList(0, 0));
+        nodeMap.put(new PitClassProperty("FirstNode", PropertyType.ATTRIBUTE, AttributesHandler.Attributes.get("Defense"), Util.returnStringList("give", "attribute"), 150, Material.GLOWSTONE), new ArrayList<>());
     }
 
     @Override
@@ -49,7 +47,7 @@ public class ExampleClass2 implements PitClass {
 
     @Override
     public String getFancyName() {
-        return "&7&lTest Class 2";
+        return "&7No Class selected";
     }
 
     @Override
@@ -85,7 +83,6 @@ public class ExampleClass2 implements PitClass {
             dt.set("players.player", new PitClassData(nodeMap));
             saveData(dt);
         }else if (!dt.contains("players")){
-            Bukkit.getLogger().info("eeeefcsdfas");
             try {
                 dt.load(file);
             }catch (Exception e) {
@@ -97,10 +94,13 @@ public class ExampleClass2 implements PitClass {
 
     @Override
     public void refreshNodeMap() {
-        nodeMap.clear();
-        nodeMap.put(new PitClassProperty("FirstNode", EggBall.class.getName(), PropertyType.SKILL, null, Arrays.asList("lore", "lore"), Material.DIAMOND_AXE), new ArrayList<>());
-        nodeMap.put(new PitClassProperty("SecondNode"), Util.returnList(0));
-        nodeMap.put(new PitClassProperty("SecondOfTheNode"), Util.returnList(1));
-        nodeMap.put(new PitClassProperty("ThirdNode"), Util.returnList(0, 0));
+        for (PitClassProperty property : nodeMap.keySet()) {
+            switch (property.name) {
+                case "FirstNode": {
+                    nodeMap.put(property, new ArrayList<>());
+                    break;
+                }
+            }
+        }
     }
 }

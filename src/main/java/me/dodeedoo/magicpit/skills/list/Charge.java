@@ -19,7 +19,8 @@ public class Charge implements Skill {
     public void execute(Player player, String[] args) {
         Vector unitVector = new Vector(player.getLocation().getDirection().getX(), 0, player.getLocation().getDirection().getZ());
         unitVector = unitVector.normalize();
-        player.setVelocity(unitVector.multiply(2));
+        player.setVelocity(unitVector.multiply(3.5));
+        initiateCooldown(player);
     }
 
     @Override

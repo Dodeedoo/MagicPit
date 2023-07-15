@@ -92,12 +92,21 @@ public class PitClassProperty {
             return;
         }
         if (type == PropertyType.SKILL) {
+//            try {
+//                HashMap<Skill, String[]> tempMap = (HashMap<Skill, String[]>) SkillHandler.playerSkills.get(player).clone();
+//                tempMap.remove((Skill) Class.forName(skillClassName).getDeclaredConstructor().newInstance());
+//                SkillHandler.playerSkills.put(player, tempMap);
+//            }catch (Exception e) {
+//                e.printStackTrace();
+//            }
+            Skill toBeRemoved = null;
             for (Skill appliedSkill : SkillHandler.playerSkills.get(player).keySet()) {
                 if (appliedSkill.getClass().getName().equals(skillClassName)) {
-                    SkillHandler.playerSkills.get(player).remove(appliedSkill);
-                    ScoreboardManager.refreshSkill(player);
+                    toBeRemoved = appliedSkill;
                 }
             }
+            SkillHandler.playerSkills.get(player).remove(toBeRemoved);
+            ScoreboardManager.refreshSkill(player);
         }
         if (type == PropertyType.ATTRIBUTE) {
             attribute.getPlayerStats().put(player, ((int)attribute.getPlayer(player) - (int)amount));

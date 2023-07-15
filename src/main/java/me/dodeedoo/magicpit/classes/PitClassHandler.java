@@ -47,8 +47,8 @@ public class PitClassHandler {
                 }
                 if (utilListForPreviousClass.get(player) != PitPlayer.playerMap.get(player).playerClass) {
                     PitPlayer.playerMap.get(player).playerClass.refreshNodeMap();
+                    utilListForPreviousClass.get(player).refreshNodeMap();
                     for (PitClassProperty pitClassProperty : utilListForPreviousClass.get(player).getNodeMap().keySet()) {
-                        //Bukkit.broadcastMessage(pitClassProperty.skillClassName + " remove");
                         //check if active
                         if (utilListForPreviousClass.get(player).getDataMap().get(player).tree.isActivated(utilListForPreviousClass.get(player).getNodeMap().get(pitClassProperty))) {
                             pitClassProperty.remove(player);
