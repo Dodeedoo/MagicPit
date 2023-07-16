@@ -16,6 +16,10 @@ public class MagicDamageHandle implements Listener {
     @EventHandler
     public void magicdamage(MagicDamage event) {
         event.value *= ((int) AttributesHandler.Attributes.get("Knowledge").getPlayer(event.attacker) / 5);
+        if (event.victim instanceof Player) {
+            event.value /= ((int) AttributesHandler.Attributes.get("MagicDefense").getPlayer((Player) event.victim) / 5);
+        }
+
         event.victim.damage(event.value);
         if (LocationLib.isInSpawn(event.attacker)) {
             return;

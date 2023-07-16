@@ -36,6 +36,24 @@ public class Warrior implements PitClass {
                 Util.returnStringList("&7Take it out"),
                 Material.IRON_SWORD
         ), new ArrayList<>());
+        nodeMap.put(new PitClassProperty(
+                        "&9Thick Skull",
+                        PropertyType.ATTRIBUTE,
+                        AttributesHandler.Attributes.get("Defense"),
+                        Util.returnStringList("&7&oGood or bad?"),
+                        300,
+                        Material.SKELETON_SKULL),
+                Util.returnList(1)
+        );
+        nodeMap.put(new PitClassProperty(
+                        "&cStrong &7&o(healthy) &cAppetite",
+                        PropertyType.ATTRIBUTE,
+                        AttributesHandler.Attributes.get("Strength"),
+                        Util.returnStringList("&7&o6 meals a day"),
+                        150,
+                        Material.GLOWSTONE),
+                Util.returnList(0)
+        );
     }
 
     @Override

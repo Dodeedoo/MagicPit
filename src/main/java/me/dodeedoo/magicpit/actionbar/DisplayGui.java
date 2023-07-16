@@ -67,6 +67,10 @@ public class DisplayGui {
                     attrname = "&1♢Crit ";
                     break;
                 }
+                case "MagicDefense": {
+                    attrname = "&5Magical Defense";
+                    break;
+                }
             }
             if (!attrname.equals(" ")) {
                 if (!attribute.getClass().getName().replace("me.dodeedoo.magicpit.attributes.", "").equals("Mana")) {

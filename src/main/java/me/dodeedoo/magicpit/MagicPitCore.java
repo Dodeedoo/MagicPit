@@ -55,6 +55,7 @@ public final class MagicPitCore extends JavaPlugin {
         AttributesHandler.addAttribute(new Crit(), "Crit"); //dmg event DONE
         AttributesHandler.addAttribute(new Scorch(), "Scorch");
         AttributesHandler.addAttribute(new Curse(), "Curse");
+        AttributesHandler.addAttribute(new MagicDefense(), "MagicDefense");
 
         //load items AFTER attributes
         ItemManager.loadItemsFromConfig();
@@ -127,6 +128,11 @@ public final class MagicPitCore extends JavaPlugin {
                             case "Crit": {
                                 Attribute attr = AttributesHandler.Attributes.get("Crit");
                                 msg.append("&1♢Crit ").append(attr.getPlayer(player).toString()).append("% &7// ");
+                                break;
+                            }
+                            case "MagicDefense": {
+                                Attribute attr = AttributesHandler.Attributes.get("MagicDefense");
+                                msg.append("&5Magical Defense ").append(attr.getPlayer(player).toString()).append("% &7// ");
                                 break;
                             }
 
