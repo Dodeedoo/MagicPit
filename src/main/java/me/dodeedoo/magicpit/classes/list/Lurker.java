@@ -26,9 +26,24 @@ public class Lurker implements PitClass {
     public static File file = new File(MagicPitCore.getInstance().getDataFolder(), "/classes/" + Lurker.class.getSimpleName() + ".yml");
 
     public Lurker() {
-        nodeMap.put(new PitClassProperty("&8Cloak Ability", Cloak.class.getName(), PropertyType.SKILL, null,
-                Util.returnStringList("&7&oThe first step to mastering the art of", "&7&oassassination is to not be seen"), Material.DIAMOND), new ArrayList<>());
-        nodeMap.put(new PitClassProperty("&2Enhanced Bones", PropertyType.ATTRIBUTE, AttributesHandler.Attributes.get("Defense"), Util.returnStringList("&7&ocorruption feeds your bones..."), 150, Material.GLOWSTONE), Util.returnList(1));
+        nodeMap.put(new PitClassProperty(
+                "&8Cloak Ability",
+                Cloak.class.getName(),
+                PropertyType.SKILL,
+                null,
+                Util.returnStringList("&7&oThe first step to mastering the art of", "&7&oassassination is to not be seen"),
+                Material.DIAMOND),
+                new ArrayList<>()
+        );
+        nodeMap.put(new PitClassProperty(
+                "&2Enhanced Bones",
+                PropertyType.ATTRIBUTE,
+                AttributesHandler.Attributes.get("Defense"),
+                Util.returnStringList("&7&ocorruption feeds your bones..."),
+                150,
+                Material.GLOWSTONE),
+                Util.returnList(1)
+        );
 
         nodeMap.put(new PitClassProperty("&9Accurate Strikes", PropertyType.ATTRIBUTE, AttributesHandler.Attributes.get("CritChance"), Util.returnStringList("&7&oGo for the arteries"), 10, Material.GLOWSTONE), Util.returnList(0));
 
@@ -68,7 +83,7 @@ public class Lurker implements PitClass {
 
     @Override
     public List<String> getGuiLore() {
-        return Util.returnStringList("&7&oThe corrupted art of killing");
+        return Util.returnStringList("&7Glass Cannon","&7&oThe corrupted art of killing");
     }
 
     @Override

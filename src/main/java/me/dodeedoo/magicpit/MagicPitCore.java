@@ -6,6 +6,7 @@ import me.dodeedoo.magicpit.classes.PitClassHandler;
 import me.dodeedoo.magicpit.classes.list.ExampleClass;
 import me.dodeedoo.magicpit.classes.list.ExampleClass2;
 import me.dodeedoo.magicpit.classes.list.Lurker;
+import me.dodeedoo.magicpit.classes.list.Warrior;
 import me.dodeedoo.magicpit.commands.ItemCommand;
 import me.dodeedoo.magicpit.commands.setStrength;
 import me.dodeedoo.magicpit.events.Connection;
@@ -72,6 +73,7 @@ public final class MagicPitCore extends JavaPlugin {
         PitClassHandler.classList.add(new ExampleClass());
         PitClassHandler.classList.add(new ExampleClass2());
         PitClassHandler.classList.add(new Lurker());
+        PitClassHandler.classList.add(new Warrior());
 
         //Periodical Loops
         Bukkit.getScheduler().runTaskTimer(this, () -> {

@@ -54,11 +54,7 @@ public class Util {
         packet.getFloat().write(0, (float) player.getHealth()).write(1, player.getSaturation());
         packet.getIntegers().write(0, player.getFoodLevel());
 
-        try {
-            protocolManager.sendServerPacket(player, packet);
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
+        protocolManager.sendServerPacket(player, packet);
     }
 
     public static List<Integer> returnList(Integer... args) {
