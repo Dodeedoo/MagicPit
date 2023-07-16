@@ -54,7 +54,16 @@ public class Warrior implements PitClass {
                         Material.GLOWSTONE),
                 Util.returnList(0)
         );
+        nodeMap.put(new PitClassProperty(
+                "&bBrace",
+                Brace.class.getName(),
+                PropertyType.SKILL,
+                null,
+                Util.returnStringList("&7Brace for impact!!!11!"),
+                Material.IRON_CHESTPLATE
+        ), Util.returnList(1, 0));
     }
+
 
     @Override
     public Boolean isTestClass() {

@@ -70,7 +70,7 @@ public class HeroicStrike implements Skill {
 
     @Override
     public SkillExecuteAction getAction() {
-        return SkillExecuteAction.DAMAGED;
+        return SkillExecuteAction.RIGHT_CLICK;
     }
 
     @Override
