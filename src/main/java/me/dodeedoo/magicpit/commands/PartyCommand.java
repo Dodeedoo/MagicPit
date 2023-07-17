@@ -15,23 +15,30 @@ public class PartyCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
         Player player = (Player) commandSender;
+        if (!s.equals("p") && !s.equals("party")) {
+            return false;
+        }
         switch (args[0]) {
             case "create": {
-                if (args.length > 2) {
+                if (args.length < 2) {
                     PartySystem.createParty(player, PartySize.SQUAD);
+                    player.sendMessage(Component.text(Util.colorize("&aParty created")));
                     return true;
                 }else{
                     switch (args[1]) {
                         case "squad": {
                             PartySystem.createParty(player, PartySize.SQUAD);
+                            player.sendMessage(Component.text(Util.colorize("&aParty created")));
                             return true;
                         }
                         case "group": {
                             PartySystem.createParty(player, PartySize.GROUP);
+                            player.sendMessage(Component.text(Util.colorize("&aParty created")));
                             return true;
                         }
                         case "raid": {
                             PartySystem.createParty(player, PartySize.RAID);
+                            player.sendMessage(Component.text(Util.colorize("&aParty created")));
                             return true;
                         }
                     }
@@ -42,33 +49,55 @@ public class PartyCommand implements CommandExecutor {
             case "disband": {
                 if (PartySystem.isInParty(player) && PartySystem.getParty(player).getLeader() == player) {
                     PartySystem.disbandParty(PartySystem.getParty(player));
+                    player.sendMessage(Component.text(Util.colorize("&cParty disbanded")));
                     return true;
                 }
                 player.sendMessage(Component.text(Util.colorize("&cNot allowed")));
                 break;
             }
             case "join": {
-                if (args.length > 2 && Bukkit.getPlayer(args[1]) != null) {
+                if (args.length > 1 && Bukkit.getPlayer(args[1]) != null && PartySystem.getParty(Bukkit.getPlayer(args[1])) != null) {
                     Player partyMember = Bukkit.getPlayer(args[1]);
                     PartySystem.joinParty(PartySystem.getParty(partyMember), player);
+                    return true;
                 }
                 player.sendMessage(Component.text(Util.colorize("&cUsage /p join <name> OR player not online")));
                 break;
             }
             case "leave": {
                 PartySystem.leaveParty(player);
+                player.sendMessage(Component.text(Util.colorize("&cYou left the party")));
                 return true;
             }
             case "invite": {
                 if (PartySystem.isInParty(player) && PartySystem.getParty(player).getLeader() == player) {
-                    if (args.length > 2 && Bukkit.getPlayer(args[1]) != null) {
+                    if (args.length > 1 && Bukkit.getPlayer(args[1]) != null) {
                         PartySystem.invitePlayer(PartySystem.getParty(player), Bukkit.getPlayer(args[1]));
+                        player.sendMessage(Component.text(Util.colorize("&aInvited")));
+                        return true;
                     }else{
                         player.sendMessage(Component.text(Util.colorize("&cUsage /p invite <name of online player>")));
                         return false;
                     }
                 }
                 player.sendMessage(Component.text(Util.colorize("&cNot allowed")));
+                break;
+            }
+            case "kick": {
+                if (PartySystem.isInParty(player) && PartySystem.getParty(player).getLeader() == player) {
+                    if (args.length > 1 && Bukkit.getPlayer(args[1]) != null) {
+                        PartySystem.leaveParty(Bukkit.getPlayer(args[1]));
+                        PartySystem.PartyRegistry.get(PartySystem.getParty(player)).forEach((player1 -> {
+                            player1.sendMessage(Component.text(Util.colorize("&c" + args[1] + " was kicked from the party")));
+                        }));
+                        return true;
+                    }
+                }
+                player.sendMessage(Component.text(Util.colorize("&cNot allowed")));
+                break;
+            }
+            case "list": {
+
                 break;
             }
         }

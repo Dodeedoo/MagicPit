@@ -87,7 +87,7 @@ public class PartySystem {
 
         TextComponent clickable = Component.
                 text(Util.colorize("&7|| &eClick &7to join &b" + party.getLeader().getName() + "'s &7party ||")).
-                clickEvent(ClickEvent.runCommand("/party accept " + party.getLeader().getName())).
+                clickEvent(ClickEvent.runCommand("/party join " + party.getLeader().getName())).
                 hoverEvent(HoverEvent.showText(Component.text(Util.colorize("&7Click to join"))));
 
         player.sendMessage(clickable);

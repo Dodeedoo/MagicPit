@@ -2,6 +2,7 @@ package me.dodeedoo.magicpit.social.party;
 
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,6 +17,7 @@ public class PartyIdentifier {
         this.leader = creator;
         this.size = size;
         this.uuid = UUID.randomUUID();
+        this.invitelist = new ArrayList<>();
     }
 
     public Player getLeader() {
