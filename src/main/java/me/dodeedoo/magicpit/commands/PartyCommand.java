@@ -1,13 +1,78 @@
 package me.dodeedoo.magicpit.commands;
 
+import me.dodeedoo.magicpit.Util;
+import me.dodeedoo.magicpit.social.party.PartySize;
+import me.dodeedoo.magicpit.social.party.PartySystem;
+import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class PartyCommand implements CommandExecutor {
     @Override
-    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
+        Player player = (Player) commandSender;
+        switch (args[0]) {
+            case "create": {
+                if (args.length > 2) {
+                    PartySystem.createParty(player, PartySize.SQUAD);
+                    return true;
+                }else{
+                    switch (args[1]) {
+                        case "squad": {
+                            PartySystem.createParty(player, PartySize.SQUAD);
+                            return true;
+                        }
+                        case "group": {
+                            PartySystem.createParty(player, PartySize.GROUP);
+                            return true;
+                        }
+                        case "raid": {
+                            PartySystem.createParty(player, PartySize.RAID);
+                            return true;
+                        }
+                    }
+                    player.sendMessage(Component.text(Util.colorize("&cPossible party sizes: squad, group, raid")));
+                }
+                break;
+            }
+            case "disband": {
+                if (PartySystem.isInParty(player) && PartySystem.getParty(player).getLeader() == player) {
+                    PartySystem.disbandParty(PartySystem.getParty(player));
+                    return true;
+                }
+                player.sendMessage(Component.text(Util.colorize("&cNot allowed")));
+                break;
+            }
+            case "join": {
+                if (args.length > 2 && Bukkit.getPlayer(args[1]) != null) {
+                    Player partyMember = Bukkit.getPlayer(args[1]);
+                    PartySystem.joinParty(PartySystem.getParty(partyMember), player);
+                }
+                player.sendMessage(Component.text(Util.colorize("&cUsage /p join <name> OR player not online")));
+                break;
+            }
+            case "leave": {
+                PartySystem.leaveParty(player);
+                return true;
+            }
+            case "invite": {
+                if (PartySystem.isInParty(player) && PartySystem.getParty(player).getLeader() == player) {
+                    if (args.length > 2 && Bukkit.getPlayer(args[1]) != null) {
+                        PartySystem.invitePlayer(PartySystem.getParty(player), Bukkit.getPlayer(args[1]));
+                    }else{
+                        player.sendMessage(Component.text(Util.colorize("&cUsage /p invite <name of online player>")));
+                        return false;
+                    }
+                }
+                player.sendMessage(Component.text(Util.colorize("&cNot allowed")));
+                break;
+            }
+        }
+
         return false;
     }
 }
