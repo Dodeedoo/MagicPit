@@ -8,6 +8,7 @@ import me.dodeedoo.magicpit.classes.list.ExampleClass2;
 import me.dodeedoo.magicpit.classes.list.Lurker;
 import me.dodeedoo.magicpit.classes.list.Warrior;
 import me.dodeedoo.magicpit.commands.ItemCommand;
+import me.dodeedoo.magicpit.commands.PartyCommand;
 import me.dodeedoo.magicpit.commands.setStrength;
 import me.dodeedoo.magicpit.events.Connection;
 import me.dodeedoo.magicpit.events.Damage;
@@ -63,6 +64,7 @@ public final class MagicPitCore extends JavaPlugin {
         //Register Commands
         this.getCommand("setStrength").setExecutor(new setStrength());
         this.getCommand("pititem").setExecutor(new ItemCommand());
+        this.getCommand("party").setExecutor(new PartyCommand());
 
         //Register Listeners
         Bukkit.getPluginManager().registerEvents(new Damage(), this);

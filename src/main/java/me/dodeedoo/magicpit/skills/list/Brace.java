@@ -46,6 +46,7 @@ public class Brace implements Skill {
         for (Location loc : LocationLib.getHelix(new Location[]{player.getLocation()}, 0.5, 1, 1, 2)) {
             new ParticleBuilder(Particle.REDSTONE).color(Color.BLUE).location(loc).spawn();
         }
+        initiateCooldown(player);
     }
 
     @Override

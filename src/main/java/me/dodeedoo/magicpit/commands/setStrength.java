@@ -13,7 +13,10 @@ import me.dodeedoo.magicpit.scoreboard.ScoreboardManager;
 import me.dodeedoo.magicpit.skills.Skill;
 import me.dodeedoo.magicpit.skills.SkillHandler;
 import me.dodeedoo.magicpit.skills.list.HoldRightClickSkillExample;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -29,6 +32,8 @@ public class setStrength implements CommandExecutor  {
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         Player player = (Player) commandSender;
         try {
+            TextComponent clickable = Component.text(ChatColor.translateAlternateColorCodes('&', "&7|| &eClick &7to join &bEqiV2's &7party ||"));
+            player.sendMessage(clickable);
             AttributesHandler.Attributes.get("Strength").getPlayerStats().put(player, Integer.parseInt(strings[0]));
             //DisplayGui.showDisplayGuiToPlayer(player);
             //AttributesHandler.Attributes.get("Mana").getPlayerStats().put(player, 0);

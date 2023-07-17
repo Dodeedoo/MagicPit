@@ -20,7 +20,7 @@ public class MagicDamageHandle implements Listener {
             event.value /= ((int) AttributesHandler.Attributes.get("MagicDefense").getPlayer((Player) event.victim) / 5);
         }
 
-        event.victim.damage(event.value);
+        event.victim.damage(event.value, event.attacker);
         if (LocationLib.isInSpawn(event.attacker)) {
             return;
         }
@@ -53,7 +53,7 @@ public class MagicDamageHandle implements Listener {
                     return;
                 }
                 double tmp = ((int)AttributesHandler.Attributes.get("Scorch").getPlayer((Player) event.victim) / 5D);
-                event.victim.damage(event.value * tmp);
+                event.victim.damage(event.value * tmp, event.attacker);
                 int scorchamount;
                 if (event.value > 1000) {
                     scorchamount = 10;

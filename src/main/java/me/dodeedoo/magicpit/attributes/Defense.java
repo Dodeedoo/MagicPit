@@ -36,7 +36,8 @@ public class Defense implements Attribute {
 
     @Override
     public void damagedModifier(EntityDamageByEntityEvent event) {
-        event.setDamage(event.getDamage() - ((Float) playerDefenseMap.get((Player) event.getEntity()) / 5));
+        Integer defense = (Integer) playerDefenseMap.get((Player) event.getEntity());
+        event.setDamage(event.getDamage() - ((double) defense / 5));
     }
 
     @Override

@@ -36,3 +36,6 @@ commands:
       - "st"
   pititem:
     permission: "*"
+  party:
+    aliases:
+      - "p"
