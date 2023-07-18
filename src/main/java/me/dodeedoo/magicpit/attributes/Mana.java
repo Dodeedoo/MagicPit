@@ -65,6 +65,7 @@ public class Mana implements Attribute {
 
     }
 
+
     @Override
     public HashMap<Player, Object> getPlayerStats() {
         return this.playerManaMap;

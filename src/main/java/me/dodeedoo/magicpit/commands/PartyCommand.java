@@ -11,11 +11,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 public class PartyCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
         Player player = (Player) commandSender;
-        if (!s.equals("p") && !s.equals("party")) {
+        if (!command.getLabel().equals("p") && !command.getLabel().equals("party")) {
             return false;
         }
         switch (args[0]) {
@@ -73,7 +75,6 @@ public class PartyCommand implements CommandExecutor {
                 if (PartySystem.isInParty(player) && PartySystem.getParty(player).getLeader() == player) {
                     if (args.length > 1 && Bukkit.getPlayer(args[1]) != null) {
                         PartySystem.invitePlayer(PartySystem.getParty(player), Bukkit.getPlayer(args[1]));
-                        player.sendMessage(Component.text(Util.colorize("&aInvited")));
                         return true;
                     }else{
                         player.sendMessage(Component.text(Util.colorize("&cUsage /p invite <name of online player>")));
@@ -97,7 +98,14 @@ public class PartyCommand implements CommandExecutor {
                 break;
             }
             case "list": {
-
+                if (PartySystem.isInParty(player)) {
+                    AtomicReference<String> playerList = new AtomicReference<>("");
+                    PartySystem.PartyRegistry.get(PartySystem.getParty(player)).forEach((p) -> {
+                        playerList.set(playerList + "&e" + p.getName() + "\n");
+                    });
+                    Component message = Component.text(Util.colorize(playerList.toString()));
+                    player.sendMessage(message);
+                }
                 break;
             }
         }

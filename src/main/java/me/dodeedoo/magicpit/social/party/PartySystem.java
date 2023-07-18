@@ -36,9 +36,7 @@ public class PartySystem {
 
     public static void disbandParty(PartyIdentifier party) {
         if (PartyRegistry.containsKey(party)) {
-            PartyRegistry.get(party).forEach((player) -> {
-                PlayerRegistry.remove(player);
-            });
+            PartyRegistry.get(party).forEach((player) -> PlayerRegistry.remove(player));
             PartyRegistry.remove(party);
         }
     }
@@ -48,6 +46,7 @@ public class PartySystem {
             party.getLeader().sendMessage(Component.text(Util.colorize("&cThey're already in a party")));
             return;
         }
+        party.getLeader().sendMessage(Component.text(Util.colorize("&aInvited")));
 
         switch (party.getSize()) {
             case SQUAD: {
@@ -79,7 +78,7 @@ public class PartySystem {
             public void run() {
                 party.getInvitelist().remove(player);
                 if (!PartyRegistry.get(party).contains(player)) {
-                    party.getLeader().sendMessage(Component.text(
+                    player.sendMessage(Component.text(
                             Util.colorize("&cParty invite from " + party.getLeader().getName() + " expired")));
                 }
             }
@@ -117,6 +116,7 @@ public class PartySystem {
             disbandParty(party);
             return;
         }
+        PlayerRegistry.remove(player);
         PartyRegistry.get(party).remove(player);
         PartyRegistry.get(party).forEach((player1 -> {
             player1.sendMessage(Component.text(Util.colorize("&c" + player.getName() + " has left the party")));
@@ -133,6 +133,9 @@ public class PartySystem {
     }
 
     public static boolean sameParty(Player player, Player player2) {
+        if (PlayerRegistry.get(player) == null || PlayerRegistry.get(player2) == null) {
+            return false;
+        }
         return PlayerRegistry.get(player) == PlayerRegistry.get(player2);
     }
 

@@ -60,7 +60,7 @@ public class Warrior implements PitClass {
                 PropertyType.SKILL,
                 null,
                 Util.returnStringList("&7Brace for impact!!!11!"),
-                Material.IRON_CHESTPLATE
+                Material.IRON_BARS
         ), Util.returnList(1, 0));
     }
 
@@ -134,6 +134,18 @@ public class Warrior implements PitClass {
             switch (property.name) {
                 case "&3Heroic Strike": {
                     nodeMap.put(property, new ArrayList<>());
+                    break;
+                }
+                case "&9Thick Skull": {
+                    nodeMap.put(property, Util.returnList(1));
+                    break;
+                }
+                case "&cStrong &7&o(healthy) &cAppetite": {
+                    nodeMap.put(property, Util.returnList(0));
+                    break;
+                }
+                case "&bBrace": {
+                    nodeMap.put(property, Util.returnList(1, 0));
                     break;
                 }
             }
