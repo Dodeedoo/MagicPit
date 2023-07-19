@@ -1,6 +1,7 @@
 package me.dodeedoo.magicpit.classes.tree;
 
 import me.dodeedoo.magicpit.classes.PitClassData;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.jetbrains.annotations.NotNull;

@@ -25,7 +25,7 @@ public class Warrior implements PitClass {
     public static HashMap<Player, PitClassData> dataMap = new HashMap<>();
     public static HashMap<PitClassProperty, List<Integer>> nodeMap = new HashMap<>();
     public static FileConfiguration data = new YamlConfiguration();
-    public static File file = new File(MagicPitCore.getInstance().getDataFolder(), "/classes/" + ExampleClass.class.getSimpleName() + ".yml");
+    public static File file = new File(MagicPitCore.getInstance().getDataFolder(), "/classes/" + Warrior.class.getSimpleName() + ".yml");
 
     public Warrior() {
         nodeMap.put(new PitClassProperty(

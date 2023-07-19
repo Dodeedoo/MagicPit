@@ -8,6 +8,7 @@ import me.dodeedoo.magicpit.GuiUtil;
 import me.dodeedoo.magicpit.PitPlayer;
 import me.dodeedoo.magicpit.Util;
 import me.dodeedoo.magicpit.classes.list.ExampleClass2;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -18,6 +19,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ClassGui {
 
@@ -131,14 +133,19 @@ public class ClassGui {
         StaticPane pane = new StaticPane(x, y, 1, 1, Pane.Priority.HIGHEST);
 
         Boolean isActivated = pitClass.getDataMap().get(player).tree.isActivated(pitClass.getNodeMap().get(property));
+//        Bukkit.broadcast(Component.text(isActivated.toString() + " " + property.name));
         Boolean beforeIsActivated = true;
         pitClass.refreshNodeMap();
         try {
-            List<Integer> tempList = pitClass.getNodeMap().get(property);
-            tempList.remove(tempList.size() - 1);
-            pitClass.refreshNodeMap();
-            beforeIsActivated = pitClass.getDataMap().get(player).tree.isActivated(tempList);
-        }catch (Exception ignored) { }
+            if (!Objects.equals(pitClass.getDataMap().get(player).tree.baseNode.name, property.name)) {
+                List<Integer> tempList = pitClass.getNodeMap().get(property);
+                tempList.remove(tempList.size() - 1);
+                pitClass.refreshNodeMap();
+                beforeIsActivated = pitClass.getDataMap().get(player).tree.isActivated(tempList);
+            }else{
+                beforeIsActivated = true;
+            }
+        }catch (Exception ignored) {}
         pitClass.refreshNodeMap();
 
         ItemStack it = new ItemStack(property.guiMaterial);
@@ -189,11 +196,29 @@ public class ClassGui {
         pane.setOnClick(event -> {
             if (!isActivated) {
                 if (finalBeforeIsActivated) {
+                    pitClass.refreshNodeMap();
                     if (pitClass.getDataMap().get(player).assignedPoints < pitClass.getDataMap().get(player).totalPoints) {
                         pitClass.getDataMap().get(player).setAssignedPoints(pitClass.getDataMap().get(player).assignedPoints + 1);
                         pitClass.getDataMap().get(player).tree.activate(pitClass.getNodeMap().get(property));
                         property.apply(player);
                         showClassTreeGui(player, pitClass);
+
+                        //workaround
+                        pitClass.refreshNodeMap();
+                        for (PitClassProperty property1 : pitClass.getNodeMap().keySet()) {
+                            if (!(property1 == property)) {
+                                pitClass.refreshNodeMap();
+                                List<Integer> tempList = pitClass.getNodeMap().get(property1);
+                                List<Integer> propertyKey = pitClass.getNodeMap().get(property);
+//                                Bukkit.broadcast(Component.text(tempList.subList(0, propertyKey.size()).toString()));
+//                                Bukkit.broadcast(Component.text(propertyKey.toString()));
+                                if (tempList.size() > propertyKey.size() && tempList.subList(0, propertyKey.size()) == propertyKey) {
+                                    Bukkit.broadcast(Component.text(property1.name + " being deactivated"));
+                                    pitClass.getDataMap().get(player).tree.indexTo(pitClass.getNodeMap().get(property1)).setActivated(false);
+                                }
+                            }
+
+                        }
                     }else{
                         player.sendMessage(Util.colorize("&cNot enough points!"));
                     }
@@ -213,9 +238,11 @@ public class ClassGui {
             for (PitClassProperty pitClassProperty : pitClass.getNodeMap().keySet()) {
                 //check if active
                 if (pitClass.getDataMap().get(player).tree.isActivated(pitClass.getNodeMap().get(pitClassProperty))) {
+                    pitClass.getDataMap().get(player).tree.indexTo(pitClass.getNodeMap().get(pitClassProperty)).setActivated(false);
                     pitClassProperty.remove(player);
                 }
             }
+            pitClass.refreshNodeMap();
             pitClass.getDataMap().put(player, new PitClassData(pitClass.getNodeMap()));
             player.sendMessage(Util.colorize("&cReset!"));
             player.closeInventory();

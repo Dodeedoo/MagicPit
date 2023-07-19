@@ -21,8 +21,8 @@ public class MagicDamageHandle implements Listener {
     @EventHandler
     public void magicdamage(MagicDamage event) {
 
+        //check same party
         if (event.victim instanceof Player && PartySystem.sameParty((Player) event.victim, event.attacker)) {
-            Bukkit.broadcast(Component.text("cancel magic dmg because party"));
             return;
         }
 

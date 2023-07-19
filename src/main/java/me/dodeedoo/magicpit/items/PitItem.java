@@ -34,6 +34,7 @@ public class PitItem {
     public ItemType type = ItemType.BASIC;
     public String name = "NONE";
     public PitClass classReq = null;
+    public boolean noData = false;
 
     public PitItem(List<String> lore, Player user, Material material, String name) {
         this.lore = lore;
@@ -85,7 +86,14 @@ public class PitItem {
         this.material = material;
     }
 
+    public void setNoData(boolean noData) {
+        this.noData = noData;
+    }
+
     public void apply() {
+        if (this.noData) {
+            return;
+        }
         if (PitPlayer.playerMap.get(this.user).level < this.levelreq) {
             this.user.sendMessage(Util.colorize("&cYou arent high enough level to use this item!"));
             return;
@@ -116,6 +124,9 @@ public class PitItem {
     }
 
     public void remove() {
+        if (this.noData) {
+            return;
+        }
         if (PitPlayer.playerMap.get(this.user).level < this.levelreq) {
             return;
         }
@@ -142,8 +153,12 @@ public class PitItem {
     }
 
     public static PitItem itemFromItemStack(ItemStack itemStack, Player player) {
+        List<String> lore = new ArrayList<>();
+        if (itemStack.getLore() != null) {
+            lore = itemStack.getLore();
+        }
         PitItem newitem = new PitItem(
-                itemStack.getLore().subList(0, 0),
+                lore,
                 player,
                 itemStack.getType(),
                 itemStack.getItemMeta().getDisplayName()
@@ -185,7 +200,9 @@ public class PitItem {
             }
             newitem.setAbilities(tempList);
             newitem.setAttributeMap(tempMap);
+            return newitem;
         }
+        newitem.setNoData(true);
         return newitem;
     }
 

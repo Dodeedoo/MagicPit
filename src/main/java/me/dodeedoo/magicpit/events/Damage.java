@@ -27,13 +27,11 @@ public class Damage implements Listener {
     public void damage(EntityDamageByEntityEvent event) {
 
         if (event.getCause() == EntityDamageEvent.DamageCause.CUSTOM) {
-            Bukkit.broadcast(Component.text("custom damage stopped processing"));
             return;
         }
 
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player &&
                 PartySystem.sameParty((Player) event.getDamager(), (Player) event.getEntity())) {
-            Bukkit.broadcast(Component.text("damage stopped from same party"));
             event.setCancelled(true);
             return;
         }

@@ -6,9 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PitClassData implements ConfigurationSerializable {
 
@@ -48,6 +46,7 @@ public class PitClassData implements ConfigurationSerializable {
                 break;
             }
         }
+
         int max = 1;
         for (List<Integer> list : map.values()) {
             if (list.size() > max) {
@@ -77,7 +76,9 @@ public class PitClassData implements ConfigurationSerializable {
                 }
             }
         }
+
         return new PitClassDataTree(baseNode);
+
     }
 
     @Override
