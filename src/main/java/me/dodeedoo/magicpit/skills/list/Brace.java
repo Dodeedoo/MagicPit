@@ -58,8 +58,8 @@ public class Brace implements Skill {
         lore.add("&7+100 Magical Defense");
         lore.add("&7+5 Regeneration");
         lore.add("&7Buffs last for 2 seconds");
-        lore.add("Cost: None");
-        lore.add("Cooldown: 4 seconds");
+        lore.add("&7Cost: None");
+        lore.add("&7Cooldown: 4 seconds");
         return lore;
     }
 

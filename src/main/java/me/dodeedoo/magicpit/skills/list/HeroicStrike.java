@@ -32,11 +32,11 @@ public class HeroicStrike implements Skill {
     public void execute(Player player, String[] args) {
         Location location = player.getEyeLocation().add(player.getLocation().getDirection().multiply(2));
         Vector forwardDir = player.getEyeLocation().getDirection();
-        Vector toLeft = forwardDir.crossProduct(new Vector(0, 1, 0));
-        Location leftLoc = player.getEyeLocation().add(toLeft).add(0, 1, 0);
-        Vector toRight = forwardDir.crossProduct(new Vector(0, -1, 0));
-        Location rightLoc = player.getEyeLocation().add(toRight).add(0, -1, 0);
-        Location[] locs = LocationLib.getLine(new Location[]{leftLoc}, rightLoc, 2);
+        Vector toLeft = forwardDir.crossProduct(new Vector(0, 2, 0));
+        Location leftLoc = player.getEyeLocation().add(toLeft).add(0, 2, 0);
+        Vector toRight = forwardDir.crossProduct(new Vector(0, -2, 0));
+        Location rightLoc = player.getEyeLocation().add(toRight).add(0, -2, 0);
+        Location[] locs = LocationLib.getLine(new Location[]{leftLoc}, rightLoc, 4);
         Integer damage = ((((Integer) AttributesHandler.Attributes.get("Defense").getPlayer(player)) * 2) + 100); //defense x2 plus 100
         boolean it = true;
         Color coola;

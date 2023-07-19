@@ -1,5 +1,12 @@
 package me.dodeedoo.magicpit;
 
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
+import com.comphenix.protocol.events.ListenerPriority;
+import com.comphenix.protocol.events.PacketAdapter;
+import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.events.PacketEvent;
 import me.dodeedoo.magicpit.actionbar.AttributeDisplay;
 import me.dodeedoo.magicpit.attributes.*;
 import me.dodeedoo.magicpit.classes.PitClassHandler;
@@ -20,6 +27,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -225,6 +233,18 @@ public final class MagicPitCore extends JavaPlugin {
 
         //low priority things that can be started after everything else is loaded
         PitClassHandler.startClassWorker();
+        ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
+        protocolManager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Server.WORLD_PARTICLES) {
+            @Override
+            public void onPacketSending(PacketEvent event) {
+                PacketContainer packet = event.getPacket();
+                if (event.getPacketType() != PacketType.Play.Server.WORLD_PARTICLES)
+                    return;
+
+                if (packet.getNewParticles().read(0).getParticle() == Particle.DAMAGE_INDICATOR)
+                    event.setCancelled(true);
+            }
+        });
 
     }
 

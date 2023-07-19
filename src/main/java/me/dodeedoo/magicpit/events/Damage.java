@@ -1,5 +1,7 @@
 package me.dodeedoo.magicpit.events;
 
+import me.dodeedoo.magicpit.MagicPitCore;
+import me.dodeedoo.magicpit.Util;
 import me.dodeedoo.magicpit.attributes.AttributesHandler;
 import me.dodeedoo.magicpit.items.PitItem;
 import me.dodeedoo.magicpit.skills.SkillExecuteAction;
@@ -7,10 +9,8 @@ import me.dodeedoo.magicpit.skills.SkillHandler;
 import me.dodeedoo.magicpit.social.party.PartySystem;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
+import org.bukkit.Location;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -21,6 +21,7 @@ import org.bukkit.event.player.PlayerItemDamageEvent;
 import particles.LocationLib;
 
 import java.time.LocalDateTime;
+import java.util.Random;
 
 public class Damage implements Listener {
     @EventHandler
@@ -118,6 +119,17 @@ public class Damage implements Listener {
                 }
             }
         }
+
+        Random random = new Random();
+        Location location = event.getEntity().getLocation().add(random.nextDouble(), random.nextDouble(), random.nextDouble());
+        ArmorStand armorStand = (ArmorStand) location.getWorld().spawnEntity(location, EntityType.ARMOR_STAND);
+        armorStand.setVisible(false);
+        armorStand.setGravity(false);
+        armorStand.setMarker(true);
+        int dmg = (int) event.getDamage();
+        armorStand.customName(Component.text(Util.colorize("&7" + dmg)));
+        armorStand.setCustomNameVisible(true);
+        Bukkit.getScheduler().runTaskLater(MagicPitCore.getInstance(), armorStand::remove, 25);
     }
 
     @EventHandler

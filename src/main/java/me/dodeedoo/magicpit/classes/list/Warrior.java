@@ -62,6 +62,14 @@ public class Warrior implements PitClass {
                 Util.returnStringList("&7Brace for impact!!!11!"),
                 Material.IRON_BARS
         ), Util.returnList(1, 0));
+        nodeMap.put(new PitClassProperty(
+                "&b&oFearless Cleave",
+                FearlessCleave.class.getName(),
+                PropertyType.SKILL,
+                null,
+                Util.returnStringList("&7Technique derived from Glimp himself"),
+                Material.DIAMOND_SWORD
+        ), Util.returnList(0, 0));
     }
 
 
@@ -146,6 +154,10 @@ public class Warrior implements PitClass {
                 }
                 case "&bBrace": {
                     nodeMap.put(property, Util.returnList(1, 0));
+                    break;
+                }
+                case "&b&oFearless Cleave": {
+                    nodeMap.put(property, Util.returnList(0, 0));
                     break;
                 }
             }
