@@ -13,8 +13,8 @@ public class PitClassData implements ConfigurationSerializable {
     public Integer totalPoints;
     public Integer assignedPoints = 0;
     public PitClassDataTree tree;
-    public Integer exp;
-    public Integer level;
+    public Integer exp = 0;
+    public Integer level = 0;
 
     //returns true if new exp levels up, false otherwise
     public boolean setExp(Integer exp) {

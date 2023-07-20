@@ -60,12 +60,14 @@ public class FearlessCleave implements Skill {
 
         for (Location loc : locs) {
             new ParticleBuilder(Particle.REDSTONE).color(Color.WHITE).location(loc).spawn();
+            if (Math.random() < 0.1) new ParticleBuilder(Particle.SWEEP_ATTACK).location(loc).spawn();
         }
 
         locs = getArc(2.25, 2.15, player);
 
         for (Location loc : locs) {
             new ParticleBuilder(Particle.REDSTONE).color(Color.AQUA).location(loc).spawn();
+            if (Math.random() < 0.1) new ParticleBuilder(Particle.SWEEP_ATTACK).location(loc).spawn();
         }
         if (index > 1) {
             damage = (int) (damage * 1.2);
@@ -73,13 +75,16 @@ public class FearlessCleave implements Skill {
 
             for (Location loc : locs) {
                 new ParticleBuilder(Particle.REDSTONE).color(Color.TEAL).location(loc).spawn();
+                if (Math.random() < 0.05) new ParticleBuilder(Particle.SWEEP_ATTACK).location(loc).spawn();
             }
+
             if (index > 2) {
                 damage = (int) (damage * 1.2);
                 locs = getArc(2.5, 2.3, player);
 
                 for (Location loc : locs) {
                     new ParticleBuilder(Particle.REDSTONE).color(Color.BLUE).location(loc).spawn();
+                    if (Math.random() < 0.1) new ParticleBuilder(Particle.SWEEP_ATTACK).location(loc).spawn();
                 }
             }
         }
@@ -141,12 +146,12 @@ public class FearlessCleave implements Skill {
 
     @Override
     public Integer getCostAmount() {
-        return 15;
+        return 150;
     }
 
     @Override
     public Long getCooldown() {
-        return 2L;
+        return 12L;
     }
 
     @Override

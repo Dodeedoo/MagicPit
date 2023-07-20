@@ -2,18 +2,15 @@ package me.dodeedoo.magicpit.skills.list;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import me.dodeedoo.magicpit.MagicPitCore;
-import me.dodeedoo.magicpit.attributes.Attribute;
-import me.dodeedoo.magicpit.attributes.AttributesHandler;
 import me.dodeedoo.magicpit.skills.Skill;
 import me.dodeedoo.magicpit.skills.SkillCost;
 import me.dodeedoo.magicpit.skills.SkillExecuteAction;
 import me.dodeedoo.magicpit.skills.SkillIndicator;
+import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
 import particles.LocationLib;
 
 import java.util.ArrayList;
@@ -21,56 +18,35 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class DefensiveRush implements Skill {
-
+public class SpeedBoost implements Skill {
     public static HashMap<Player, Long> cooldownmap = new HashMap<>();
 
     @Override
     public void execute(Player player, String[] args) {
-        Vector unitVector = new Vector(player.getLocation().getDirection().getX(), 0, player.getLocation().getDirection().getZ());
-        unitVector = unitVector.normalize();
-        player.setVelocity(unitVector.multiply(4.5));
-        new BukkitRunnable() {
+        Location feet = player.getLocation().add(0, -0.4, 0);
+        Location[] locs = LocationLib.getSphere(new Location[]{feet}, 0.75, 3);
+        for (Location loc : locs) {
+            if (Math.random() < 0.4) new ParticleBuilder(Particle.REDSTONE).color(Color.WHITE).location(loc).spawn();
+        }
 
-            @Override
-            public void run() {
-                Location[] locs = LocationLib.getSphere(new Location[]{player.getLocation()}, 3.5, 3);
-                for (Location loc : locs) {
-                    if (Math.random() < 0.3) new ParticleBuilder(Particle.REDSTONE).color(Color.AQUA).location(loc).spawn();
-                }
-            }
-        }.runTaskLater(MagicPitCore.getInstance(), 10);
-
-        Attribute attribute = AttributesHandler.Attributes.get("Defense");
-        int defenseBefore = ((int) attribute.getPlayer(player));
-        int defenseAfter = (int) (defenseBefore * 1.15);
-        attribute.getPlayerStats().put(player, defenseAfter);
-
-        new BukkitRunnable() {
-
-            @Override
-            public void run() {
-                int gainedSince = (int) attribute.getPlayer(player) - defenseAfter;
-                attribute.getPlayerStats().put(player, defenseBefore + gainedSince);
-            }
-        }.runTaskLater(MagicPitCore.getInstance(), 60);
-        initiateCooldown(player);
-
+        float walkSpeedBefore = player.getWalkSpeed();
+        player.setWalkSpeed(walkSpeedBefore + 0.2F);
+        Bukkit.getScheduler().runTaskLater(MagicPitCore.getInstance(), () -> player.setWalkSpeed(walkSpeedBefore), 100);
     }
 
     @Override
     public List<String> getLore() {
         List<String> lore = new ArrayList<>();
-        lore.add("&7Rush Forwards");
-        lore.add("&7Gain +15% defense for 3s");
-        lore.add("&7Cost: &b50 Mana");
+        lore.add("&7Activate a speed boost");
+        lore.add("&7for 5 seconds");
+        lore.add("&7Cost: &b80 Mana");
         lore.add("&7Cooldown: 8 seconds");
         return lore;
     }
 
     @Override
     public SkillExecuteAction getAction() {
-        return SkillExecuteAction.SNEAK_RIGHT_CLICK;
+        return SkillExecuteAction.RIGHT_CLICK;
     }
 
     @Override
@@ -80,7 +56,7 @@ public class DefensiveRush implements Skill {
 
     @Override
     public Integer getCostAmount() {
-        return 50;
+        return 80;
     }
 
     @Override
@@ -90,7 +66,7 @@ public class DefensiveRush implements Skill {
 
     @Override
     public SkillIndicator getIndicator() {
-        return new SkillIndicator(SkillIndicator.indicatorType.MESSAGE, "&3Defensive Rush", 0);
+        return new SkillIndicator(SkillIndicator.indicatorType.MESSAGE, "&fSpeed Boost", 0);
     }
 
     @Override
@@ -105,7 +81,7 @@ public class DefensiveRush implements Skill {
 
     @Override
     public Boolean overTime() {
-        return false;
+        return null;
     }
 
     @Override

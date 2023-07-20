@@ -20,38 +20,51 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class ExampleClass implements PitClass {
+public class Scout implements PitClass {
 
     public static HashMap<Player, PitClassData> dataMap = new HashMap<>();
     public static HashMap<PitClassProperty, List<Integer>> nodeMap = new HashMap<>();
     public static FileConfiguration data = new YamlConfiguration();
-    public static File file = new File(MagicPitCore.getInstance().getDataFolder(), "/classes/" + ExampleClass.class.getSimpleName() + ".yml");
+    public static File file = new File(MagicPitCore.getInstance().getDataFolder(), "/classes/" + Scout.class.getSimpleName() + ".yml");
 
-    public ExampleClass() {
-        nodeMap.put(new PitClassProperty("FirstNode", PropertyType.ATTRIBUTE, AttributesHandler.Attributes.get("Defense"), Util.returnStringList("give", "attribute"), 150, Material.GLOWSTONE), new ArrayList<>());
-        nodeMap.put(new PitClassProperty("SecondNode", ParalyzingDart.class.getName(), PropertyType.SKILL, null, Util.returnStringList("lore", "lore"), Material.GLOWSTONE), Util.returnList(0));
-        nodeMap.put(new PitClassProperty("SecondOfTheNode", WindStrike.class.getName(), PropertyType.SKILL, null, Util.returnStringList("loree", "lor"), Material.DIAMOND), Util.returnList(1));
-        nodeMap.put(new PitClassProperty("ThirdNode",  Corruption.class.getName(), PropertyType.SKILL, null, Util.returnStringList("lore", "lore"), Material.GLOWSTONE), Util.returnList(0, 0));
+    public Scout() {
+        nodeMap.put(new PitClassProperty(
+                "&fSpeed Boost",
+                SpeedBoost.class.getName(),
+                PropertyType.SKILL,
+                null,
+                Util.returnStringList("&7Quick on your feet"),
+                Material.CHAINMAIL_BOOTS
+        ), new ArrayList<>());
+        nodeMap.put(new PitClassProperty(
+                        "&f&lSwift",
+                        PropertyType.ATTRIBUTE,
+                        AttributesHandler.Attributes.get("Swiftness"),
+                        Util.returnStringList("&fSwiftness &7increases the chance of", "&7dodging incoming damage"),
+                        20,
+                        Material.BONE_MEAL),
+                Util.returnList(1)
+        );
     }
 
     @Override
     public Boolean isTestClass() {
-        return true;
+        return false;
     }
 
     @Override
     public Material getGuiMaterial() {
-        return Material.DIAMOND;
+        return Material.IRON_BOOTS;
     }
 
     @Override
     public List<String> getGuiLore() {
-        return Util.returnStringList("wqdsa", "asfagdgf");
+        return Util.returnStringList("&7Speed and survivability");
     }
 
     @Override
     public String getFancyName() {
-        return "&7&lTest Class";
+        return "&fScout";
     }
 
     @Override
@@ -101,20 +114,12 @@ public class ExampleClass implements PitClass {
     public void refreshNodeMap() {
         for (PitClassProperty property : nodeMap.keySet()) {
             switch (property.name) {
-                case "FirstNode": {
+                case "&fSpeed Boost": {
                     nodeMap.put(property, new ArrayList<>());
                     break;
                 }
-                case "SecondNode": {
-                    nodeMap.put(property, Util.returnList(0));
-                    break;
-                }
-                case "SecondOfTheNode": {
+                case "&f&lSwift": {
                     nodeMap.put(property, Util.returnList(1));
-                    break;
-                }
-                case "ThirdNode": {
-                    nodeMap.put(property, Util.returnList(0, 0));
                     break;
                 }
             }

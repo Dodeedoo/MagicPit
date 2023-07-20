@@ -10,10 +10,7 @@ import com.comphenix.protocol.events.PacketEvent;
 import me.dodeedoo.magicpit.actionbar.AttributeDisplay;
 import me.dodeedoo.magicpit.attributes.*;
 import me.dodeedoo.magicpit.classes.PitClassHandler;
-import me.dodeedoo.magicpit.classes.list.ExampleClass;
-import me.dodeedoo.magicpit.classes.list.ExampleClass2;
-import me.dodeedoo.magicpit.classes.list.Lurker;
-import me.dodeedoo.magicpit.classes.list.Warrior;
+import me.dodeedoo.magicpit.classes.list.*;
 import me.dodeedoo.magicpit.commands.ItemCommand;
 import me.dodeedoo.magicpit.commands.PartyCommand;
 import me.dodeedoo.magicpit.commands.setStrength;
@@ -65,6 +62,7 @@ public final class MagicPitCore extends JavaPlugin {
         AttributesHandler.addAttribute(new Scorch(), "Scorch");
         AttributesHandler.addAttribute(new Curse(), "Curse");
         AttributesHandler.addAttribute(new MagicDefense(), "MagicDefense");
+        AttributesHandler.addAttribute(new Swiftness(), "Swiftness");
 
         //load items AFTER attributes
         ItemManager.loadItemsFromConfig();
@@ -85,6 +83,7 @@ public final class MagicPitCore extends JavaPlugin {
         PitClassHandler.classList.add(new ExampleClass2());
         PitClassHandler.classList.add(new Lurker());
         PitClassHandler.classList.add(new Warrior());
+        PitClassHandler.classList.add(new Scout());
 
         //Periodical Loops
         Bukkit.getScheduler().runTaskTimer(this, () -> {
