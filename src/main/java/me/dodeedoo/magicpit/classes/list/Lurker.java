@@ -121,7 +121,7 @@ public class Lurker implements PitClass {
             }catch (Exception e) {
                 e.printStackTrace();
             }
-            dt.set("players.player", new PitClassData(nodeMap));
+            dt.set("players.player", new PitClassData(nodeMap, 0, 0));
             saveData(dt);
         }else if (!dt.contains("players")){
             try {

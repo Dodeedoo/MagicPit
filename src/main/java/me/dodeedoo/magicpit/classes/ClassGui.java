@@ -243,7 +243,8 @@ public class ClassGui {
                 }
             }
             pitClass.refreshNodeMap();
-            pitClass.getDataMap().put(player, new PitClassData(pitClass.getNodeMap()));
+            pitClass.getDataMap().put(player, new PitClassData(pitClass.getNodeMap(),
+                    pitClass.getDataMap().get(player).exp, pitClass.getDataMap().get(player).level));
             player.sendMessage(Util.colorize("&cReset!"));
             player.closeInventory();
         });

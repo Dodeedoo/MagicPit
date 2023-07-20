@@ -13,6 +13,23 @@ public class PitClassData implements ConfigurationSerializable {
     public Integer totalPoints;
     public Integer assignedPoints = 0;
     public PitClassDataTree tree;
+    public Integer exp;
+    public Integer level;
+
+    //returns true if new exp levels up, false otherwise
+    public boolean setExp(Integer exp) {
+        this.exp = exp;
+        if (exp >= this.level * 20 * (Math.pow(2, this.level))) {
+            this.exp = 0;
+            this.level += 1;
+            return true;
+        }
+        return false;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
 
     public void setAssignedPoints(Integer assignedPoints) {
         this.assignedPoints = assignedPoints;
@@ -30,7 +47,7 @@ public class PitClassData implements ConfigurationSerializable {
 
     }
 
-    public PitClassData(HashMap<PitClassProperty, List<Integer>> map) {
+    public PitClassData(HashMap<PitClassProperty, List<Integer>> map, Integer exp, Integer level) {
         this.tree = constructTreeFromNodeMap(map);
     }
 
@@ -87,6 +104,8 @@ public class PitClassData implements ConfigurationSerializable {
         map.put("totalPoints", totalPoints);
         map.put("assignedPoints", assignedPoints);
         map.put("tree", tree);
+        map.put("exp", exp);
+        map.put("level", level);
         return map;
     }
 

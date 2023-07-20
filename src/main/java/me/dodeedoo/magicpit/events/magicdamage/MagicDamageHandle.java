@@ -6,6 +6,8 @@ import me.dodeedoo.magicpit.social.party.PartySystem;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,10 +16,16 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.potion.PotionEffectType;
 import particles.LocationLib;
 
+import java.util.HashMap;
+
 public class MagicDamageHandle implements Listener {
+
+    public static HashMap<LivingEntity, EntityDamageByEntityEvent> lastMagicDamage = new HashMap<>();
 
     @EventHandler
     public void magicdamage(MagicDamage event) {
+        lastMagicDamage.remove(event.victim);
+
         //check same party
         if (event.victim instanceof Player && PartySystem.sameParty((Player) event.victim, event.attacker)) {
             return;
@@ -31,6 +39,7 @@ public class MagicDamageHandle implements Listener {
         EntityDamageByEntityEvent damageEvent = new EntityDamageByEntityEvent(event.attacker, event.victim, EntityDamageEvent.DamageCause.CUSTOM, event.value);
         event.victim.setLastDamageCause(damageEvent);
         Bukkit.getServer().getPluginManager().callEvent(damageEvent);
+        lastMagicDamage.put(event.victim, damageEvent);
         event.victim.damage(event.value);
 
         if (LocationLib.isInSpawn(event.attacker)) {

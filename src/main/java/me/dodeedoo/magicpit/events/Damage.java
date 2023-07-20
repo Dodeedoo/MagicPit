@@ -3,6 +3,7 @@ package me.dodeedoo.magicpit.events;
 import me.dodeedoo.magicpit.MagicPitCore;
 import me.dodeedoo.magicpit.Util;
 import me.dodeedoo.magicpit.attributes.AttributesHandler;
+import me.dodeedoo.magicpit.events.magicdamage.MagicDamageHandle;
 import me.dodeedoo.magicpit.items.PitItem;
 import me.dodeedoo.magicpit.skills.SkillExecuteAction;
 import me.dodeedoo.magicpit.skills.SkillHandler;
@@ -154,6 +155,12 @@ public class Damage implements Listener {
 
     @EventHandler
     public void death(EntityDeathEvent event) {
+        //setting killer from magic damage
+        if (event.getEntity().getKiller() == null && MagicDamageHandle.lastMagicDamage.containsKey(event.getEntity())) {
+            event.getEntity().setKiller((Player) MagicDamageHandle.lastMagicDamage.get(event.getEntity()).getDamager());
+            Bukkit.broadcast(Component.text(event.getEntity().getKiller().getName()));
+        }
+
         if (event.getEntity() instanceof Player) {
             AttributesHandler.handleDeath(event);
             SkillHandler.handleAction(SkillExecuteAction.DEATH, (Player) event.getEntity());
@@ -165,13 +172,6 @@ public class Damage implements Listener {
                         (Player) event.getEntity()
                 ).type.invoke((Player) event.getEntity(), event);
             }catch (Exception ignored) { }
-        }
-
-        //setting killer from magic damage
-        if (event.getEntity().getKiller() == null && event.getEntity().getLastDamageCause() instanceof EntityDamageByEntityEvent &&
-                ((EntityDamageByEntityEvent) event.getEntity().getLastDamageCause()).getDamager() instanceof Player) {
-            event.getEntity().setKiller((Player) ((EntityDamageByEntityEvent) event.getEntity().getLastDamageCause()).getDamager());
-            Bukkit.broadcast(Component.text(event.getEntity().getKiller().getName()));
         }
 
         if (event.getEntity().getKiller() != null) {

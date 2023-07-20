@@ -19,7 +19,7 @@ public class PitClassHandler {
     public static void select(Player player, PitClass pitClass) {
         PitPlayer.playerMap.get(player).setPlayerClass(pitClass);
         if (!pitClass.getDataMap().containsKey(player)) {
-            pitClass.getDataMap().put(player, new PitClassData(pitClass.getNodeMap()));
+            pitClass.getDataMap().put(player, new PitClassData(pitClass.getNodeMap(), 0, 0));
         }
     }
 
@@ -28,7 +28,7 @@ public class PitClassHandler {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 for (PitClass pitClass : classList) {
                     PitClassData data = pitClass.getDataMap().get(player);
-                    data.setTotalPoints(PitPlayer.playerMap.get(player).level);
+                    data.setTotalPoints(data.level);
                     pitClass.getDataMap().put(player, data);
                 }
                 if (!utilListForPreviousClass.containsKey(player)) {
@@ -94,7 +94,7 @@ public class PitClassHandler {
             Bukkit.getLogger().info(pitClass.getFancyName());
             if (!pitClass.getData().contains("players." + player.getUniqueId())) {
                 FileConfiguration cfg = pitClass.getData();
-                cfg.set("players." + player.getUniqueId(), new PitClassData(pitClass.getNodeMap()));
+                cfg.set("players." + player.getUniqueId(), new PitClassData(pitClass.getNodeMap(), 0, 0));
                 pitClass.saveData(cfg);
             }
             pitClass.getDataMap().put(player, (PitClassData) pitClass.getData().get("players." + player.getUniqueId()));
@@ -120,6 +120,14 @@ public class PitClassHandler {
                 pitClass.getDataMap().remove(player);
             }
         }
+    }
+
+    //returns true if leveled up
+    public static boolean addExpToClass(PitClass pitClass, Player player, Integer amount) {
+        PitClassData data = pitClass.getDataMap().get(player);
+        boolean lvlup = data.setExp(data.exp + amount);
+        pitClass.getDataMap().put(player, data);
+        return lvlup;
     }
 
 

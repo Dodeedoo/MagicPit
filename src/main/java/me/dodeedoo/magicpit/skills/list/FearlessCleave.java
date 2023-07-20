@@ -23,6 +23,7 @@ import particles.LocationLib;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class FearlessCleave implements Skill {
@@ -30,9 +31,26 @@ public class FearlessCleave implements Skill {
     public static HashMap<Player, Long> cooldownmap = new HashMap<>();
 
     public static Location[] getArc(Double distanceAway, Double distanceSide, Player player) {
+        Random random = new Random();
+        double num = 0;
+
         Location location = player.getEyeLocation().add(player.getLocation().getDirection().multiply(distanceAway));
         Location right = LocationLib.getRightSide(player.getEyeLocation(), distanceSide);
         Location left = LocationLib.getLeftSide(player.getEyeLocation(), distanceSide);
+        num = random.nextDouble();
+        if (random.nextBoolean()) {
+            num *= -1.25;
+        }
+
+        right.add(0, num, 0);
+
+        num = random.nextDouble();
+        if (random.nextBoolean()) {
+            num *= -1;
+        }
+
+        left.add(0, num, 0);
+
         return LocationLib.getLine(new Location[]{right, left}, location, 5);
     }
 
@@ -95,6 +113,8 @@ public class FearlessCleave implements Skill {
             }
 
         }.runTaskLater(MagicPitCore.getInstance(), 45);
+
+        initiateCooldown(player);
     }
 
     @Override
