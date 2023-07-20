@@ -27,8 +27,22 @@ public class Damage implements Listener {
     @EventHandler
     public void damage(EntityDamageByEntityEvent event) {
 
-        if (event.getCause() == EntityDamageEvent.DamageCause.CUSTOM) {
+        if (event.getEntity() instanceof ArmorStand || event.getEntity().hasMetadata("NPC")) {
             return;
+        }
+
+        Bukkit.broadcast(Component.text(event.getCause().name()));
+        String colorCode = "&7";
+
+        switch (event.getCause()) {
+            case CUSTOM: {
+                colorCode = "&d";
+                break;
+            }
+            case PROJECTILE: {
+                colorCode = "&6";
+                break;
+            }
         }
 
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player &&
@@ -127,7 +141,13 @@ public class Damage implements Listener {
         armorStand.setGravity(false);
         armorStand.setMarker(true);
         int dmg = (int) event.getDamage();
-        armorStand.customName(Component.text(Util.colorize("&7" + dmg)));
+
+        if (event.getDamager() instanceof Player) {
+            armorStand.customName(Component.text(Util.colorize(colorCode + dmg)));
+        }else if (event.getEntity() instanceof Player) {
+            armorStand.customName(Component.text(Util.colorize("&c" + dmg)));
+        }
+
         armorStand.setCustomNameVisible(true);
         Bukkit.getScheduler().runTaskLater(MagicPitCore.getInstance(), armorStand::remove, 25);
     }
@@ -146,7 +166,16 @@ public class Damage implements Listener {
                 ).type.invoke((Player) event.getEntity(), event);
             }catch (Exception ignored) { }
         }
+
+        //setting killer from magic damage
+        if (event.getEntity().getKiller() == null && event.getEntity().getLastDamageCause() instanceof EntityDamageByEntityEvent &&
+                ((EntityDamageByEntityEvent) event.getEntity().getLastDamageCause()).getDamager() instanceof Player) {
+            event.getEntity().setKiller((Player) ((EntityDamageByEntityEvent) event.getEntity().getLastDamageCause()).getDamager());
+            Bukkit.broadcast(Component.text(event.getEntity().getKiller().getName()));
+        }
+
         if (event.getEntity().getKiller() != null) {
+
             AttributesHandler.handleKill(event);
 
             try {

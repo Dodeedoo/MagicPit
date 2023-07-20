@@ -31,6 +31,9 @@ public class setStrength implements CommandExecutor  {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         Player player = (Player) commandSender;
+        if (!command.getLabel().equals("setstrength")) {
+            return false;
+        }
         try {
             TextComponent clickable = Component.text(ChatColor.translateAlternateColorCodes('&', "&7|| &eClick &7to join &bEqiV2's &7party ||"));
             player.sendMessage(clickable);

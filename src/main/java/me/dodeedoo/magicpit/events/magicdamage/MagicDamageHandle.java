@@ -3,24 +3,21 @@ package me.dodeedoo.magicpit.events.magicdamage;
 import com.destroystokyo.paper.ParticleBuilder;
 import me.dodeedoo.magicpit.attributes.AttributesHandler;
 import me.dodeedoo.magicpit.social.party.PartySystem;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.potion.PotionEffectType;
 import particles.LocationLib;
-
-import java.nio.Buffer;
 
 public class MagicDamageHandle implements Listener {
 
     @EventHandler
     public void magicdamage(MagicDamage event) {
-
         //check same party
         if (event.victim instanceof Player && PartySystem.sameParty((Player) event.victim, event.attacker)) {
             return;
@@ -31,7 +28,11 @@ public class MagicDamageHandle implements Listener {
             event.value /= ((int) AttributesHandler.Attributes.get("MagicDefense").getPlayer((Player) event.victim) / 5);
         }
 
-        event.victim.damage(event.value, event.attacker);
+        EntityDamageByEntityEvent damageEvent = new EntityDamageByEntityEvent(event.attacker, event.victim, EntityDamageEvent.DamageCause.CUSTOM, event.value);
+        event.victim.setLastDamageCause(damageEvent);
+        Bukkit.getServer().getPluginManager().callEvent(damageEvent);
+        event.victim.damage(event.value);
+
         if (LocationLib.isInSpawn(event.attacker)) {
             return;
         }
