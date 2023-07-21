@@ -48,6 +48,8 @@ public class PitClassData implements ConfigurationSerializable {
     }
 
     public PitClassData(HashMap<PitClassProperty, List<Integer>> map, Integer exp, Integer level) {
+        this.exp = exp;
+        this.level = level;
         this.tree = constructTreeFromNodeMap(map);
     }
 

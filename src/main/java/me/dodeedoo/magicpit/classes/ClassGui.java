@@ -199,7 +199,9 @@ public class ClassGui {
                     pitClass.refreshNodeMap();
                     if (pitClass.getDataMap().get(player).assignedPoints < pitClass.getDataMap().get(player).totalPoints) {
                         pitClass.getDataMap().get(player).setAssignedPoints(pitClass.getDataMap().get(player).assignedPoints + 1);
+                        pitClass.refreshNodeMap();
                         pitClass.getDataMap().get(player).tree.activate(pitClass.getNodeMap().get(property));
+                        pitClass.refreshNodeMap();
                         property.apply(player);
                         showClassTreeGui(player, pitClass);
 
