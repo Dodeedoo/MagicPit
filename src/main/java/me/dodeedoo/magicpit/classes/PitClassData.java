@@ -2,6 +2,7 @@ package me.dodeedoo.magicpit.classes;
 
 import me.dodeedoo.magicpit.classes.tree.PitClassDataTree;
 import me.dodeedoo.magicpit.classes.tree.PitClassTreeNode;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.jetbrains.annotations.NotNull;

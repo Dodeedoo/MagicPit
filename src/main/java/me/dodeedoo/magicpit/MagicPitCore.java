@@ -35,9 +35,11 @@ import java.util.HashMap;
 public final class MagicPitCore extends JavaPlugin {
 
     private static MagicPitCore instance;
+    private static ProtocolManager protocolManager;
 
     @Override
     public void onEnable() {
+        protocolManager = ProtocolLibrary.getProtocolManager();
         instance = this;
         //Disconnect all online players
         if (!Bukkit.getOnlinePlayers().isEmpty()) {
@@ -257,5 +259,9 @@ public final class MagicPitCore extends JavaPlugin {
 
     public static MagicPitCore getInstance() {
         return instance;
+    }
+
+    public static ProtocolManager getProtocolManager() {
+        return protocolManager;
     }
 }

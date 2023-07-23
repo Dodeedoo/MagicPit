@@ -1,5 +1,11 @@
 package me.dodeedoo.magicpit.events;
 
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.events.PacketAdapter;
+import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.wrappers.WrappedChatComponent;
+import com.comphenix.protocol.wrappers.WrappedDataWatcher;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
 import me.dodeedoo.magicpit.MagicPitCore;
 import me.dodeedoo.magicpit.Util;
 import me.dodeedoo.magicpit.attributes.AttributesHandler;
@@ -22,6 +28,9 @@ import org.bukkit.event.player.PlayerItemDamageEvent;
 import particles.LocationLib;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 public class Damage implements Listener {
@@ -136,21 +145,45 @@ public class Damage implements Listener {
         }
 
         Random random = new Random();
-        Location location = event.getEntity().getLocation().add(random.nextDouble(), random.nextDouble(), random.nextDouble());
-        ArmorStand armorStand = (ArmorStand) location.getWorld().spawnEntity(location, EntityType.ARMOR_STAND);
-        armorStand.setVisible(false);
-        armorStand.setGravity(false);
-        armorStand.setMarker(true);
-        int dmg = (int) event.getDamage();
+        Integer entityId = random.nextInt(9999);
+        Location loc = event.getEntity().getLocation();
+        PacketContainer packet = MagicPitCore.getProtocolManager().createPacket(PacketType.Play.Server.SPAWN_ENTITY);
+        packet.getIntegers().write(0, entityId); //entity id
+        packet.getIntegers().write(1, 2); //entity type armor stand
+        packet.getDoubles().write(0, loc.getX() + random.nextDouble());
+        packet.getDoubles().write(1, loc.getY() + random.nextDouble());
+        packet.getDoubles().write(2, loc.getZ() + random.nextDouble());
 
-        if (event.getDamager() instanceof Player) {
-            armorStand.customName(Component.text(Util.colorize(colorCode + dmg)));
-        }else if (event.getEntity() instanceof Player) {
-            armorStand.customName(Component.text(Util.colorize("&c" + dmg)));
+        PacketContainer data = MagicPitCore.getProtocolManager().createPacket(PacketType.Play.Server.ENTITY_METADATA);
+        data.getIntegers().write(0, entityId);
+
+        WrappedDataWatcher metadata = new WrappedDataWatcher();
+        metadata.setObject(new WrappedDataWatcher.WrappedDataWatcherObject(0,
+                WrappedDataWatcher.Registry.get(Byte.class)), (byte) 0x20); //invis
+        metadata.setObject(new WrappedDataWatcher.WrappedDataWatcherObject(3,
+                WrappedDataWatcher.Registry.get(Boolean.class)), true); //custom name visible
+        metadata.setObject(new WrappedDataWatcher.WrappedDataWatcherObject(5,
+                WrappedDataWatcher.Registry.get(Boolean.class)), true); //no gravity
+        metadata.setObject(new WrappedDataWatcher.WrappedDataWatcherObject(15,
+                WrappedDataWatcher.Registry.get(Byte.class)), (byte) (0x08 | 0x10)); //isSmall, noBasePlate, set Marker
+        Optional<?> opt = Optional.of(WrappedChatComponent.fromChatMessage(Util.colorize(colorCode + event.getDamage()))[0].getHandle());
+        metadata.setObject(new WrappedDataWatcher.WrappedDataWatcherObject(2,
+                WrappedDataWatcher.Registry.getChatComponentSerializer(true)), opt); //name
+
+        data.getWatchableCollectionModifier().write(0, metadata.getWatchableObjects());
+
+        List<Player> players = new ArrayList<>();
+        for (Entity player : loc.getNearbyEntities(30, 30, 30)) {
+            if (player instanceof Player) {
+                players.add((Player) player);
+                MagicPitCore.getProtocolManager().sendServerPacket((Player) player, packet);
+                MagicPitCore.getProtocolManager().sendServerPacket((Player) player, data);
+            }
         }
 
-        armorStand.setCustomNameVisible(true);
-        Bukkit.getScheduler().runTaskLater(MagicPitCore.getInstance(), armorStand::remove, 25);
+        Bukkit.getScheduler().runTaskLater(MagicPitCore.getInstance(), () -> {
+
+        }, 25);
     }
 
     @EventHandler

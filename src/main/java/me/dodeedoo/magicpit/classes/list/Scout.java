@@ -43,7 +43,7 @@ public class Scout implements PitClass {
                         Util.returnStringList("&fSwiftness &7increases the chance of", "&7dodging incoming damage"),
                         20,
                         Material.BONE_MEAL),
-                Util.returnList(1)
+                Util.returnList(0)
         );
     }
 
@@ -119,7 +119,7 @@ public class Scout implements PitClass {
                     break;
                 }
                 case "&f&lSwift": {
-                    nodeMap.put(property, Util.returnList(1));
+                    nodeMap.put(property, Util.returnList(0));
                     break;
                 }
             }
