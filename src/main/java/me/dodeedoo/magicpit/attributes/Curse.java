@@ -47,6 +47,9 @@ public class Curse implements Attribute {
 
     @Override
     public void secondModifier(Player player) {
+        if ((int) getPlayer(player) < 0) {
+            playerCurseMap.put(player, 0);
+        }
         if ((int) getPlayer(player) != 0) {
             playerCurseMap.put(player, (int) getPlayer(player) - 1);
         }

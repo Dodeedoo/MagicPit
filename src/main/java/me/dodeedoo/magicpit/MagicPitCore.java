@@ -86,6 +86,7 @@ public final class MagicPitCore extends JavaPlugin {
         PitClassHandler.classList.add(new Lurker());
         PitClassHandler.classList.add(new Warrior());
         PitClassHandler.classList.add(new Scout());
+        PitClassHandler.classList.add(new Paladin());
 
         //Periodical Loops
         Bukkit.getScheduler().runTaskTimer(this, () -> {
