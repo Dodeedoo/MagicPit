@@ -9,6 +9,7 @@ import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.event.player.PlayerUnleashEntityEvent;
@@ -34,6 +35,12 @@ public class Interact implements Listener {
                 }
             }
         }
+    }
+
+    @EventHandler
+    public void drop(PlayerDropItemEvent event) {
+        event.setCancelled(true);
+        SkillHandler.handleAction(SkillExecuteAction.DROP, event.getPlayer());
     }
 
 }

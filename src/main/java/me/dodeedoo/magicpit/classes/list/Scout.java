@@ -45,6 +45,57 @@ public class Scout implements PitClass {
                         Material.BONE_MEAL),
                 Util.returnList(0)
         );
+        nodeMap.put(new PitClassProperty(
+                "&fDisengage",
+                Disengage.class.getName(),
+                PropertyType.SKILL,
+                null,
+                Util.returnStringList("&7Live another second"),
+                Material.LEAD
+        ), Util.returnList(0, 0));
+        nodeMap.put(new PitClassProperty(
+                        "&dMagic Resistances",
+                        PropertyType.ATTRIBUTE,
+                        AttributesHandler.Attributes.get("MagicDefense"),
+                        Util.returnStringList("&7Faster than the speed of mana"),
+                        20,
+                        Material.PURPLE_DYE),
+                Util.returnList(1)
+        );
+        nodeMap.put(new PitClassProperty(
+                "&aAdrenaline",
+                Adrenaline.class.getName(),
+                PropertyType.SKILL,
+                null,
+                Util.returnStringList("&7\"I dont go down that easy\""),
+                Material.RED_DYE
+        ), Util.returnList(1, 0));
+        nodeMap.put(new PitClassProperty(
+                        "&bMagical affinity",
+                        PropertyType.ATTRIBUTE,
+                        AttributesHandler.Attributes.get("Maxmana"),
+                        Util.returnStringList("&7Larger mana pool"),
+                        50,
+                        Material.DIAMOND),
+                Util.returnList(1, 0, 0)
+        );
+        nodeMap.put(new PitClassProperty(
+                        "&9Keen eye",
+                        PropertyType.ATTRIBUTE,
+                        AttributesHandler.Attributes.get("CritChance"),
+                        Util.returnStringList("&7Accurate Strikes"),
+                        15,
+                        Material.ENDER_PEARL),
+                Util.returnList(1, 0, 0, 0)
+        );
+        nodeMap.put(new PitClassProperty(
+                "&f&lLifting Spirits",
+                LiftingSpirits.class.getName(),
+                PropertyType.SKILL,
+                null,
+                Util.returnStringList("&7\"Die = Kick !!!\""),
+                Material.RABBIT_STEW
+        ), Util.returnList(1, 0, 0, 0, 0));
     }
 
     @Override
@@ -120,6 +171,30 @@ public class Scout implements PitClass {
                 }
                 case "&f&lSwift": {
                     nodeMap.put(property, Util.returnList(0));
+                    break;
+                }
+                case "&fDisengage": {
+                    nodeMap.put(property, Util.returnList(0, 0));
+                    break;
+                }
+                case "&dMagical Resistances": {
+                    nodeMap.put(property, Util.returnList(1));
+                    break;
+                }
+                case "&aAdrenaline": {
+                    nodeMap.put(property, Util.returnList(1, 0));
+                    break;
+                }
+                case "&bMagical affinity": {
+                    nodeMap.put(property, Util.returnList(1, 0, 0));
+                    break;
+                }
+                case "&9Keen eye": {
+                    nodeMap.put(property, Util.returnList(1, 0, 0, 0));
+                    break;
+                }
+                case "&f&lLifting Spirits": {
+                    nodeMap.put(property, Util.returnList(1, 0, 0, 0, 0));
                     break;
                 }
             }
