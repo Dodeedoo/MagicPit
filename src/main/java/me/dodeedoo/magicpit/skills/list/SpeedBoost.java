@@ -32,6 +32,7 @@ public class SpeedBoost implements Skill {
         float walkSpeedBefore = player.getWalkSpeed();
         player.setWalkSpeed(walkSpeedBefore + 0.35F);
         Bukkit.getScheduler().runTaskLater(MagicPitCore.getInstance(), () -> player.setWalkSpeed(walkSpeedBefore), 100);
+        initiateCooldown(player);
     }
 
     @Override

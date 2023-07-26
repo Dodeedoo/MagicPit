@@ -9,6 +9,8 @@ import me.dodeedoo.magicpit.skills.Skill;
 import me.dodeedoo.magicpit.skills.SkillCost;
 import me.dodeedoo.magicpit.skills.SkillExecuteAction;
 import me.dodeedoo.magicpit.skills.SkillIndicator;
+import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -23,7 +25,9 @@ public class Adrenaline implements Skill {
 
     @Override
     public void execute(Player player, String[] args) {
-        if (player.getHealth() <= player.getMaxHealth() * 0.3) {
+        Bukkit.broadcast(Component.text(player.getHealth()));
+        Bukkit.broadcast(Component.text(player.getMaxHealth()));
+        if (player.getHealth() <= player.getMaxHealth() * 0.6) {
             PacketContainer addHealth = MagicPitCore.getProtocolManager().createPacket(PacketType.Play.Server.UPDATE_HEALTH);
             addHealth.getIntegers().write(0, (int) (player.getMaxHealth() * 0.1));
             MagicPitCore.getProtocolManager().sendServerPacket(player, addHealth);
@@ -45,6 +49,7 @@ public class Adrenaline implements Skill {
                     attribute.getPlayerStats().put(player, ((int) attribute.getPlayer(player)) - 15);
                 }
             }.runTaskLater(MagicPitCore.getInstance(), 100);
+            initiateCooldown(player);
         }
     }
 
@@ -68,12 +73,12 @@ public class Adrenaline implements Skill {
 
     @Override
     public SkillCost getCostType() {
-        return SkillCost.HEALTH;
+        return SkillCost.MANA;
     }
 
     @Override
     public Integer getCostAmount() {
-        return -50;
+        return 10;
     }
 
     @Override

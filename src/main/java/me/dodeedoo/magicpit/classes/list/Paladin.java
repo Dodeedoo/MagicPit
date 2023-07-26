@@ -40,7 +40,7 @@ public class Paladin implements PitClass {
 
     @Override
     public Boolean isTestClass() {
-        return true;
+        return false;
     }
 
     @Override

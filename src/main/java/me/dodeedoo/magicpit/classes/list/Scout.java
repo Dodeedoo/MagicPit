@@ -177,7 +177,7 @@ public class Scout implements PitClass {
                     nodeMap.put(property, Util.returnList(0, 0));
                     break;
                 }
-                case "&dMagical Resistances": {
+                case "&dMagic Resistances": {
                     nodeMap.put(property, Util.returnList(1));
                     break;
                 }

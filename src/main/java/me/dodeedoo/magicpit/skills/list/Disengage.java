@@ -31,7 +31,7 @@ public class Disengage implements Skill {
         Location front = player.getLocation().add(player.getLocation().getDirection().normalize().multiply(2));
         for (Entity entity : front.getNearbyEntities(1.5, 1.5 ,1.5)) {
             if (entity instanceof LivingEntity) {
-                if (!(entity instanceof Player && PartySystem.sameParty((Player) entity, player))) {
+                if (!(entity instanceof Player && entity != player && PartySystem.sameParty((Player) entity, player))) {
                     ((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20, 3));
                     ((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 10, 1));
                 }
@@ -45,6 +45,8 @@ public class Disengage implements Skill {
         for (Location loc : LocationLib.getHelix(new Location[]{player.getLocation()}, 1, 2, 1, 2)) {
             new ParticleBuilder(Particle.SMOKE_LARGE).location(loc).spawn();
         }
+
+        initiateCooldown(player);
     }
 
     @Override

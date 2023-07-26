@@ -50,6 +50,8 @@ public class LiftingSpirits implements Skill {
                 }, 100);
             }
         }
+
+        initiateCooldown(player);
     }
 
     @Override
