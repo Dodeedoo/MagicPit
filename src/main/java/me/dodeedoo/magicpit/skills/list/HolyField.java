@@ -31,8 +31,11 @@ public class HolyField implements Skill {
         for (int i = 0; i < 6; i++) {
             Bukkit.getScheduler().runTaskLater(MagicPitCore.getInstance(), () -> {
 
-                for (Location loc : LocationLib.getHelix(new Location[]{player.getLocation()}, 7, 4, 3, 10)) {
-                    if (Math.random() > 0.8) new ParticleBuilder(Particle.REDSTONE).color(Color.YELLOW).location(loc).spawn();
+                for (int o = 1; o < 8; o++) {
+                    for (Location loc : LocationLib.getHelix(new Location[]{player.getLocation()}, o, 3, 2, 5)) {
+                        if (Math.random() > 0.9)
+                            new ParticleBuilder(Particle.REDSTONE).color(Color.YELLOW).location(loc).spawn();
+                    }
                 }
 
                 for (Entity entity : player.getLocation().getNearbyEntities(7, 4, 7)) {

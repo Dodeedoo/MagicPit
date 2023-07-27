@@ -99,4 +99,10 @@ public class Scorch implements Attribute {
     public ModifierPriority getPriority() {
         return ModifierPriority.LOW;
     }
+
+    @Override
+    public boolean isAddedToPowerLevel() {
+        return false;
+    }
+
 }

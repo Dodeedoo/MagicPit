@@ -72,4 +72,10 @@ public class Health implements Attribute {
     public Object getDefaultValue() {
         return defaultval;
     }
+
+    @Override
+    public boolean isAddedToPowerLevel() {
+        return true;
+    }
+
 }

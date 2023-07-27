@@ -40,6 +40,11 @@ public class CritChance implements Attribute {
     }
 
     @Override
+    public boolean isAddedToPowerLevel() {
+        return true;
+    }
+
+    @Override
     public void secondModifier(Player player) {
 
     }

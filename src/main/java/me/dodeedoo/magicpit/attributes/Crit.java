@@ -75,4 +75,10 @@ public class Crit implements Attribute {
 
         return this.defaultval;
     }
+
+    @Override
+    public boolean isAddedToPowerLevel() {
+        return true;
+    }
+
 }

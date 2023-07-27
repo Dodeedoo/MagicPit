@@ -73,4 +73,10 @@ public class Strength implements Attribute {
         return this.defaultval;
     }
 
+    @Override
+    public boolean isAddedToPowerLevel() {
+        return true;
+    }
+
+
 }

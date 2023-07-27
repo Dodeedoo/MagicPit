@@ -36,6 +36,15 @@ public class Paladin implements PitClass {
                 Util.returnStringList("&7Call on the strength of the greater one"),
                 Material.GOLD_NUGGET
         ), new ArrayList<>());
+        nodeMap.put(new PitClassProperty(
+                        "&cIntimidating",
+                        PropertyType.ATTRIBUTE,
+                        AttributesHandler.Attributes.get("Threat"),
+                        Util.returnStringList("&7&oGood or bad?", "&7&oHigher threat makes mobs target you instead of others"),
+                        25,
+                        Material.WITHER_SKELETON_SKULL),
+                Util.returnList(0)
+        );
     }
 
     @Override

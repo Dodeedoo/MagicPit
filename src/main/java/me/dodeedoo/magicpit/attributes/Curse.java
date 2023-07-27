@@ -102,4 +102,10 @@ public class Curse implements Attribute {
     public ModifierPriority getPriority() {
         return ModifierPriority.HIGH;
     }
+
+    @Override
+    public boolean isAddedToPowerLevel() {
+        return false;
+    }
+
 }

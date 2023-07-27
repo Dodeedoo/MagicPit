@@ -18,4 +18,6 @@ public interface Attribute {
     Object getPlayer(Player player);
     Object getDefaultValue();
     ModifierPriority getPriority();
+
+    boolean isAddedToPowerLevel();
 }

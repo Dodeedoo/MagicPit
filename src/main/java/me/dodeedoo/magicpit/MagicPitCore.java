@@ -65,6 +65,7 @@ public final class MagicPitCore extends JavaPlugin {
         AttributesHandler.addAttribute(new Curse(), "Curse");
         AttributesHandler.addAttribute(new MagicDefense(), "MagicDefense");
         AttributesHandler.addAttribute(new Swiftness(), "Swiftness");
+        AttributesHandler.addAttribute(new Threat(), "Threat");
 
         //load items AFTER attributes
         ItemManager.loadItemsFromConfig();
@@ -224,8 +225,7 @@ public final class MagicPitCore extends JavaPlugin {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 int power = 0;
                 for (Attribute attribute : AttributesHandler.Attributes.values()) {
-                    if (!attribute.getClass().getSimpleName().equals("Scorch") &&
-                            !attribute.getClass().getSimpleName().equals("Curse")) {
+                    if (attribute.isAddedToPowerLevel()) {
                         power = power + (int) attribute.getPlayer(player);
                     }
                 }

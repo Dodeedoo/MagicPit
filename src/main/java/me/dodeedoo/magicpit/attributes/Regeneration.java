@@ -74,4 +74,10 @@ public class Regeneration implements Attribute {
     public Object getDefaultValue() {
         return this.defaultval;
     }
+
+    @Override
+    public boolean isAddedToPowerLevel() {
+        return true;
+    }
+
 }

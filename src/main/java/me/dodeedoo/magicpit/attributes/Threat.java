@@ -6,16 +6,17 @@ import org.bukkit.event.entity.EntityDeathEvent;
 
 import java.util.HashMap;
 
-public class MagicDefense implements Attribute {
-    public String name = "Magic Defense";
-    public String colorcode = "&5";
+public class Threat implements Attribute {
+
+    public String name = "Threat";
+    public String colorcode = "&c";
     public String icon = "";
-    public HashMap<Player, Object> playerMagicDefenseMap = new HashMap<>();
-    public Integer defaultval = 5;
+    public HashMap<Player, Object> playerThreatMap = new HashMap<>();
+    public Integer defaultval = 50;
 
     @Override
     public void setPlayerStat(HashMap<Player, Object> map) {
-        this.playerMagicDefenseMap = map;
+        this.playerThreatMap = map;
     }
 
     @Override
@@ -50,12 +51,12 @@ public class MagicDefense implements Attribute {
 
     @Override
     public HashMap<Player, Object> getPlayerStats() {
-        return this.playerMagicDefenseMap;
+        return this.playerThreatMap;
     }
 
     @Override
     public Object getPlayer(Player player) {
-        return this.playerMagicDefenseMap.get(player);
+        return this.playerThreatMap.get(player);
     }
 
     @Override
@@ -65,7 +66,6 @@ public class MagicDefense implements Attribute {
 
     @Override
     public Object getDefaultValue() {
-
         return this.defaultval;
     }
 

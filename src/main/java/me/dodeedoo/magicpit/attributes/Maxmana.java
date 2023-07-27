@@ -68,4 +68,10 @@ public class Maxmana implements Attribute {
     public Object getDefaultValue() {
         return this.defaultval;
     }
+
+    @Override
+    public boolean isAddedToPowerLevel() {
+        return true;
+    }
+
 }

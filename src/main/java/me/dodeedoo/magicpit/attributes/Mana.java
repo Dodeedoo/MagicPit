@@ -80,4 +80,10 @@ public class Mana implements Attribute {
     public Object getDefaultValue() {
         return this.defaultval;
     }
+
+    @Override
+    public boolean isAddedToPowerLevel() {
+        return false;
+    }
+
 }
