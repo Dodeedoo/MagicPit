@@ -45,6 +45,48 @@ public class Paladin implements PitClass {
                         Material.WITHER_SKELETON_SKULL),
                 Util.returnList(0)
         );
+        nodeMap.put(new PitClassProperty(
+                "&eTaunt",
+                Taunt.class.getName(),
+                PropertyType.SKILL,
+                null,
+                Util.returnStringList("&7&o'Hey you look stupid Lol'"),
+                Material.ANDESITE_SLAB
+        ), Util.returnList(0, 0));
+        nodeMap.put(new PitClassProperty(
+                        "&2Defensive Stance",
+                        PropertyType.ATTRIBUTE,
+                        AttributesHandler.Attributes.get("Defense"),
+                        Util.returnStringList("&7&oLess damage = good"),
+                        100,
+                        Material.WITHER_SKELETON_SKULL),
+                Util.returnList(1)
+        );
+        nodeMap.put(new PitClassProperty(
+                "&2Stone Skin",
+                StoneSkin.class.getName(),
+                PropertyType.SKILL,
+                null,
+                Util.returnStringList("&7&oOnly magic can get through"),
+                Material.TURTLE_HELMET
+        ), Util.returnList(1, 0));
+        nodeMap.put(new PitClassProperty(
+                        "&2Defensiver Stance",
+                        PropertyType.ATTRIBUTE,
+                        AttributesHandler.Attributes.get("Defense"),
+                        Util.returnStringList("&7&oLess damage = good"),
+                        150,
+                        Material.WITHER_SKELETON_SKULL),
+                Util.returnList(1, 0, 0)
+        );
+        nodeMap.put(new PitClassProperty(
+                "&e&lRetribution",
+                Retribution.class.getName(),
+                PropertyType.SKILL,
+                null,
+                Util.returnStringList("&7&oThey must pay for their sins"),
+                Material.GOLDEN_SHOVEL
+        ), Util.returnList(1, 0));
     }
 
     @Override
@@ -116,6 +158,30 @@ public class Paladin implements PitClass {
             switch (property.name) {
                 case "&eHoly Field": {
                     nodeMap.put(property, new ArrayList<>());
+                    break;
+                }
+                case "&cIntimidating": {
+                    nodeMap.put(property, Util.returnList(0));
+                    break;
+                }
+                case "&eTaunt": {
+                    nodeMap.put(property, Util.returnList(0, 0));
+                    break;
+                }
+                case "&2Defensive Stance": {
+                    nodeMap.put(property, Util.returnList(1));
+                    break;
+                }
+                case "&2Stone Skin": {
+                    nodeMap.put(property, Util.returnList(1, 0));
+                    break;
+                }
+                case "&2Defensiver Stance": {
+                    nodeMap.put(property, Util.returnList(1, 0, 0));
+                    break;
+                }
+                case "&e&lRetribution": {
+                    nodeMap.put(property, Util.returnList(1, 0, 0, 0));
                     break;
                 }
             }
