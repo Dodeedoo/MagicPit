@@ -26,17 +26,19 @@ public class StoneSkin implements Skill {
 
     @Override
     public void execute(Player player, String[] args) {
-        double add = 50;
+        int add = 50;
         add *= 1 + (1 - (player.getHealth() / player.getMaxHealth()) * 3);
 
         Attribute attribute = AttributesHandler.Attributes.get("Defense");
         attribute.getPlayerStats().put(player, (int) attribute.getPlayer(player) + add);
-        double finalAdd = add;
+        int finalAdd = add;
         Bukkit.getScheduler().runTaskLater(MagicPitCore.getInstance(), () -> {attribute.getPlayerStats().put(player, (int) attribute.getPlayer(player) - finalAdd);}, 40);
 
         for (Location loc : LocationLib.getHelix(new Location[]{player.getLocation()}, 1, 2.5, 3, 2)) {
             new ParticleBuilder(Particle.REDSTONE).color(Color.GRAY).location(loc).spawn();
         }
+
+        initiateCooldown(player);
     }
 
     @Override

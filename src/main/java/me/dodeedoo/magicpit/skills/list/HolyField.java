@@ -60,6 +60,8 @@ public class HolyField implements Skill {
 
             }, i * 20);
         }
+
+        initiateCooldown(player);
     }
 
     @Override

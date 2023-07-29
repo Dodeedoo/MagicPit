@@ -23,12 +23,13 @@ public class Taunt implements Skill {
 
     @Override
     public void execute(Player player, String[] args) {
-        Sound tauntSound = Sound.sound(Key.key("item_goat_horn_sound_1"), Sound.Source.AMBIENT, 5f, 1f);
-        player.playSound(tauntSound, Sound.Emitter.self());
+        player.playSound(player.getLocation(), org.bukkit.Sound.ITEM_GOAT_HORN_SOUND_1, 5, 0.5F);
 
         Attribute attribute = AttributesHandler.Attributes.get("Threat");
         attribute.getPlayerStats().put(player, (int) attribute.getPlayer(player) + 300);
         Bukkit.getScheduler().runTaskLater(MagicPitCore.getInstance(), () -> {attribute.getPlayerStats().put(player, (int) attribute.getPlayer(player) - 300);}, 100);
+
+        initiateCooldown(player);
     }
 
     @Override
@@ -36,7 +37,7 @@ public class Taunt implements Skill {
         List<String> lore = new ArrayList<>();
         lore.add("&7Make fun of surrounding mobs");
         lore.add("&7+300 Threat for 5 seconds");
-        lore.add("&7Cost: &c10 HP");
+        lore.add("&7Cost: &c5 HP");
         lore.add("&7Cooldown: 30 seconds");
         return lore;
     }
@@ -53,12 +54,12 @@ public class Taunt implements Skill {
 
     @Override
     public Integer getCostAmount() {
-        return 10;
+        return 3;
     }
 
     @Override
     public Long getCooldown() {
-        return 30L;
+        return 3L;
     }
 
     @Override

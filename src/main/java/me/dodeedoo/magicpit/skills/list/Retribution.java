@@ -10,6 +10,7 @@ import me.dodeedoo.magicpit.skills.SkillCost;
 import me.dodeedoo.magicpit.skills.SkillExecuteAction;
 import me.dodeedoo.magicpit.skills.SkillIndicator;
 import me.dodeedoo.magicpit.social.party.PartySystem;
+import net.kyori.adventure.text.Component;
 import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -49,6 +50,7 @@ public class Retribution implements Skill {
 
             //each iteration is 0.2 blocks
             for (int o = 0; o <= 5; o++) {
+                Bukkit.broadcast(Component.text((((i / 2) * 20) + (o * 4))));
                 if (rightOrLeft) {
                     spiral1Loc = LocationLib.getRightSide(spiral1Loc.add(direction), 0.2).add(0, 0.3, 0);
                     spiral2Loc = LocationLib.getLeftSide(spiral2Loc.add(direction), 0.2).add(0, -0.3, 0);
@@ -60,10 +62,10 @@ public class Retribution implements Skill {
                 Location finalSpiral1Loc = spiral1Loc;
                 Location finalSpiral2Loc = spiral2Loc;
                 Bukkit.getScheduler().runTaskLater(MagicPitCore.getInstance(), () -> {
-                    for (Location loc : LocationLib.getSphere(new Location[]{finalSpiral1Loc}, 0.1, 2)) {
+                    for (Location loc : LocationLib.getSphere(new Location[]{finalSpiral1Loc}, 0.5, 2)) {
                         new ParticleBuilder(Particle.REDSTONE).color(Color.YELLOW).location(loc).spawn();
                     }
-                    for (Location loc : LocationLib.getSphere(new Location[]{finalSpiral2Loc}, 0.1, 2)) {
+                    for (Location loc : LocationLib.getSphere(new Location[]{finalSpiral2Loc}, 0.5, 2)) {
                         new ParticleBuilder(Particle.REDSTONE).color(Color.ORANGE).location(loc).spawn();
                     }
 
@@ -74,14 +76,16 @@ public class Retribution implements Skill {
 
                         if (entity instanceof Player && entity != player && !PartySystem.sameParty(player, (Player) entity)) {
                             Bukkit.getPluginManager().callEvent(new MagicDamage(player, (LivingEntity) entity, MagicDamageType.ICE, (int) damage));
-                        }else if (entity instanceof LivingEntity) {
+                        }else if (entity instanceof LivingEntity && entity != player) {
                             Bukkit.getPluginManager().callEvent(new MagicDamage(player, (LivingEntity) entity, MagicDamageType.ICE, (int) damage));
                         }
                     }
-                }, (i / 2) * 20);
+                }, (((i / 2) * 20) + (o * 4)));
             }
 
         }
+
+        initiateCooldown(player);
 
     }
 
