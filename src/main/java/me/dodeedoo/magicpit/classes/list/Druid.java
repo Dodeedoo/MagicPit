@@ -36,11 +36,28 @@ public class Druid implements PitClass {
                 Util.returnStringList("&7AOE healing"),
                 Material.BIRCH_SAPLING
         ), new ArrayList<>());
+        nodeMap.put(new PitClassProperty(
+                        "&bWisdom",
+                        PropertyType.ATTRIBUTE,
+                        AttributesHandler.Attributes.get("Maxmana"),
+                        Util.returnStringList("&7&oFor the apple is not the sapling", "&7&oAnd the sapling is not the apple"),
+                        100,
+                        Material.CYAN_CANDLE),
+                Util.returnList(0)
+        );
+        nodeMap.put(new PitClassProperty(
+                "&aTotem",
+                Totem.class.getName(),
+                PropertyType.SKILL,
+                null,
+                Util.returnStringList("&7Mystery"),
+                Material.OAK_SAPLING
+        ), Util.returnList(0, 0));
     }
 
     @Override
     public Boolean isTestClass() {
-        return true;
+        return false;
     }
 
     @Override
@@ -107,6 +124,14 @@ public class Druid implements PitClass {
             switch (property.name) {
                 case "&a&lWell of Life": {
                     nodeMap.put(property, new ArrayList<>());
+                    break;
+                }
+                case "&bWisdom": {
+                    nodeMap.put(property, Util.returnList(0));
+                    break;
+                }
+                case "&aTotem": {
+                    nodeMap.put(property, Util.returnList(0, 0));
                     break;
                 }
             }
